@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'trips/new'
+
+  get 'trips/show'
+
+  get 'trips/edit'
+
+  get 'trips/index'
+
   scope '(:locale)', locale: /en|fr|de/ do
     root to: 'pages#home'
     devise_for :users do
