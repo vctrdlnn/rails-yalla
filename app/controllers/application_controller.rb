@@ -1,3 +1,4 @@
+# Application controller
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_locale
@@ -39,7 +40,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
 
     # For additional in app/views/devise/registrations/edit.html.erb
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :photo, :mobile, :hometown])
+    devise_parameter_sanitizer.permit(
+      :account_update,
+      keys: [:username, :photo, :mobile, :hometown]
+    )
   end
 
   # override the devise helper to store the current location so we can
