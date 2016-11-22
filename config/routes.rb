@@ -2,10 +2,7 @@ Rails.application.routes.draw do
 
   scope '(:locale)', locale: /en|fr|de/ do
     root to: 'pages#home'
-    devise_for :users, skip: :omniauth_callbacks,
-      controllers: {
-        registrations: "registrations"
-      } do
+    devise_for :users, skip: :omniauth_callbacks do
       get 'profile'
     end
 
