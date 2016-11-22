@@ -1,3 +1,4 @@
+# Base class where we store all trips
 class Trip < ApplicationRecord
   belongs_to :user
   has_many :trip_days, dependent: :destroy
