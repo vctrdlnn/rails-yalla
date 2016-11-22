@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 
   scope '(:locale)', locale: /en|fr|de/ do
     root to: 'pages#home'
-    devise_for :users do
+    devise_for :users, skip: :omniauth_callbacks,
+      controllers: {
+        registrations: "registrations"
+      } do
       get 'profile'
     end
 
@@ -21,5 +24,8 @@ Rails.application.routes.draw do
       end
     end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  devise_for :users, only: :omniauth_callbacks, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
 end
+
+
