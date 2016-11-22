@@ -22,11 +22,9 @@ class TripsController < ApplicationController
       else
         render :new
       end
-    end
   end
 
   def update
-    respond_to do |format|
     if @trip.update(trip_params)
       redirect_to @trip, notice: 'Trip was successfully updated.'
     else
@@ -52,5 +50,4 @@ class TripsController < ApplicationController
       params.require(:trip).permit(:title, :description, :category,
         :city, :country, :lat, :lon, :photo, :photo_cache, :public, :user_id)
     end
-end
 end
