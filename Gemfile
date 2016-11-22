@@ -51,6 +51,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-underscore'
 end
 
+gem 'jquery-ui-rails'
+
 # authorizations:
 gem 'pundit'
 
