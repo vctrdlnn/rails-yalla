@@ -10,10 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122100459) do
+ActiveRecord::Schema.define(version: 20161122103409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "category"
+    t.string   "establishment"
+    t.string   "city"
+    t.string   "address"
+    t.float    "lon"
+    t.float    "lat"
+    t.integer  "index"
+    t.integer  "trip_id"
+    t.integer  "trip_day_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["trip_day_id"], name: "index_activities_on_trip_day_id", using: :btree
+    t.index ["trip_id"], name: "index_activities_on_trip_id", using: :btree
+  end
+
+  create_table "trip_days", force: :cascade do |t|
+    t.string   "title"
+    t.date     "date"
+    t.integer  "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_trip_days_on_trip_id", using: :btree
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "category"
+    t.string   "city"
+    t.string   "country"
+    t.float    "lat"
+    t.float    "lon"
+    t.string   "photo"
+    t.boolean  "public",      default: true
+    t.integer  "user_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["user_id"], name: "index_trips_on_user_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -36,4 +79,8 @@ ActiveRecord::Schema.define(version: 20161122100459) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "activities", "trip_days"
+  add_foreign_key "activities", "trips"
+  add_foreign_key "trip_days", "trips"
+  add_foreign_key "trips", "users"
 end
