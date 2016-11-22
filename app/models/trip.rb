@@ -1,7 +1,7 @@
 class Trip < ApplicationRecord
   belongs_to :user
-  has_many :trip_days
-  has_many :activities
+  has_many :trip_days, dependent: :destroy
+  has_many :activities, dependent: :destroy
 
   validates :title, presence: true
   validates :category, presence: true
