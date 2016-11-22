@@ -26,11 +26,14 @@ group :development, :test do
   gem 'spring'
   gem 'listen', '~> 3.0.5'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem "letter_opener" # mails
+  gem 'letter_opener' # mails
+
+  gem 'rubocop', require: false
+  gem 'i18n-tasks'
 end
 
 # add ones:
-gem "rails-controller-testing"
+gem 'rails-controller-testing'
 gem 'rails_12factor', group: :production
 gem 'cloudinary', '1.1.0'
 gem 'carrierwave'
@@ -40,13 +43,17 @@ gem 'simple-form-datepicker'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 
-gem "geocoder"
-gem "coffee-rails"
-gem "gmaps4rails"
+gem 'geocoder'
+gem 'coffee-rails'
+gem 'gmaps4rails'
 
 source 'https://rails-assets.org' do
-  gem "rails-assets-underscore"
+  gem 'rails-assets-underscore'
 end
 
-#authorizations:
+# authorizations:
 gem 'pundit'
+
+# internationalization
+gem 'rails-i18n', '~> 5.0.0'
+gem 'devise-i18n'
