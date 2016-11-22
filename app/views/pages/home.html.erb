@@ -1,2 +1,12 @@
 <h1><%= t('home.hello') %> </h1>
 <p>Find me in app/views/pages/home.html.erb</p>
+
+<div class="datepicker">coucou</div>
+
+<% content_for(:js) do %>
+  <script>
+    $(function() {
+      $('.datepicker').datepicker();
+    });
+  </script>
+<% end %>
