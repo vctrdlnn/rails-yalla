@@ -1,2 +1,8 @@
 <h1>Trips#index</h1>
 <p>Find me in app/views/trips/index.html.erb</p>
+
+<% @some_trips.each do |trip| %>
+    <%= trip.title %>
+<% end %>
+
+
