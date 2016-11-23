@@ -1,0 +1,11 @@
+<div class="col-xs-12 col-sm-4">
+  <div class="card-trip" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('background.jpg');">
+    <div class="card-trip-category">Popular</div>
+    <div class="card-trip-description">
+      <h2><%= trip.title %></h2>
+      <p>Very cool stuff, useful and smart</p>
+    </div>
+    <img class="card-trip-user avatar" src="user.jpg">
+    <%= link_to "", edit_trip_path(trip), {:class=>"card-trip-link"} %>
+  </div>
+</div>
