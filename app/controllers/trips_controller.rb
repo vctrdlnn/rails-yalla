@@ -14,6 +14,8 @@ class TripsController < ApplicationController
   end
 
   def edit
+    @activities = @trip.activities
+    @trip_days = @trip.trip_days
   end
 
   def create

@@ -4,6 +4,25 @@
  * Feel free to change them and create your own
  * ------------------------------------- */
 
+// Div sizings
+.heigth100 {
+  height: 100%;
+}
+
+.width100 {
+  width: 100%;
+}
+
+.vscroll{
+  overflow: auto;
+  height: 100%;
+}
+
+.hscroll{
+  overflow: auto;
+  width: 100%;
+}
+
 // Paddings
 .padded {
   padding-top: 5em;
@@ -22,4 +41,9 @@
 }
 .bg-dark-blue {
   background: #3b5998;
+}
+
+// Bordered
+.brd-lightgry {
+  border: 1px solid lightgrey;
 }
