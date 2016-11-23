@@ -1,0 +1,18 @@
+.card_activity_index {
+  height: 20px;
+  width: 20px;
+  border: 1px solid black;
+  position: relative;
+}
+
+
+.card_activity_link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index:2;
+  background: black;
+  opacity: 0;
+}

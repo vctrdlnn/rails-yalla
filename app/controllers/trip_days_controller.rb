@@ -1,6 +1,8 @@
+# Controller trip days
 class TripDaysController < ApplicationController
   before_action :set_tripday, only: [:show, :edit, :update, :destroy]
   before_action :set_trip, only: [:new, :create, :edit, :update]
+
   def index
     @trip_days = TripDay.all
   end
@@ -17,19 +19,19 @@ class TripDaysController < ApplicationController
 
   def create
     @trip_day = @trip.trip_days.build(tripday_params)
-      if @trip_day.save
-        redirect_to :back, notice: 'Trip day was successfully created.'
-      else
-        render :new
-      end
+    if @trip_day.save
+      redirect_to :back, notice: 'Trip day was successfully created.'
+    else
+      render :new
+    end
   end
 
   def update
-      if @trip_day.update(tripday_params)
-        redirect_to :back, notice: 'Trip day was successfully updated.'
-      else
-        render :edit
-      end
+    if @trip_day.update(tripday_params)
+      redirect_to :back, notice: 'Trip day was successfully updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -51,5 +53,3 @@ class TripDaysController < ApplicationController
     @trip = Trip.find(params[:trip_id])
   end
 end
-
-

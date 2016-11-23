@@ -1,3 +1,4 @@
+# Trip controller - classic CRUD so far
 class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
 
@@ -13,15 +14,17 @@ class TripsController < ApplicationController
   end
 
   def edit
+    @activities = @trip.activities
+    @trip_days = @trip.trip_days
   end
 
   def create
     @trip = Trip.new(trip_params)
-      if @trip.save
-        redirect_to @trip, notice: 'Trip was successfully created.'
-      else
-        render :new
-      end
+    if @trip.save
+      redirect_to @trip, notice: 'Trip was successfully created.'
+    else
+      render :new
+    end
   end
 
   def update
@@ -37,17 +40,17 @@ class TripsController < ApplicationController
     redirect_to trips_url, notice: 'Trip was successfully destroyed.'
   end
 
-  def search
-    fail
+  private
+
+  def set_trip
+    @trip = Trip.find(params[:id])
   end
 
-  private
-    def set_trip
-      @trip = Trip.find(params[:id])
-    end
-
-    def trip_params
-      params.require(:trip).permit(:title, :description, :category,
-        :city, :country, :lat, :lon, :photo, :photo_cache, :public, :user_id)
-    end
+  def trip_params
+    params.require(:trip).permit(
+      :title, :description, :category,
+      :city, :country, :lat, :lon,
+      :photo, :photo_cache, :public, :user_id
+    )
+  end
 end

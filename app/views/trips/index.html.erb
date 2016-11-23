@@ -6,3 +6,12 @@
 <% end %>
 
 
+=======
+<div class="container">
+  <div class="row">
+      <% @trips.each do |t| %>
+        <%= render 'card_trip_index', trip: t %>
+      <% end %>
+  </div>
+</div>
+

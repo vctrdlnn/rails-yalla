@@ -10,11 +10,12 @@
 @import "bootstrap-datetimepicker";
 
 // Your CSS
+@import "body";
 @import "layout/index";
 @import "components/index";
 @import "pages/index";
 @import "vendor/index";
-
+@import "models/index";
 /*
  *= require jquery-ui
  */
