@@ -7,4 +7,7 @@ class Activity < ApplicationRecord
   validates :title, presence: true
   # validates :address, presence: true
   validates :category, presence: true
+
+  geocoded_by :address, latitude: :lat, longitude: :lon
+  after_validation :geocode, if: :address_changed?
 end

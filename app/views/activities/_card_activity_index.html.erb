@@ -1,16 +1,8 @@
-<div class="card_activity_index">
-  <%= link_to "", activity_path(@activity), {class: "card_activity_link"} %>
+<div class="col-xs-2">
+  <div class="card_activity_index">
+      <p><%= activity.title.downcase.capitalize %></p>
+      <%= link_to edit_activity_path(activity) do %>
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      <% end %>
+  </div>
 </div>
-
-
-
-<!--    t.string   "title"
-
-    t.string   "description"
-    t.string   "category"
-    t.string   "establishment"
-    t.string   "city"
-    t.string   "address"
-
-    t.integer  "index"
-    t.integer  "trip_id" -->

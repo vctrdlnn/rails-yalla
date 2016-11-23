@@ -3,10 +3,17 @@ class ActivitiesController < ApplicationController
   before_action :set_trip, only: [:new, :create, :edit, :update]
 
   def index
-    @activities = Activity.all
+    @activities = Activity.where.not(lat: nil, lon: nil)
+
+    @hash = Gmaps4rails.build_markers(@activities) do |activity, marker|
+      marker.lat activity.lat
+      marker.lng activity.lon
+      # marker.infowindow render_to_string(partial: "/flats/map_box", locals: { flat: flat })
+    end
   end
 
   def show
+    @activity_coordinates = { lat: @activity.lat, lng: @activity.lon }
   end
 
   def new
