@@ -1,16 +1,27 @@
 <div class="trip-edit-wrapper">
   <div class="container guides-index heigth100 width100">
     <div class="row text-center heigth100">
-      <div class="col-xs-12 col-md-4 scroll heigth100">
+      <div class="col-xs-12 col-sm-3 scroll heigth100">
       <!-- Activities not assigned + Add new activity module -->
+        les activites non assignees
       </div>
 
-      <div class="col-xs-12 col-md-8 scroll heigth100">
+      <div class="col-xs-12 col-sm-7 heigth100">
       <!-- Trip Days and Itiniraries -->
+        les jours
+        <div class="row trip-days-container brd-lightgry">
+          chaque jour
+          <% @trip_days.each do |td| %>
+            <div class="col-xs-6 col-sm-4 trip-day">
+              <%= td.title %>
+            </div>
+          <% end %>
+        </div>
       </div>
 
-      <div class="col-xs-12 col-md-4 scroll heigth100">
+      <div class="col-xs-12 col-sm-2 heigth100">
       <!-- Map, to do, references, etc... -->
+        la carte avec la place s'il en reste!?
       </div>
 
       </div>

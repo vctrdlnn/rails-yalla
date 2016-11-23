@@ -13,6 +13,15 @@
   width: 100%;
 }
 
+.vscroll{
+  overflow: auto;
+  height: 100%;
+}
+
+.hscroll{
+  overflow: auto;
+  width: 100%;
+}
 
 // Paddings
 .padded {
@@ -32,4 +41,9 @@
 }
 .bg-dark-blue {
   background: #3b5998;
+}
+
+// Bordered
+.brd-lightgry {
+  border: 1px solid lightgrey;
 }

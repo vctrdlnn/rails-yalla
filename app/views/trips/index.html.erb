@@ -4,7 +4,7 @@
 <div class="container">
   <div class="row">
       <% @trips.each do |t| %>
-        <%= render 'trip_index_cards', trip: t %>
+        <%= render 'card_trip_index', trip: t %>
       <% end %>
   </div>
 </div>
