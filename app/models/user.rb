@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :trips, dependent: :destroy
 
-  validates :username, presence: true, uniqueness: true
+  # validates :username, presence: true, uniqueness: true
 
   def self.find_for_facebook_oauth(auth)
     user_params = auth.to_h.slice(:provider, :uid)
@@ -24,6 +24,7 @@ class User < ApplicationRecord
     else
       user = User.new(user_params)
       user.password = Devise.friendly_token[0, 20] # Fake password for validation
+      # user.username = user.first_name + " " + user.last_name
       user.save
     end
     user
