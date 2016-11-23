@@ -15,6 +15,7 @@ class TripsController < ApplicationController
 
   def edit
     @activities = @trip.activities
+    @activities_unasigned = @activities.where(trip_day: nil)
     @trip_days = @trip.trip_days
   end
 
