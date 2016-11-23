@@ -28,8 +28,13 @@
 
 // Paddings
 .padded {
-  padding-top: 5em;
-  padding-bottom: 5em;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.mini-padded {
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 // Backgrounds
@@ -55,4 +60,8 @@
 }
 .brd-red {
   border: 1px solid red;
+}
+
+.panel{
+  margin-top: 50px;
 }

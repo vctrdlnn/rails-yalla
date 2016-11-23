@@ -1,18 +1,47 @@
-<h2><%= t(".sign_up") %></h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+<div class="container">
+  <div class="row text-center">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
+      <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+        <div class="panel panel-default">
+          <div class="form-inputs">
+            <div class="panel-heading">
+              <h2><%= t(".sign_up") %></h2>
+            </div>
 
-  <div class="form-inputs">
-    <%= f.input :username %>
-    <%= f.input :email, required: true, autofocus: true %>
-    <%= f.input :password, required: true %>
-    <%= f.input :password_confirmation, required: true %>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <%= f.input :username %>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <%= f.input :email, required: true, autofocus: true %>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <%= f.input :password, required: true %>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <%= f.input :password_confirmation, required: true %>
+                  </div>
+                </div>
+                <div class="mini-padded"></div>
+                <div class="form-actions">
+                  <%= f.button :submit, t(".sign_up") %>
+                </div>
+                <div class="mini-padded"></div>
+              </div>
+          </div>
+          <%= render "devise/shared/links" %>
+          <div class="mini-padded"></div>
+        </div>
+      </div>
+  <% end %>
   </div>
+</div>
 
-  <div class="form-actions">
-    <%= f.button :submit, t(".sign_up") %>
-  </div>
-<% end %>
+<div class="padded"></div>
 
-<%= render "devise/shared/links" %>

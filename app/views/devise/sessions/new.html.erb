@@ -1,15 +1,42 @@
-<h2><%= t(".sign_in") %></h2>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email, required: false, autofocus: true %>
-    <%= f.input :password, required: false %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+<div class="container">
+  <div class="row text-center">
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
+      <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+        <div class="panel panel-default">
+          <div class="form-inputs">
+            <div class="panel-heading">
+              <h2><%= t(".sign_in") %></h2>
+            </div>
+
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <%= f.input :email, required: false, autofocus: true %>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <%= f.input :password, required: false %>
+                  </div>
+
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <%= f.button :submit, t(".sign_in") %>
+                </div>
+                <div class="mini-padded"></div>
+              </div>
+          </div>
+          <%= render "devise/shared/links" %>
+          <div class="mini-padded"></div>
+        </div>
+      </div>
+  <% end %>
   </div>
+</div>
 
-  <div class="form-actions">
-    <%= f.button :submit, t(".sign_in") %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<div class="padded"></div>
