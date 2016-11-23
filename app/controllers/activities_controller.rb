@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
     @hash = Gmaps4rails.build_markers(@activities) do |activity, marker|
       marker.lat activity.lat
       marker.lng activity.lon
-      # marker.infowindow render_to_string(partial: "/flats/map_box", locals: { flat: flat })
+      marker.infowindow render_to_string(partial: "/activities/map_box", locals: { activity: activity })
     end
   end
 
