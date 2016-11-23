@@ -1,11 +1,12 @@
-<div class="col-xs-12 col-sm-4">
-  <div class="card-trip" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('background.jpg');">
-    <div class="card-trip-category">Popular</div>
-    <div class="card-trip-description">
-      <h2><%= trip.title %></h2>
-      <p>Very cool stuff, useful and smart</p>
+<li class="work-item illustration webdesign">
+  <div class="work-image">
+    <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
     </div>
-    <img class="card-trip-user avatar" src="user.jpg">
+    <div class="work-caption">
+      <h3 class="work-title font-alt"><%= trip.title %></h3>
+      <div class="work-descr font-inc">
+        <%= trip.category %>
+      </div>
     <%= link_to "", edit_trip_path(trip), {:class=>"card-trip-link"} %>
   </div>
-</div>
+</li>
