@@ -14,13 +14,16 @@
 }
 
 .vscroll{
-  overflow: auto;
-  height: 100%;
+  overflow-y: auto;
 }
 
 .hscroll{
-  overflow: auto;
-  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.inblock{
+  display: inline-block;
+  float: none;
 }
 
 // Paddings
@@ -46,4 +49,10 @@
 // Bordered
 .brd-lightgry {
   border: 1px solid lightgrey;
+}
+.brd-grey {
+  border: 1px solid grey;
+}
+.brd-red {
+  border: 1px solid red;
 }
