@@ -1,17 +1,64 @@
-<h1>Trips#index</h1>
-<p>Find me in app/views/trips/index.html.erb</p>
+<!-- WRAPPER -->
+<div class="wrapper">
 
-<% @some_trips.each do |trip| %>
-    <%= trip.title %>
-<% end %>
+  <!-- HOME -->
+  <section class="module module-header bg-dark bg-dark-50" data-background="assets/images/section-1.jpg">
 
+    <div class="container">
 
-=======
-<div class="container">
-  <div class="row">
-      <% @trips.each do |t| %>
-        <%= render 'card_trip_index', trip: t %>
-      <% end %>
-  </div>
+      <!-- MODULE TITLE -->
+      <div class="row">
+
+        <div class="col-sm-6 col-sm-offset-3">
+
+          <h1 class="module-title font-alt align-center">My travels</h1>
+
+          <div class="module-subtitle font-inc align-center">
+            All your past and future travels, your likes, ready for you!
+          </div>
+
+        </div>
+
+      </div>
+      <!-- /MODULE TITLE -->
+
+    </div>
+
+  </section >
+
+  <!-- PORTFOLIO -->
+  <section class="module-small p-t-20 p-b-60">
+
+    <div class="container">
+
+      <!-- PORTFOLIO FILTER -->
+      <div class="row">
+        <div class="col-sm-12">
+
+          <ul id="filters" class="filter font-inc hidden-xs">
+            <li><a href="#" data-filter="*" class="current wow fadeInUp">All</a></li>
+            <li><a href="#" data-filter=".illustration" class="wow fadeInUp" data-wow-delay="0.2s">Personal Trips</a></li>
+            <li><a href="#" data-filter=".marketing" class="wow fadeInUp" data-wow-delay="0.4s">Liked Trips</a></li>
+            <li><a href="#" data-filter=".photography" class="wow fadeInUp" data-wow-delay="0.6s">Something else</a></li>
+            <li><a href="#" data-filter=".webdesign" class="wow fadeInUp" data-wow-delay="0.8s">And more...</a></li>
+          </ul>
+
+        </div>
+      </div>
+      <!-- /PORTFOLIO FILTER -->
+
+      <!-- PORTFOLIO LIST -->
+      <ul id="works-grid" class="works-grid works-grid-gut works-grid-3 works-hover-w">
+
+        <!-- LOOP ON ITEMS -->
+        <% @trips.each do |trip| %>
+          <%= render 'card_trip_index', trip: trip %>
+        <% end %>
+
+        <!-- PORTFOLIO ITEM -->
+
+        <!-- /PORTFOLIO ITEM -->
+      </ul>
+    </div>
+  </section>
 </div>
-
