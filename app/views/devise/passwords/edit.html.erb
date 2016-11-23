@@ -1,19 +1,38 @@
-<h2><%= t(".change_your_password") %></h2>
+<div class="container">
+  <div class="row text-center">
+    <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :reset_password_token, as: :hidden %>
+    <%= f.full_error :reset_password_token %>
+      <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+        <div class="panel panel-default">
+          <div class="form-inputs">
+            <div class="panel-heading">
+              <h2><%= t(".change_your_password") %></h2>
+            </div>
 
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
-
-  <%= f.input :reset_password_token, as: :hidden %>
-  <%= f.full_error :reset_password_token %>
-
-  <div class="form-inputs">
-    <%= f.input :password, label: t(".new_password"), required: true, autofocus: true %>
-    <%= f.input :password_confirmation, label: t(".confirm_new_password"), required: true %>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <%= f.input :password, label: t(".new_password"), required: true, autofocus: true %>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                    <%= f.input :password_confirmation, label: t(".confirm_new_password"), required: true %>
+                  </div>
+                </div>
+                <div class="mini-padded"></div>
+                <div class="form-actions">
+                  <%= f.button :submit, t(".change_my_password") %>
+                </div>
+                <div class="mini-padded"></div>
+              </div>
+          </div>
+          <%= render "devise/shared/links" %>
+          <div class="mini-padded"></div>
+        </div>
+      </div>
+  <% end %>
   </div>
+</div>
 
-  <div class="form-actions">
-    <%= f.button :submit, t(".change_my_password") %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<div class="padded"></div>
