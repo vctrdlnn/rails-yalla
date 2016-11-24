@@ -65,7 +65,7 @@ some_activities = [
   {
     title: "Marche",
     description: "where moneyed locals scoop up their saucisson, fresh milk and seasonal produce",
-    category: "Shopping",
+    category: "walk",
     establishment: "Le Marché Couvert",
     address: "4-6 Rue Lobineau, Paris",
     city: "Paris",
@@ -87,7 +87,7 @@ some_activities = [
   {
   title: "AVANT GARDE ART",
   description: "he Cartier Fondation and Fondation Henri Cartier-Bresson, which are within walking distance of each other on opposite sides of the famed Montparnasse Cemetery, are sized to offer just the right dose of the familiar and the cutting edge",
-  category: "Museum",
+  category: "cultural",
   establishment: "Fondation Henri Cartier-Bresson",
   address: "2 Impasse Lebouis, 14ème, Paris",
   city: "Paris",
@@ -140,7 +140,7 @@ some_activities = [
   {
   title: "SUNDAY STROLL",
   description: "No longer are the Luxembourg Gardens the only nearby spot of green where you can eat your market loot",
-  category: "Parcs",
+  category: "nature",
   establishment: "",
   address: "Luxembourg Gardens, Paris",
   city: "Paris",
@@ -160,7 +160,7 @@ some_activities = [
   {
   title: "SWEET ENDING",
   description: "This boutique is also an 8,600-square-foot salon de thé/restaurant/lounge devoted to high-end chocolate.",
-  category: "Shopping",
+  category: "romantic",
   establishment: "Un dimanche a paris",
   address: "4-6-8 Cour du Commerce Saint-André, 6ème, Paris",
   city: "Paris",
