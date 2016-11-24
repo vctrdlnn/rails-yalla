@@ -7,4 +7,5 @@ class Trip < ApplicationRecord
   validates :title, presence: true
   validates :category, presence: true
   validates :city, presence: true
+
 end

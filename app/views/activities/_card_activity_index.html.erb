@@ -1,8 +1,6 @@
-<div class="col-xs-2">
   <div class="card_activity_index">
-      <p><%= activity.title.downcase.capitalize %></p>
       <%= link_to edit_activity_path(activity) do %>
+        <p><%= activity.title.downcase.capitalize %></p>
         <i class="fa fa-pencil" aria-hidden="true"></i>
       <% end %>
   </div>
-</div>
