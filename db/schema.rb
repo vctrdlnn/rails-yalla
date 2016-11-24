@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 20161124141044) do
     t.integer  "index"
     t.integer  "trip_id"
     t.integer  "trip_day_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "category_id"
-    t.index ["category_id"], name: "index_activities_on_category_id", using: :btree
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "main_category_id"
+    t.index ["main_category_id"], name: "index_activities_on_main_category_id", using: :btree
     t.index ["trip_day_id"], name: "index_activities_on_trip_day_id", using: :btree
     t.index ["trip_id"], name: "index_activities_on_trip_id", using: :btree
   end
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20161124141044) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "activities", "categories"
+  add_foreign_key "activities", "main_categories"
   add_foreign_key "activities", "trip_days"
   add_foreign_key "activities", "trips"
   add_foreign_key "categories", "main_categories"

@@ -3,10 +3,11 @@
 class Activity < ApplicationRecord
   belongs_to :trip
   belongs_to :trip_day, optional: true
+  belongs_to :main_category
 
   validates :title, presence: true
   # validates :address, presence: true
-  validates :category_id, presence: true
+  validates :main_category_id, presence: true
 
   geocoded_by :address, latitude: :lat, longitude: :lon
   after_validation :geocode, if: :address_changed?
