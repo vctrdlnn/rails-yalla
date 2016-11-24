@@ -1,12 +1,22 @@
 <% if notice %>
-  <div class="alert alert-info alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <%= notice %>
-  </div>
+<script>
+notif({
+  msg: "<%= notice %>",
+  type: "success",
+  timeout: 5000,
+  position: "right",
+  opacity: 0.7
+});
+</script>
 <% end %>
 <% if alert %>
-  <div class="alert alert-warning alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <%= alert %>
-  </div>
+<script>
+notif({
+  msg: "<%= alert %>",
+  type: "error",
+  timeout: 3000,
+  position: "right",
+  opacity: 0.7
+});
+</script>
 <% end %>

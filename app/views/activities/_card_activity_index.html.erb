@@ -5,21 +5,6 @@
       <%= link_to edit_activity_path(activity) do %>
         <i class="fa fa-pencil activity-edit" aria-hidden="true"></i>
       <% end %>
-
-      <% if activity.category == 'nature' %>
-        <%= image_tag "nature.png", class: 'activity-logo' %>
-      <% elsif activity.category == 'walk' %>
-        <%= image_tag "balade.png", class: 'activity-logo' %>
-      <% elsif activity.category == 'romantic' %>
-        <%= image_tag "love.png", class: 'activity-logo' %>
-      <% elsif activity.category == 'cultural' %>
-        <%= image_tag "culture.png", class: 'activity-logo' %>
-      <% elsif activity.category == 'by night' %>
-        <%= image_tag "night.png", class: 'activity-logo' %>
-      <% elsif activity.category == 'sport' %>
-        <%= image_tag "sport.png", class: 'activity-logo' %>
-      <% end %>
-
     </div>
   </div>
 </div>

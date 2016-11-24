@@ -5,178 +5,48 @@
   <!-- /PRELOADER -->
 
   <!-- NAVIGATION -->
-  <nav class="navbar navbar-custom <%= "navbar-fixed-top navbar-transparent" if (controller_name == "pages") %>" role="navigation">
+  <nav class="navbar navbar-custom <%= "navbar-fixed-top navbar-transparent" if (controller_name == "pages") %><%= "navbar-custom-black navbar-transparent" if (controller_name != "home") %>" role="navigation">
 
       <div class="container">
-
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">YA-LA</a>
+          <div class="navbar-header"><%= link_to("YA-LA", root_path, class: "navbar-brand navbar-link") %>
+          <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+          </div>
         </div>
 
+        <% if user_signed_in? %>
         <div class="collapse navbar-collapse" id="custom-collapse">
-
           <ul class="nav navbar-nav navbar-right">
+            <li role="presentation"><%= link_to("Mes voyages", trips_path)%></li>
 
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-              <ul class="dropdown-menu">
-                <li><a href="index.html">Image Parallax 1</a></li>
-                <li><a href="index-2.html">Image Parallax 2</a></li>
-                <li><a href="index-3.html">Slider Parallax 1</a></li>
-                <li><a href="index-4.html">Slider Parallax 2</a></li>
-                <li><a href="index-5.html">Text rotator 1</a></li>
-                <li><a href="index-6.html">Text rotator 2</a></li>
-                <li><a href="index-7.html">Video background 1</a></li>
-                <li><a href="index-8.html">Video background 2</a></li>
-              </ul>
-            </li>
-
-            <li><a href="about.html">About</a></li>
-
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Name</a>
               <ul class="dropdown-menu" role="menu">
 
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Boxed</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="portfolio-boxed-col2.html">2 Columns</a></li>
-                    <li><a href="portfolio-boxed-col3.html">3 Columns</a></li>
-                    <li><a href="portfolio-boxed-col4.html">4 Columns</a></li>
-                    <li><a href="portfolio-boxed-hover-black.html">Hover Black</a></li>
-                    <li><a href="portfolio-boxed-hover-gradient.html">Hover Gradient</a></li>
-                  </ul>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mon profil</a>
                 </li>
 
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Boxed - Gutter</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="portfolio-boxed-gutter-col2.html">2 Columns</a></li>
-                    <li><a href="portfolio-boxed-gutter-col3.html">3 Columns</a></li>
-                    <li><a href="portfolio-boxed-gutter-col4.html">4 Columns</a></li>
-                    <li><a href="portfolio-boxed-gutter-hover-black.html">Hover Black</a></li>
-                    <li><a href="portfolio-boxed-gutter-hover-gradient.html">Hover Gradient</a></li>
-                  </ul>
+                  <%= link_to("Sign out", destroy_user_session_path, method: :delete) %>
                 </li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Boxed - Masonry</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="portfolio-boxed-masonry-col2.html">2 Columns</a></li>
-                    <li><a href="portfolio-boxed-masonry-col3.html">3 Columns</a></li>
-                    <li><a href="portfolio-boxed-masonry-col4.html">4 Columns</a></li>
-                    <li><a href="portfolio-boxed-masonry-hover-black.html">Hover Black</a></li>
-                    <li><a href="portfolio-boxed-masonry-hover-gradient.html">Hover Gradient</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Wide</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="portfolio-wide-col2.html">2 Columns</a></li>
-                    <li><a href="portfolio-wide-col3.html">3 Columns</a></li>
-                    <li><a href="portfolio-wide-col4.html">4 Columns</a></li>
-                    <li><a href="portfolio-wide-hover-black.html">Hover Black</a></li>
-                    <li><a href="portfolio-wide-hover-gradient.html">Hover Gradient</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Wide - Gutter</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="portfolio-wide-gutter-col2.html">2 Columns</a></li>
-                    <li><a href="portfolio-wide-gutter-col3.html">3 Columns</a></li>
-                    <li><a href="portfolio-wide-gutter-col4.html">4 Columns</a></li>
-                    <li><a href="portfolio-wide-gutter-hover-black.html">Hover Black</a></li>
-                    <li><a href="portfolio-wide-gutter-hover-gradient.html">Hover Gradient</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Wide - Masonry</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="portfolio-wide-masonry-col2.html">2 Columns</a></li>
-                    <li><a href="portfolio-wide-masonry-col3.html">3 Columns</a></li>
-                    <li><a href="portfolio-wide-masonry-col4.html">4 Columns</a></li>
-                    <li><a href="portfolio-wide-masonry-hover-black.html">Hover Black</a></li>
-                    <li><a href="portfolio-wide-masonry-hover-gradient.html">Hover Gradient</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Single</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="portfolio-single-1.html">Single 1</a></li>
-                    <li><a href="portfolio-single-2.html">Single 2</a></li>
-                    <li><a href="portfolio-single-3.html">Single 3</a></li>
-                    <li><a href="portfolio-single-4.html">Single 4</a></li>
-                    <li><a href="portfolio-single-5.html">Single 5</a></li>
-                    <li><a href="portfolio-single-6.html">Single 6</a></li>
-                    <li><a href="portfolio-single-7.html">Single 7</a></li>
-                  </ul>
-                </li>
-
               </ul>
             </li>
-
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog</a>
-              <ul class="dropdown-menu" role="menu">
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Grid</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="blog-grid-2col.html">2 Columns</a></li>
-                    <li><a href="blog-grid-3col.html">3 Columns</a></li>
-                    <li><a href="blog-grid-4col.html">4 Columns</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Standart</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="blog-standart-1.html">Standart 1</a></li>
-                    <li><a href="blog-standart-2.html">Standart 2</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Single</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="blog-single.html">Single 1</a></li>
-                    <li><a href="blog-single-2.html">Single 2</a></li>
-                  </ul>
-                </li>
-
-              </ul>
-            </li>
-
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Features</a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="comp-alerts-wells.html"><i class="fa fa-bolt"></i> Alerts and Wells</a></li>
-                <li><a href="comp-buttons.html"><i class="fa fa-link fa-sm"></i> Buttons</a></li>
-                <li><a href="comp-collapses-tabs.html"><i class="fa fa-tasks"></i> Collapses &amp; Tabs</a></li>
-                <li><a href="comp-content-box.html"><i class="fa fa-list-alt"></i> Contents Box</a></li>
-                <li><a href="comp-forms.html"><i class="fa fa-check-square-o"></i> Forms</a></li>
-                <li><a href="comp-icons.html"><i class="fa fa-star"></i> Icons</a></li>
-                <li><a href="comp-progress-bars.html"><i class="fa fa-server"></i> Progress Bars</a></li>
-                <li><a href="comp-typography.html"><i class="fa fa-font"></i> Typography</a></li>
-              </ul>
-            </li>
-
-            <li><a href="contact.html">Contact</a></li>
 
           </ul>
         </div>
-
+        <% else %>
+          <div class="collapse navbar-collapse" id="navcol-1">
+            <p class="navbar-text navbar-right actions ">
+              <%= link_to("sign in", new_user_session_path, class: "navbar-link login") %>
+              <%= link_to("sign up", new_user_registration_path, class: "btn btn-g btn-round action-button", role: "button") %>
+            </p>
+          </div>
+        <% end %>
       </div>
-
   </nav>
+
+
+
+
 
