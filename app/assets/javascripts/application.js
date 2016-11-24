@@ -20,15 +20,4 @@
 //= require contact
 //= require custom
 //= require notifIt
-
-
-
-
-
-
-
-
-
-
-
-
+//= require_tree .

@@ -4,12 +4,14 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities = Activity.where.not(lat: nil, lon: nil)
-
-    @hash = Gmaps4rails.build_markers(@activities) do |activity, marker|
+    @iMarker = 1
+    @hash = Gmaps4rails.build_markers @activities do |activity, marker|
       marker.lat activity.lat
       marker.lng activity.lon
-      marker.infowindow render_to_string(partial: "/activities/map_box", locals: { activity: activity })
+      # marker.title @iMarker
+      # marker.infowindow render_to_string(partial: "/activities/map_box", locals: { activity: activity })
     end
+    # @hash.each_with_index { |key, index| key[:label] = (index + 1).to_s }
   end
 
   def show
