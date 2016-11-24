@@ -1,12 +1,25 @@
-<li class="work-item illustration webdesign">
-  <div class="work-image">
-    <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
+<!-- POST ITEM -->
+<div class="col-sm-6 col-md-3 col-lg-3">
+  <div class="post">
+    <div class="post-thumbnail">
+      <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
+      <%= link_to "", edit_trip_path(trip), {:class=>"card-trip-link"} %>
     </div>
-    <div class="work-caption">
-      <h3 class="work-title font-alt"><%= trip.title %></h3>
-      <div class="work-descr font-inc">
-        <%= trip.category %>
+    <div class="post-header">
+      <%= link_to edit_trip_path(trip), {:class=>""} do %>
+        <h2 class="post-title font-alt"><%= trip.title %></h2>
+      <% end %>
+      <div class="post-meta font-inc">
+        By <a href="#">by <%= trip.user.name %></a> | <%= trip.created_at.strftime('%d %^b %y') %>
       </div>
-    <%= link_to "", edit_trip_path(trip), {:class=>"card-trip-link"} %>
+    </div>
+    <div class="post-entry">
+      <p><%= trip.short_description %></p>
+    </div>
+    <div class="post-more font-inc">
+      <!-- TODO: Edit links -->
+      <%= link_to "Read more", trip %>
+    </div>
   </div>
-</li>
+</div>
+<!-- /POST ITEM -->

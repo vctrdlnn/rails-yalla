@@ -1,0 +1,12 @@
+<li class="work-item illustration webdesign">
+  <div class="work-image">
+    <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
+    </div>
+    <div class="work-caption">
+      <h3 class="work-title font-alt"><%= trip.title %></h3>
+      <div class="work-descr font-inc">
+        <%= trip.category %>
+      </div>
+    <%= link_to "", edit_trip_path(trip), {:class=>"card-trip-link"} %>
+  </div>
+</li>

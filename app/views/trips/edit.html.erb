@@ -1,46 +1,63 @@
-<div class="trip-edit-wrapper">
+<div class="trip-edit-wrapper heigth100">
   <div class="container-fuid guides-index heigth100">
     <div class="row-fluid text-center heigth100">
       <div class="col-xs-12 col-sm-3 scroll heigth100">
       <!-- Activities not assigned + Add new activity module -->
         les activites non assignees
-         <div class="container-fluid brd-lightgry">
-          <button class="btn btn-success">Add activity</button>
-          <div class="row sortable brd-grey">
-            <% @activities_unasigned.each do |act| %>
-              <div class="col-xs-6 brd-red" style="height: 30px">
-                <div class="TMP-card-activity-edit">
-                  <%= act.title %>
-                </div>
+
+        <button class="btn btn-success">Add activity</button>
+
+        <div class="activity-grid works-grid works-grid-gut works-hover-w sortable heigth100 brd-grey">
+
+          <% @activities_unasigned.each do |act| %>
+            <!-- PORTFOLIO ITEM -->
+            <div class="card_activity_trip illustration webdesign brd-red">
+              <div class="card_activity_trip-header">
+                <h3 class="work-title font-alt"><%= act.title %></h3>
               </div>
-            <% end %>
-          </div>
+              <div class="card_activity_trip-content work-descr">
+                <%= link_to edit_activity_path(act) do %>
+                  <%= act.short_description(50) %>
+                <% end %>
+              </div>
+            </div>
+            <!-- /PORTFOLIO ITEM -->
+          <% end %>
         </div>
       </div>
 
       <div class="col-xs-12 col-sm-7 heigth100">
       <!-- Trip Days and Itiniraries -->
         les jours
-        <div class="container-fluid brd-lightgry">
-          chaque jour
-          <div class="row hscroll width100 inblock brd-grey">
+<!--         <div class="container-fluid brd-lightgry heigth100">
+ -->          chaque jour
+          <div class="row width100 inblock brd-grey heigth100">
             <% @trip_days.each do |td| %>
-              <div class="col-xs-4 inblock trip-day brd-red">
+              <div class="col-xs-4 inblock trip-day brd-red heigth100">
                 <%= td.title %>
-                <div class="row sortable brd-grey">
+                <div class="activity-grid works-grid works-grid-gut works-hover-w sortable heigth100 brd-grey">
+
                   <% @activities.where(trip_day: td).each do |act| %>
-                    <div class="col-xs-12 brd-red">
-                      <div class="TMP-card-activity-edit">
-                        <%= act.title %>
+                    <!-- PORTFOLIO ITEM -->
+                    <div class="card_activity_trip illustration webdesign brd-red">
+                        <div class="card_activity_trip-header">
+                            <h3 class="work-title font-alt"><%= act.title %></h3>
+                        </div>
+                        <div class="card_activity_trip-content work-descr">
+                          <%= link_to edit_activity_path(act) do %>
+                            <%= act.short_description(50) %>
+                          <% end %>
+                        </div>
                       </div>
-                    </div>
+                    <!-- /PORTFOLIO ITEM -->
                   <% end %>
                 </div>
+
               </div>
             <% end %>
           </div>
-        </div>
-      </div>
+<!--         </div>
+ -->      </div>
 
       <div class="col-xs-12 col-sm-2 heigth100">
       <!-- Map, to do, references, etc... -->
@@ -56,8 +73,23 @@
   <script>
     $( function() {
       $( ".sortable").sortable({
-          connectWith: ".sortable"
+          connectWith: ".sortable",
+          placeholder: "placeholder-highlight ui-corner-all",
+          handle: ".card_activity_trip-header",
+          cancel: ".card_activity_trip-toggle"
       }).disableSelection();
     } );
+
+    $( ".card_activity_trip" )
+      .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+      .find( ".card_activity_trip-header" )
+        .addClass( "ui-widget-header ui-corner-all" )
+        .prepend( "<span class='ui-icon ui-icon-minusthick card_activity_trip-toggle'></span>");
+
+    $( ".card_activity_trip-toggle" ).on( "click", function() {
+      var icon = $( this );
+      icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+      icon.closest( ".card_activity_trip" ).find( ".card_activity_trip-content" ).toggle();
+    });
   </script>
 <% end %>

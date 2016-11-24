@@ -2,7 +2,7 @@
 <div class="wrapper">
 
   <!-- HOME -->
-  <section class="module module-header bg-dark bg-dark-50" data-background="assets/images/section-7.jpg">
+  <section class="module module-header bg-dark bg-dark-50" data-background="assets/images/section-1.jpg">
 
     <div class="container">
 
@@ -25,11 +25,9 @@
     </div>
 
   </section >
-  <!-- /HOME -->
 
-  <!-- BLOG GRID -->
-  <section class="module p-b-0">
-
+  <!-- PORTFOLIO -->
+  <section class="module-small p-t-20 p-b-60">
     <div class="container">
 
       <!-- PORTFOLIO FILTER -->
@@ -49,15 +47,17 @@
       <!-- /PORTFOLIO FILTER -->
 
       <!-- PORTFOLIO LIST -->
-      <div class="row multi-columns-row post-columns">
-
+      <ul id="works-grid" class="works-grid works-grid-gut works-grid-3 works-hover-w">
 
         <!-- LOOP ON ITEMS -->
         <% @trips.each do |trip| %>
           <%= render 'card_trip_index', trip: trip %>
         <% end %>
 
-      </div>
+        <!-- PORTFOLIO ITEM -->
+
+        <!-- /PORTFOLIO ITEM -->
+      </ul>
     </div>
   </section>
 </div>

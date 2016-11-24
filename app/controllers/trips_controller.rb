@@ -14,6 +14,7 @@ class TripsController < ApplicationController
   end
 
   def edit
+    @disable_footer = true
     @activities = @trip.activities
     @activities_unasigned = @activities.where(trip_day: nil)
     @trip_days = @trip.trip_days

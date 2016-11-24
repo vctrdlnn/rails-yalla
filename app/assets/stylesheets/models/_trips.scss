@@ -5,19 +5,28 @@
   padding: 0;
 }
 
-.sortable li {
-  border: 1px solid #eee;
-  margin: 0 5px 5px 5px;
+.card_activity_trip {
+  margin: 5px 0;
   padding: 6px;
   font-size: 1.2em;
 }
 
-.TMP-card-activity-edit {
-  border: 1px solid #eee;
-  margin-right: 10px;
-  min-height: 20px;
-  margin: 0;
-  padding: 5px 0 0 0;
+.card_activity_trip-header {
+  background-color: lightgrey;
+}
+
+.activity-item-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -8px;
+  }
+
+.placeholder-highlight {
+  line-height: 2em;
+  background-color: lightgrey;
+  border: 1px dotted black;
+  height: 50px;
 }
 
 .trip-days-container{
@@ -26,5 +35,4 @@
 
 .trip-day {
   width: 33%;
-  margin: 0 5px;
 }
