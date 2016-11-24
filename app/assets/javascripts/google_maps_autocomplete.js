@@ -31,7 +31,7 @@ function getAddressComponents(place) {
   var route = null;
   var zip_code = null;
   var city = null;
-  var category = null;
+  var type = null;
   var country_code = null;
   for (var i in place.address_components) {
     var component = place.address_components[i];
@@ -56,6 +56,6 @@ function getAddressComponents(place) {
     zip_code: zip_code,
     city: city,
     country_code: country_code,
-    category: category
+    type: type
   };
 }
