@@ -45,6 +45,9 @@ class ActivitiesController < ApplicationController
     redirect_to :back, notice: 'Activity was deleted.'
   end
 
+  # def which_category
+  # end
+
   private
 
   def set_activity

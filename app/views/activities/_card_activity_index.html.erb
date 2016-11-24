@@ -1,6 +1,11 @@
   <div class="card_activity_index">
+    <div class = "card_activity_index_contenu">
+      <p><%= activity.title.downcase.capitalize %></p>
       <%= link_to edit_activity_path(activity) do %>
-        <p><%= activity.title.downcase.capitalize %></p>
-        <i class="fa fa-pencil" aria-hidden="true"></i>
+        <i class="fa fa-pencil activity-edit" aria-hidden="true"></i>
       <% end %>
+
+      <%= image_tag "balade.png", class: 'activity-logo' %>
+
+    </div>
   </div>
