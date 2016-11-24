@@ -8,13 +8,21 @@
   </div>
 </div>
 
-
 <% content_for(:js) do %>
   <script>
     $(document).ready(function() {
+      // var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      // var labelIndex = 0;
       var handler = Gmaps.build('Google');
+      //added resetBounds
+      handler.resetBounds();
       handler.buildMap({ internal: { id: 'map' } }, function() {
-        markers = handler.addMarkers(<%= raw @hash.to_json %>);
+        markers = handler.addMarkers(<%= raw @hash.to_json %>, {
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          // label: labels[labelIndex++ % labels.length]
+
+        });
         handler.bounds.extendWith(markers);
         handler.fitMapToBounds();
         if (markers.length == 0) {
@@ -26,3 +34,4 @@
     });
   </script>
 <% end %>
+
