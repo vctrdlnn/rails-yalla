@@ -17,8 +17,9 @@
   overflow: hidden;
 }
 
-.scroll{
-  overflow: scroll;
+.vscroll{
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .hscroll{
