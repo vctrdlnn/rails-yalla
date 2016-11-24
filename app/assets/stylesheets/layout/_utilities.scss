@@ -13,13 +13,16 @@
   width: 100%;
 }
 
-.vscroll{
-  overflow-y: auto;
+.overflow-h{
+  overflow: hidden;
+}
+
+.scroll{
+  overflow: scroll;
 }
 
 .hscroll{
   overflow-x: auto;
-  white-space: nowrap;
 }
 .inblock{
   display: inline-block;
