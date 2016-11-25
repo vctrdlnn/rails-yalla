@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   scope '(:locale)', locale: /en|fr|de/ do
     root to: 'pages#home'
     devise_for :users, skip: [:omniauth_callbacks, :registrations] do
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
     resources :activities do
       member do
         put 'pin'
+        put 'change_position'
       end
     end
   end

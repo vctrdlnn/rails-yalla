@@ -59,3 +59,7 @@ gem 'pundit'
 # internationalization
 gem 'rails-i18n', '~> 5.0.0'
 gem 'devise-i18n'
+
+# admins
+gem 'remotipart', github: 'mshibuya/remotipart'
+gem 'rails_admin', '>= 1.0.0.rc'
