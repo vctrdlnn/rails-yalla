@@ -6,9 +6,10 @@ Rails.application.routes.draw do
     devise_for :users, skip: [:omniauth_callbacks, :registrations] do
       get 'profile'
     end
-
+    #added that
+    resources :activities
     resources :trips do
-      resources :activities
+      # resources :activities
       resources :trip_days, only: [:create, :destroy, :update, :show]
       member do
         put 'like'

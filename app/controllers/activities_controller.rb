@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position]
-  before_action :set_trip, only: [:new, :create]
+  # before_action :set_trip, only: [:new, :create]
 
   def index
     @activities = Activity.where.not(lat: nil, lon: nil)
@@ -23,19 +23,20 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
+    # redirect_to :back, notice: 'Activity was successfully updated.'
   end
 
   def create
-    @activity = @trip.activities.build(activity_params)
+    # @activity = @trip.activities.build(activity_params)
+    @activity = Activity.new(activity_params)
     if @activity.save
-      redirect_to :back, notice: 'Activity was successfully created.'
+      redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
     else
       render :new
     end
   end
 
   def update
-fail
     if @activity.update(activity_params)
       redirect_to :back, notice: 'Activity was successfully updated.'
     else
@@ -67,9 +68,9 @@ fail
     @activity = Activity.find(params[:id])
   end
 
-  def set_trip
-    @trip = Trip.find(params[:trip_id])
-  end
+  # def set_trip
+  #   @trip = Trip.find(params[:trip_id])
+  # end
 
   def activity_params
     params.require(:activity).permit(
