@@ -17,37 +17,37 @@ main_categories =
 [
   {
     title: "Cultural",
-    icon: "cultural.png",
+    icon: "categories/cultural.png",
     color: "theme1"
   },
   {
     title: "Food & Beverage",
-    icon: "food.png",
+    icon: "categories/food.png",
     color: "theme2"
   },
   {
     title: "Fun",
-    icon: "fun.png",
+    icon: "categories/fun.png",
     color: "theme3"
   },
   {
     title: "Nature",
-    icon: "nature.png",
+    icon: "categories/nature.png",
     color: "theme4"
   },
   {
     title: "Night",
-    icon: "night.png",
+    icon: "categories/night.png",
     color: "theme5"
   },
   {
     title: "Others",
-    icon: "others.png",
+    icon: "categories/others.png",
     color: "theme6"
   },
   {
     title: "Sport",
-    icon: "sport.png",
+    icon: "categories/sport.png",
     color: "theme7"
   }
 ]

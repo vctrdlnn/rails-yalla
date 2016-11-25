@@ -22,13 +22,18 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
   end
 
+  def new_act
+    @activity = Activity.new
+  end
+
   def edit
-    # redirect_to :back, notice: 'Activity was successfully updated.'
   end
 
   def create
     # @activity = @trip.activities.build(activity_params)
     @activity = Activity.new(activity_params)
+    @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
+
     if @activity.save
       redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
     else

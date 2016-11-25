@@ -1,8 +1,8 @@
 <%= simple_form_for (@activity) do |f| %>
-  <%= f.input :establishment %>
-  <%= f.input :address, as: :hidden %>
+  <%= f.association :main_category %>
+  <%= f.input :address %>
+  <%= f.input :establishment, as: :hidden %>
   <%= f.input :city, as: :hidden %>
-  <%= f.input :main_category, as: :hidden %>
   <%= f.button :submit %>
   <%= link_to 'Back', activities_path %>
 <% end %>
