@@ -8,8 +8,6 @@ Rails.application.routes.draw do
         get 'profile'
       end
     end
-    #added that
-    resources :activities
     resources :trips do
       # resources :activities
       resources :trip_days, only: [:create, :destroy, :update, :show]
