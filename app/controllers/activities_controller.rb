@@ -10,7 +10,7 @@ class ActivitiesController < ApplicationController
       marker.lat activity.lat
       marker.lng activity.lon
       # marker.title @iMarker
-      # marker.infowindow render_to_string(partial: "/activities/map_box", locals: { activity: activity })
+      marker.infowindow render_to_string(partial: "/activities/map_box", locals: { activity: activity })
     end
     # @hash.each_with_index { |key, index| key[:label] = (index + 1).to_s }
   end

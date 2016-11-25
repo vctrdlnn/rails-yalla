@@ -39,10 +39,11 @@
         });
       }
 
+
       function drop() {
         clearMarkers();
         for (var i = 0; i < activities.length; i++) {
-          addMarkerWithTimeoutandLabel(activities[i], i, i * 200);
+          addMarkerWithTimeoutandLabel(activities[i], i, i * 300);
           loc = new google.maps.LatLng(activities[i].lat, activities[i].lng);
           bounds.extend(loc);
           map.fitBounds(bounds);
@@ -53,14 +54,27 @@
 
       function addMarkerWithTimeoutandLabel(position, index, timeout) {
         window.setTimeout(function() {
-          markers.push(new google.maps.Marker({
+
+          // create marker
+          var marker = new google.maps.Marker({
             position: position,
             map: map,
             label: String(index),
             animation: google.maps.Animation.DROP
-          }));
-        }, timeout);
-      }
+          });
+          // create infowindow
+          var infowindow = new google.maps.InfoWindow({
+            content: position.infowindow
+          });
+          // add infowindow to marker
+          marker.addListener('click', function(){
+            infowindow.open(map, marker);
+          });
+          markers.push(marker);
+
+        }, timeout); // end of timeoue
+
+      } // end of add marker
 
       function clearMarkers() {
         for (var i = 0; i < markers.length; i++) {
