@@ -1,4 +1,6 @@
 
+Category.destroy_all
+MainCategory.destroy_all
 User.destroy_all
 Trip.destroy_all
 TripDay.destroy_all
@@ -7,7 +9,8 @@ Activity.destroy_all
 
 user_params = {username: "victor01", email: "admin@admin.com", password: "000000", mobile: "0604590059"}
 user = User.create!(user_params)
-
+user.admin = true
+user.save
 
 
 main_categories =

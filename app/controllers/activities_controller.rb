@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
-  before_action :set_activity, only: [:show, :edit, :update, :destroy]
-  before_action :set_trip, only: [:new, :create, :update]
+  before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position]
+  before_action :set_trip, only: [:new, :create]
 
   def index
     @activities = Activity.where.not(lat: nil, lon: nil)
@@ -35,6 +35,7 @@ class ActivitiesController < ApplicationController
   end
 
   def update
+fail
     if @activity.update(activity_params)
       redirect_to :back, notice: 'Activity was successfully updated.'
     else
@@ -45,6 +46,19 @@ class ActivitiesController < ApplicationController
   def destroy
     @activity.destroy
     redirect_to :back, notice: 'Activity was deleted.'
+  end
+
+  def change_position
+    i = 1
+    params["activity"]["index"] = params["activity"]["index"].to_i
+    if params["activity"]["trip_day_id"].to_i == 0
+      params["activity"]["trip_day_id"] = nil
+    else
+      params["activity"]["trip_day_id"] = params["activity"]["trip_day_id"].to_i
+    end
+
+    @activity.update(activity_params)
+
   end
 
   private

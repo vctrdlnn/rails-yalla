@@ -1,0 +1,16 @@
+<%= simple_form_for(@activity) do |f| %>
+  <% if @activity.errors.any? %>
+   <div id="error_explanation">
+     <ul>
+     <% @activity.errors.full_messages.each do |message| %>
+       <li><%= message %></li>
+     <% end %>
+     </ul>
+   </div>
+  <% end %>
+
+  <%= f.input :title %>
+  <%= f.input :trip_day_id %>
+  <%= f.button :submit %>
+
+<% end %>
