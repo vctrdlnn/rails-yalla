@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124213744) do
+ActiveRecord::Schema.define(version: 20161125172043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(version: 20161124213744) do
     t.integer  "index"
     t.integer  "trip_id"
     t.integer  "trip_day_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "main_category_id"
+    t.string   "google_place_identifier"
+    t.string   "google_category"
     t.index ["main_category_id"], name: "index_activities_on_main_category_id", using: :btree
     t.index ["trip_day_id"], name: "index_activities_on_trip_day_id", using: :btree
     t.index ["trip_id"], name: "index_activities_on_trip_id", using: :btree
