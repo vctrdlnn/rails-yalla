@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   has_many :trips, dependent: :destroy
 
+  mount_uploader :photo, PhotoUploader
 
   # validates :username, presence: true, uniqueness: true
 

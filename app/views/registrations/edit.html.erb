@@ -1,17 +1,18 @@
 <div class="container">
   <h2 class="page-header text-center">Edit Profile</h2>
-  <div class="padded"></div>
   <div class="row">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
       <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="mini-padded"></div>
         <div class="text-center">
-          <img src="http://lorempixel.com/200/200/people/9/" class="img-circle" alt="photo">
-          <h6>Upload a different photo...</h6>
-          <input type="file" class="text-center center-block well well-sm">
+        <%= cl_image_tag @user.photo, height: 200, width: 200, crop: :fill, :class => "img-circle profile_photo" %>
+        <%= f.file_field :photo, :class => "up_photo"  %>
+        <%= f.hidden_field :photo_cache, :class => "up-photo" %>
         </div>
       </div>
 
     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+    <div class="padded"></div>
       <div class="form-group ">
         <%= f.label :username, class: 'col-lg-3 control-label' %>
         <div class="col-lg-8">
@@ -31,13 +32,14 @@
           <%= f.text_field :hometown, class: 'form-control' %>
         </div>
       </div>
+      <div class="mini-padded"></div>
 
       <div class="form-group">
         <label class="col-md-3 control-label"></label>
         <div class="col-md-8">
-          <div class="form-actions text-center">
+          <div class="form-actions text-center back">
           <%= f.submit "Update", class: 'btn btn-g' %>
-          <%= link_to t("devise.shared.links.back"), :back, html_options = { class: 'btn btn-g' } %>
+          <%= link_to t("devise.shared.links.back"), :back %>
         </div>
       </div>
     </div>
@@ -45,6 +47,7 @@
   </div>
 </div>
 </div>
+<div class="padded"></div>
 
 
 
