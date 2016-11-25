@@ -31,10 +31,9 @@ function onPlaceChanged() {
   var components = getAddressComponents(place);
 
   $('#activity_address').trigger('blur').val(components.address);
-  $('#activity_zip_code').val(components.zip_code);
-  $('#activity_city').val(components.city);
-  $('#activity_category').val(components.type);
   $('#activity_establishment').val(components.name);
+  $('#activity_city').val(components.city);
+  $('#activity_google_category').val(components.type);
 }
 
 
@@ -45,7 +44,7 @@ function onActivityPlaceChanged() {
   $('#activity_establishment').trigger('blur').val(components.name);
   $('#activity_address').val(components.formatted_address);
   $('#activity_city').val(components.city);
-  $('#activity_main_category').val(components.type);
+  $('#activity_google_category').val(components.type);
 }
 
 function getAddressComponents(place) {
