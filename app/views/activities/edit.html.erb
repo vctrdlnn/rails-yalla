@@ -17,8 +17,8 @@
   <%= f.input :address %>
   <%= f.input :city %>
 
-  <%= f.input :trip_day_id %>
+  <%= f.association :trip %>
   <%= f.association :main_category %>
   <%= f.button :submit %>
-
+  <%= link_to 'Back', activities_path %>
 <% end %>
