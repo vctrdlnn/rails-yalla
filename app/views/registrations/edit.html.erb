@@ -1,50 +1,53 @@
 <div class="container">
   <h2 class="page-header text-center">Edit Profile</h2>
-  <div class="padded"></div>
   <div class="row">
-    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-      <div class="text-center">
-        <img src="http://lorempixel.com/200/200/people/9/" class="img-circle" alt="photo">
-        <h6>Upload a different photo...</h6>
-        <input type="file" class="text-center center-block well well-sm">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="mini-padded"></div>
+        <div class="text-center">
+        <%= cl_image_tag @user.photo, height: 200, width: 200, crop: :fill, :class => "img-circle profile_photo" %>
+        <%= f.file_field :photo, :class => "up_photo"  %>
+        <%= f.hidden_field :photo_cache, :class => "up-photo" %>
+        </div>
       </div>
-    </div>
 
     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Username</label>
-          <div class="col-lg-8">
-            <input class="form-control" value="Jane" type="text">
-          </div>
+    <div class="padded"></div>
+      <div class="form-group ">
+        <%= f.label :username, class: 'col-lg-3 control-label' %>
+        <div class="col-lg-8">
+          <%= f.text_field :username, class: 'form-control' %>
         </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Mobile:</label>
-          <div class="col-lg-8">
-            <input class="form-control" value="Bishop" type="text">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Hometown:</label>
-          <div class="col-lg-8">
-            <input class="form-control" value="" type="text">
-          </div>
-        </div>
+      </div>
 
-        <div class="form-group">
-          <label class="col-md-3 control-label"></label>
-          <div class="col-md-8">
-            <input class="btn btn-primary" value="Save Changes" type="button">
-            <span></span>
-            <input class="btn btn-default" value="Cancel" type="reset">
-          </div>
+      <div class="form-group">
+        <%= f.label :mobile, class: 'col-lg-3 control-label' %>
+        <div class="col-lg-8">
+          <%= f.text_field :mobile, class: 'form-control' %>
         </div>
-      </form>
+      </div>
+      <div class="form-group">
+        <%= f.label :hometown, class: 'col-lg-3 control-label' %>
+        <div class="col-lg-8">
+          <%= f.text_field :hometown, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="mini-padded"></div>
+
+      <div class="form-group">
+        <label class="col-md-3 control-label"></label>
+        <div class="col-md-8">
+          <div class="form-actions text-center back">
+          <%= f.submit "Update", class: 'btn btn-g' %>
+          <%= link_to t("devise.shared.links.back"), :back %>
+        </div>
+      </div>
     </div>
     <% end %>
   </div>
 </div>
+</div>
+<div class="padded"></div>
 
 
 

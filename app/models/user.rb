@@ -6,7 +6,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
 
+
   has_many :trips, dependent: :destroy
+
+  mount_uploader :photo, PhotoUploader
 
   # validates :username, presence: true, uniqueness: true
 
