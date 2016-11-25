@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /en|fr|de/ do
     root to: 'pages#home'
     devise_for :users, skip: [:omniauth_callbacks, :registrations] do
-      get 'profile'
+      member do
+        get 'profile'
+      end
     end
 
     resources :trips do

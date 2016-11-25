@@ -1,6 +1,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
+
   def short_description(nb)
     if description.length > nb
       truncate(description, nb, elided = ' ...')
