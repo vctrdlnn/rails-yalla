@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position]
-  before_action :set_trip, only: [:new, :create]
+  # before_action :set_trip, only: [:new, :create]
   before_filter :sanitize_activity_params, only: [:change_position]
 
   def index
@@ -23,13 +23,20 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
   end
 
+  def new_act
+    @activity = Activity.new
+  end
+
   def edit
   end
 
   def create
-    @activity = @trip.activities.build(activity_params)
+    # @activity = @trip.activities.build(activity_params)
+    @activity = Activity.new(activity_params)
+    @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
+
     if @activity.save
-      redirect_to :back, notice: 'Activity was successfully created.'
+      redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
     else
       render :new
     end
@@ -37,7 +44,7 @@ class ActivitiesController < ApplicationController
 
   def update
     if @activity.update(activity_params)
-      redirect_to :back, notice: 'Activity was successfully updated.'
+      redirect_to activities_path, notice: 'Activity was successfully updated.'
     else
       render :edit
     end
@@ -81,9 +88,9 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])
   end
 
-  def set_trip
-    @trip = Trip.find(params[:trip_id])
-  end
+  # def set_trip
+  #   @trip = Trip.find(params[:trip_id])
+  # end
 
   def activity_params
     params.require(:activity).permit(
