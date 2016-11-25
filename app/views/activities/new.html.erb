@@ -1,14 +1,7 @@
-<%= simple_form_for [@trip, @activity] do |f| %>
-
-
-  <%= f.input :title %>
-  <%= f.input :description %>
+<%= simple_form_for (@activity) do |f| %>
   <%= f.input :establishment %>
-  <%= f.input :address %>
-  <%= f.input :city %>
-  <%= f.input :index%>
-  <%= f.input :main_category %>
-
+  <%= f.input :address, as: :hidden %>
+  <%= f.input :city, as: :hidden %>
   <%= f.button :submit %>
 <% end %>
 

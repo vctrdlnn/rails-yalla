@@ -1,6 +1,7 @@
 <div id="map" style="width: 100%; height: 300px;"></div>
 
 <div class="container">
+<%= link_to 'Add Activity', new_activity_path %>
   <div class="row">
     <% @activities.each do |activity| %>
       <%= render 'card_activity_index', activity: activity %>
