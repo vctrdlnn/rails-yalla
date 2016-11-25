@@ -11,7 +11,7 @@ $(document).ready(function() {
   //   });
   // }
 
-  // Code for 'steps address'
+  // Code for 'activity establishment'
   var activity_establishment = $('#activity_establishment').get(0);
 
   if (activity_establishment) {

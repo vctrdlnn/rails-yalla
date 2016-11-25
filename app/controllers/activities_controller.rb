@@ -38,7 +38,7 @@ class ActivitiesController < ApplicationController
 
   def update
     if @activity.update(activity_params)
-      redirect_to :back, notice: 'Activity was successfully updated.'
+      redirect_to activities_path, notice: 'Activity was successfully updated.'
     else
       render :edit
     end
