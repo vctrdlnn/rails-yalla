@@ -1,18 +1,12 @@
 class ActivitiesController < ApplicationController
+  include MapsHashConcern
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position]
   # before_action :set_trip, only: [:new, :create]
   before_filter :sanitize_activity_params, only: [:change_position]
 
   def index
     @activities = Activity.where.not(lat: nil, lon: nil)
-    @iMarker = 1
-    @hash = Gmaps4rails.build_markers @activities do |activity, marker|
-      marker.lat activity.lat
-      marker.lng activity.lon
-      # marker.title @iMarker
-      marker.infowindow render_to_string(partial: "/activities/map_box", locals: { activity: activity })
-    end
-    # @hash.each_with_index { |key, index| key[:label] = (index + 1).to_s }
+    @hash = set_map_hash(@activities)
   end
 
   def show

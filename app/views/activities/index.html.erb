@@ -1,4 +1,5 @@
-<div id="map" style="width: 100%; height: 300px;"></div>
+<%= render 'shared/maps', map_hash: @hash %>
+
 <div class="padded"></div>
 <div class="container text-center">
 <%= link_to 'Add Activity', activities_new_act_path, class: 'btn btn-g' %>
@@ -18,104 +19,7 @@
   <script>
     $(document).ready(function() {
 
-      initMap();
 
-      console.log("hello");
-
-      var activities = <%= raw @hash.to_json %>;
-
-      var markers = [];
-      var map;
-
-      bounds  = new google.maps.LatLngBounds();
-      console.log("drop ? ")
-      drop();
-      console.log("dropped !")
-
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 48.8566, lng: 2.3522},
-          zoom: 8
-        });
-      }
-
-
-      function drop() {
-        clearMarkers();
-        for (var i = 0; i < activities.length; i++) {
-          addMarkerWithTimeoutandLabel(activities[i], i, i * 300);
-          loc = new google.maps.LatLng(activities[i].lat, activities[i].lng);
-          bounds.extend(loc);
-          map.fitBounds(bounds);
-          map.panToBounds(bounds);
-          console.log(bounds);
-        }
-      }
-
-      function addMarkerWithTimeoutandLabel(position, index, timeout) {
-        window.setTimeout(function() {
-
-          // create marker
-          var marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            label: String(index),
-            animation: google.maps.Animation.DROP
-          });
-          // create infowindow
-          var infowindow = new google.maps.InfoWindow({
-            content: position.infowindow
-          });
-          // add infowindow to marker
-          marker.addListener('click', function(){
-            infowindow.open(map, marker);
-          });
-          markers.push(marker);
-
-        }, timeout); // end of timeoue
-
-      } // end of add marker
-
-      function clearMarkers() {
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(null);
-        }
-        markers = [];
-      }
-
-      // function addMarkerWithTimeout(position, timeout) {
-      //   window.setTimeout(function() {
-      //     markers.push(new google.maps.Marker({
-      //       position: position,
-      //       map: map,
-      //       animation: google.maps.Animation.DROP
-      //     }));
-      //   }, timeout);
-      // }
-
-      // var labelIndex = 1;
-      // var markers = []
-      // var handler = Gmaps.build('Google');
-      // //added resetBounds
-      // handler.resetBounds();
-      // handler.buildMap({ internal: { id: 'map' } }, function() {
-      //   markers = handler.addMarkers(<%= raw @hash.to_json %>, {
-      //     draggable: true,
-      //     animation: google.maps.Animation.DROP,
-      //     label: String(labelIndex)
-      //   });
-      //   handler.bounds.extendWith(markers);
-      //   handler.fitMapToBounds();
-      //   if (markers.length == 0) {
-      //     handler.getMap().setZoom(2);
-      //   } else if (markers.length == 1) {
-      //     handler.getMap().setZoom(14);
-      //   }
-      // });
-      // handlerhandler.addMarkers({
-      //   lat: 48.8566,
-      //   lon: 2.3522,
-      // });
 
     });
 
