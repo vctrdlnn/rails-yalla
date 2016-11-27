@@ -6,6 +6,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities = Activity.where.not(lat: nil, lon: nil)
+    @activities = policy_scope(Activity)
     @hash = set_map_hash(@activities)
   end
 
