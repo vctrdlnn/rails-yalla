@@ -1,5 +1,7 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index, :show ]
+
   include MapsHashConcern
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
 
@@ -22,7 +24,8 @@ class TripsController < ApplicationController
   end
 
   def create
-    @trip = Trip.new(trip_params)
+    # @trip = Trip.new(trip_params)
+    @trip = current_user.trips.build(trip_params)
     if @trip.save
       redirect_to @trip, notice: 'Trip was successfully created.'
     else
