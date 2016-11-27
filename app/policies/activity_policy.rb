@@ -1,7 +1,7 @@
 class ActivityPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(user: user) && scope.where(public: true)
+      scope.all
     end
   end
 
