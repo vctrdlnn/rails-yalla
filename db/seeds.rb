@@ -300,7 +300,7 @@ some_activities = [
   establishment: "",
   address: "Luxembourg Gardens, Paris",
   city: "Paris",
-  index: "",
+  index: "1",
   trip: Trip.first
   },
   {
@@ -310,7 +310,7 @@ some_activities = [
   establishment: "",
   address: "Berges de Seine, Paris",
   city: "Paris",
-  index: "",
+  index: "1",
   trip: Trip.first
   },
   {

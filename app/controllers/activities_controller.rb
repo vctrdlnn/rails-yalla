@@ -29,7 +29,6 @@ class ActivitiesController < ApplicationController
     # @activity = @trip.activities.build(activity_params)
     @activity = Activity.new(activity_params)
     @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
-
     if @activity.save
       redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
     else
@@ -71,7 +70,7 @@ class ActivitiesController < ApplicationController
   end
 
   def increment_next_index(activities, start_id, inc)
-    new_idx = [start_id + inc, 1].max
+    start_id ? new_idx = [start_id + inc, 1].max : new_idx = 1
     activities.each do |act|
       act.index = new_idx
       act.save
@@ -81,6 +80,7 @@ class ActivitiesController < ApplicationController
 
   def set_activity
     @activity = Activity.find(params[:id])
+    authorize @activity
   end
 
   # def set_trip

@@ -21,13 +21,17 @@ class ActivityPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
+  def change_position?
+    user_is_owner_or_admin?
+  end
+
   private
 
   def user_is_owner_or_admin?
     # TODO: seul le user peut modifier le resto
     # record => @trip
     # user => current_user
-    user.admin || record.user == user
+    user.admin || record.trip.user == user
   end
 
 end

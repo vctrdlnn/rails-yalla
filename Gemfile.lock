@@ -105,6 +105,7 @@ GEM
     ffi (1.9.14)
     figaro (1.1.1)
       thor (~> 0.14)
+    flickraw (0.9.9)
     font-awesome-rails (4.7.0.0)
       railties (>= 3.2, < 5.1)
     font-awesome-sass (4.7.0)
@@ -341,6 +342,7 @@ DEPENDENCIES
   devise
   devise-i18n
   figaro
+  flickraw
   font-awesome-sass
   geocoder
   gmaps4rails
