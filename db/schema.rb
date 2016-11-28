@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124213744) do
+ActiveRecord::Schema.define(version: 20161128123248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,16 @@ ActiveRecord::Schema.define(version: 20161124213744) do
     t.integer  "index"
     t.integer  "trip_id"
     t.integer  "trip_day_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "main_category_id"
+    t.string   "google_place_identifier"
+    t.string   "google_category"
+    t.integer  "user_id"
     t.index ["main_category_id"], name: "index_activities_on_main_category_id", using: :btree
     t.index ["trip_day_id"], name: "index_activities_on_trip_day_id", using: :btree
     t.index ["trip_id"], name: "index_activities_on_trip_id", using: :btree
+    t.index ["user_id"], name: "index_activities_on_user_id", using: :btree
   end
 
   create_table "categories", force: :cascade do |t|
@@ -108,6 +112,7 @@ ActiveRecord::Schema.define(version: 20161124213744) do
   add_foreign_key "activities", "main_categories"
   add_foreign_key "activities", "trip_days"
   add_foreign_key "activities", "trips"
+  add_foreign_key "activities", "users"
   add_foreign_key "categories", "main_categories"
   add_foreign_key "trip_days", "trips"
   add_foreign_key "trips", "users"

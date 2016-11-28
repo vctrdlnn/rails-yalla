@@ -4,6 +4,7 @@ class Activity < ApplicationRecord
   belongs_to :trip
   belongs_to :trip_day, optional: true
   belongs_to :main_category
+  belongs_to :user
 
   validates :title, presence: true
   validates :address, presence: true
