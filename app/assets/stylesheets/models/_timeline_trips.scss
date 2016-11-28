@@ -89,7 +89,6 @@ padding-left:90px;
   top: 16px;
   left: 50%;
   margin-left: -25px;
-  background-color: #999999;
   z-index: 100;
   border-top-right-radius: 50%;
   border-top-left-radius: 50%;
@@ -144,4 +143,12 @@ padding-left:90px;
     height: 60px;
     margin-bottom: 10px;
   }
+}
+
+.timeline-panel_noassigned{
+  height: 350px;
+  border: 1px solid #d4d4d4;
+  border-radius: 2px;
+  padding: 20px;
+  margin-top: 20px;
 }
