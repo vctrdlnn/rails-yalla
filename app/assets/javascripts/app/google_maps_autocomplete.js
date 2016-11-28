@@ -56,10 +56,10 @@ function onActivityPlaceChanged() {
   var components = getAddressComponents(place);
 
   $('#activity_establishment').trigger('blur').val(components.name);
-  $('#activity_address').val(components.formatted_address);
-  $('#activity_city').val(components.city);
-  $('#activity_google_category').val(components.type);
-  $('#activity_google_place_identifier').val(components.place_id);
+  $('#activity_est_address').val(components.formatted_address);
+  $('#activity_est_city').val(components.city);
+  $('#activity_est_google_category').val(components.type);
+  $('#activity_est_google_place_identifier').val(components.place_id);
 }
 
 // Specific to "New Trips"
