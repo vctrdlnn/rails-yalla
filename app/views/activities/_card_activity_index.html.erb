@@ -2,7 +2,7 @@
 <div id="act-<%= activity.id %>" class="activity-item illustration webdesign <%= 'bg-day'+ [activity.index, 10].min.to_s %>">
   <div class="activity-item-header">
     <div class="content-box-title">
-      <%= activity.title %><%= "(#{activity.index})" %>
+      <%= activity.title %>
     </div>
   </div>
   <div class="activity-item-content content-box-text">
@@ -10,6 +10,7 @@
       <strong><%= activity.establishment %></strong>
       <%= activity.short_description(50) %>
     <% end %>
+    <%= "(#{activity.index})" %>
     <%= link_to edit_activity_path(activity) do %>
       <i class="fa fa-pencil activity-edit" aria-hidden="true"></i>
     <% end %>

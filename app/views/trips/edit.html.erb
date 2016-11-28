@@ -30,7 +30,20 @@
       </div>
       <div class="col-xs-12 col-sm-4 heigth100">
         <!-- Add Activities -->
-        <button class="btn btn-success">Add activity</button>
+          <div class="row new-activities">
+            <div class="col-xs-12 col-sm-6">
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModale">Add Establishment</button>
+              <%= render 'activities/form_new_activity_by_category', activity: @activity, main_categories: @main_categories %>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModal">Add Activity</button>
+              <%= render 'activities/form_new_activity_by_establishment', activity: @activity %>
+            </div>
+          </div>
+
+
         <!-- Map, to do, references, etc... -->
         <div class="map_container" style="width: 100%; height: 50%;">
           <%= render 'shared/maps', map_hash: @map_hash %>
@@ -70,11 +83,13 @@
       });
 
       $( ".accordion" ).accordion({
-        header: "> div > div",
+        header: "> div > div.activity-item-header",
         collapsible: true,
         heightStyle: "content",
         active: false
       });
+
+      // document.getElementById( 'ui' ).style.display = 'none';
 
       function savePosition(event, ui) {
         // check why this ?
@@ -105,19 +120,6 @@
           }
         });
       }
-
-
-      // $( ".activity-item" )
-      //   .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-      //   .find( ".activity-item-header" )
-      //     .addClass( "ui-widget-header ui-corner-all" )
-      //     .prepend( "<span class='ui-icon ui-icon-minusthick activity-item-toggle'></span>");
-
-      // $( ".activity-item-toggle" ).on( "click", function() {
-      //   var icon = $( this );
-      //   icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-      //   icon.closest( ".activity-item" ).find( ".activity-item-content" ).toggle();
-
     });
   </script>
 <% end %>
