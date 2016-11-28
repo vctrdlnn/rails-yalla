@@ -29,10 +29,10 @@ module MapsHashConcern
     def set_day_icon(trip_days)
       icons = {}
       trip_days.each_with_index do |trip, i|
-        icons[trip.id] = ActionController::Base.helpers.asset_path('numbers/v' + (i + 1).to_s + '.png')
+        icons[trip.id] = ActionController::Base.helpers.asset_path('numbers/Picture' + (i + 2).to_s + '.png')
       end
-      icons[0] = ActionController::Base.helpers.asset_path('color/location-color_bookmark-add.svg')
-      icons
+      icons[0] = ActionController::Base.helpers.asset_path('numbers/Picture0.png')
+      return icons
     end
   end
   module ClassMethods

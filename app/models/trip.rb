@@ -5,7 +5,7 @@ class Trip < ApplicationRecord
   has_many :activities, dependent: :destroy
 
   validates :title, presence: true
-  validates :category, presence: true
+  # validates :category, presence: true
   validates :city, presence: true
 
   mount_uploader :photo, PhotoUploader

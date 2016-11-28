@@ -7,11 +7,13 @@ Activity.destroy_all
 MainCategory.destroy_all
 
 
-user_params = {username: "victor01", email: "admin@admin.com", password: "000000", mobile: "0604590059"}
-user = User.create!(user_params)
-user.admin = true
-user.save
+user_params = {username: "admin", email: "admin@admin.com", password: "000000", mobile: "0604590059"}
+user1 = User.create!(user_params)
+user1.admin = true
+user1.save
 
+user_params = {username: "victor01", email: "victor010101@gmail.com", password: "000000", mobile: "0055314810"}
+user2 = User.create!(user_params)
 
 main_categories =
 [
@@ -170,7 +172,7 @@ trips = [
     category: "decouverte",
     city: "Paris",
     country: "France",
-    user: user
+    user: user2
   },
   {
     title: "Budapest par Glamour",
@@ -178,7 +180,7 @@ trips = [
     category: "entre copines",
     city: "Budapest",
     country: "Hongrie",
-    user: user
+    user: user1
   }
 ]
 
@@ -298,7 +300,7 @@ some_activities = [
   establishment: "",
   address: "Luxembourg Gardens, Paris",
   city: "Paris",
-  index: "",
+  index: "1",
   trip: Trip.first
   },
   {
@@ -308,7 +310,7 @@ some_activities = [
   establishment: "",
   address: "Berges de Seine, Paris",
   city: "Paris",
-  index: "",
+  index: "1",
   trip: Trip.first
   },
   {
