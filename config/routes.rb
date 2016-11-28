@@ -16,8 +16,8 @@ Rails.application.routes.draw do
       end
     end
 
-    get 'activities/new_act', to: 'activities#new_act'
-    post 'activities/new_act', to: 'activities#create'
+    # get 'activities/new_act', to: 'activities#new_act'
+    # post 'activities/new_act', to: 'activities#create'
 
     resources :activities do
       member do
