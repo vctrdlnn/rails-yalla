@@ -34,10 +34,20 @@ class TripsController < ApplicationController
   def create
     @trip = current_user.trips.build(trip_params)
     authorize @trip
+    create_trip_days(params["trip"]["nb_days"].to_i, params["trip"]["description"].to_date)
     if @trip.save
       redirect_to @trip, notice: 'Trip was successfully created.'
     else
       render :new
+    end
+  end
+
+  def create_trip_days(nb_days, start_date)
+    day = start_date || Date.today
+    nb_days.times do
+      @trip.trip_days.build(title: day.strftime('%A'), date: day)
+      @trip.save
+      day = day.next
     end
   end
 

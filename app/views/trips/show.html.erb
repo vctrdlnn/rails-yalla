@@ -2,6 +2,9 @@
   <div class="trip_descri text-center">
     <h1><%= @trip.title %></h1>
     <h4>By: <%= @trip.user.username %></h4>
+    <% if policy(@trip).edit? %>
+      <%= link_to "Edit ", edit_trip_path(@trip)%>
+    <% end %>
   </div>
 </div>
     <ul class="nav nav-tabs" role="tablist">

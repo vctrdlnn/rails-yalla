@@ -1,16 +1,100 @@
-<h2>Create a trip now!</h2>
+<!-- WRAPPER -->
+  <div class="wrapper">
 
-<%= simple_form_for @trip, defaults: { input_html: { class: 'form-inline' } } do |f| %>
-  <%= f.input :city, input_html: { maxlength: 20 } %>
-  <%= f.input :country, :as => :hidden%>
-  <%= f.input :title %>
-  <%= f.input :description, :as => :text %>
-  <%= f.input :category %>
-  <%= f.input :photo %>
-  <%= f.input :photo_cache, as: :hidden %>
-  <%= f.button :submit %>
-<% end %>
+    <!-- HOME -->
+    <section class="module module-header bg-dark bg-dark-50" data-background=<%= image_path('cities/city2.jpg') %> >
+      <div class="container">
+        <!-- MODULE TITLE -->
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <h1 class="module-title font-alt align-center">Start a trip now!</h1>
+            <div class="module-subtitle font-inc align-center">
+              Pick a city in the world you'd like to visit and let the simplest travel planner take you exactly where you want to go.
+            </div>
+          </div>
+        </div>
+        <!-- /MODULE TITLE -->
+      </div>
+    </section >
+    <!-- /HOME -->
+
+    <!-- ABOUT -->
+    <section>
+
+      <div class="container">
+
+        <!-- MODULE TITLE -->
+        <div class="row">
+          <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+            <h3>Input city and other info</h3>
+            <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
+              <%= f.input :nb_days, required: true, collection: 1..3, selected: 3, label: 'Number of days' %>
+              <%= f.input :city %>
+              <%= f.input :title %>
+              <%= f.input :category,
+                as: :radio_buttons,
+                item_wrapper_class: 'radio-inline',
+                collection: ["Lovers", "Business", "Backpacker", "Friends", "Bachelorette", "Bachelor", "Family", "Cultural"]
+                %>
+              <h5>Optional: </h5>
+              <%= f.input :country, :as => :hidden %>
+              <%= f.input :start_date %>
+              <%= f.input :photo, label: "Put a nice picture of the city" %>
+              <%= f.input :photo_cache, as: :hidden %>
+              <%= f.input :description, :as => :text %>
+              <%= f.button :submit %>
+            <% end %>
+          </div>
+        </div>
+        <!-- /MODULE TITLE -->
+      </div>
+    </section>
+  </div>
+
 
 
 <!-- https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=62b4d043cc35b97fb3e86b4fa9330f71&tags=street%2C+exterieur%2C+hdr&text=Londres&license=3%2C4%2C5%2C6%2C7&sort=interestingness-desc&safe_search=1&content_type=1&format=json&auth_token=72157675491863902-8690853b197fec9e&api_sig=708692d91ad0986b4a0b715547de09f2
  -->
+
+<% content_for (:js) do %>
+  <script>
+    $( function() {
+
+      $( "#trip_start_date" ).datepicker({
+        showButtonPanel: true,
+        dateFormat: "d M, y"
+      });
+      var today = new Date();
+      var dateFormat = "d M, yy",
+        from = $( "#from" )
+          .datepicker({
+            defaultDate: today + 7,
+            changeMonth: true,
+            numberOfMonths: 1
+          })
+          .on( "change", function() {
+            to.datepicker( "option", "minDate", getDate( this ) );
+          }),
+        to = $( "#to" ).datepicker({
+          defaultDate:  "+1w",
+          changeMonth: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          from.datepicker( "option", "maxDate", getDate( this ) );
+        });
+
+      function getDate( element ) {
+        var date;
+        try {
+          date = $.datepicker.parseDate( dateFormat, element.value );
+        } catch( error ) {
+          date = null;
+        }
+
+        return date;
+
+      }
+    } );
+  </script>
+<% end %>
