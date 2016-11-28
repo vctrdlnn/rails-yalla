@@ -7,7 +7,7 @@
   </div>
   <div class="activity-item-content content-box-text">
     <%= link_to edit_activity_path(activity) do %>
-      <strong><%= " @ " + activity.establishment %></strong>
+      <strong><%= activity.establishment %></strong>
       <%= activity.short_description(50) %>
     <% end %>
     <%= link_to edit_activity_path(activity) do %>

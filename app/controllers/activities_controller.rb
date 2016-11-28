@@ -35,7 +35,7 @@ class ActivitiesController < ApplicationController
     @activity = current_user.activities.build(activity_params)
     @activity.index = 1 # TODO : REMOVE THIS
     authorize @activity
-    @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
+    set_title if @activity.title.nil?
     if @activity.save
       redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
     else
@@ -63,6 +63,13 @@ class ActivitiesController < ApplicationController
   end
 
   private
+  def set_title
+      if @activity.establishment.nil?
+        @activity.title = @activity.main_category.title + " time around " + @activity.address
+      else
+        @activity.title = "Visit of " + @activity.establishment
+      end
+  end
 
   def next_activities(activity)
     if activity.trip_day.nil?

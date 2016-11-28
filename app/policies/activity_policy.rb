@@ -35,7 +35,7 @@ class ActivityPolicy < ApplicationPolicy
     # TODO: seul le user peut modifier le resto
     # record => @trip
     # user => current_user
-    user.admin || record.trip.user == user
+    user.admin || record.user == user || record.trip.user == user
   end
 
 end

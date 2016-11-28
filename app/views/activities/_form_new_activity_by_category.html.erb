@@ -13,20 +13,20 @@
           <%= f.label :main_category %>
           <div class="row">
             <% main_categories.each do |main_category| %>
-              <div class="col-xs-2">
-                <div class="card-category">
-                  <label class="form-check-inline category-logo">
-                    <input class="form-check-input" type="radio" name="radio" id="inlineRadio1" value="yes">
-                    <%= image_tag main_category.icon, :style => "width: 60px" %>
-                    <%= main_category.title %>
-                  </label>
-                </div>
+              <div id="cat-<%= main_category.id.to_s %>" class="col-xs-2 card-category">
+                <label class="form-check-inline category-logo">
+                  <input class="form-check-input" type="radio" name="radio" id="inlineRadio1" value="yes">
+                  <%= image_tag main_category.icon, :style => "height: 60px" %>
+                  <%= main_category.title %>
+                </label>
               </div>
             <% end %>
           </div>
           <%= f.input :address %>
-          <%= f.input :establishment, as: :hidden, input_html: { id: 'hidden_establishment' } %>
+          <%= f.input :main_category_id, as: :hidden, required: true %>
           <%= f.input :city, as: :hidden %>
+          <%= f.input :google_category, as: :hidden %>
+          <%= f.input :google_place_identifier, as: :hidden %>
           <%= f.button :submit %>
         <% end %>
       </div>
@@ -36,3 +36,11 @@
     </div>
   </div>
 </div>
+
+<% content_for (:js) do %>
+  <script>
+    $('.card-category').on('click', function(event) {
+      $('#activity_main_category_id').val(this.id.split("-").pop());
+    });
+  </script>
+<% end %>

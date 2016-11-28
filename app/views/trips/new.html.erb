@@ -37,9 +37,9 @@
                 collection: ["Lovers", "Business", "Backpacker", "Friends", "Bachelorette", "Bachelor", "Family", "Cultural"]
                 %>
               <h5>Optional: </h5>
-              <%= f.input :country, :as => :hidden %>
               <%= f.input :start_date %>
               <%= f.input :photo, label: "Put a nice picture of the city" %>
+              <%= f.input :country, :as => :hidden %>
               <%= f.input :photo_cache, as: :hidden %>
               <%= f.input :description, :as => :text %>
               <%= f.button :submit %>
@@ -62,39 +62,9 @@
 
       $( "#trip_start_date" ).datepicker({
         showButtonPanel: true,
-        dateFormat: "d M, y"
+        dateFormat: "d M, yy"
       });
-      var today = new Date();
-      var dateFormat = "d M, yy",
-        from = $( "#from" )
-          .datepicker({
-            defaultDate: today + 7,
-            changeMonth: true,
-            numberOfMonths: 1
-          })
-          .on( "change", function() {
-            to.datepicker( "option", "minDate", getDate( this ) );
-          }),
-        to = $( "#to" ).datepicker({
-          defaultDate:  "+1w",
-          changeMonth: true,
-          numberOfMonths: 1
-        })
-        .on( "change", function() {
-          from.datepicker( "option", "maxDate", getDate( this ) );
-        });
 
-      function getDate( element ) {
-        var date;
-        try {
-          date = $.datepicker.parseDate( dateFormat, element.value );
-        } catch( error ) {
-          date = null;
-        }
-
-        return date;
-
-      }
     } );
   </script>
 <% end %>

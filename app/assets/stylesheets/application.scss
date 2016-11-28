@@ -8,6 +8,7 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "bootstrap-datetimepicker";
+@import "jquery-ui.css";
 
 // Your CSS
 @import "body";
@@ -25,9 +26,3 @@
 @import "custom";
 @import "override_theme";
 @import "notifIt";
-
-/*
- *= require jquery-ui
- */
-
-
