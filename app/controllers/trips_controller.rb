@@ -21,7 +21,7 @@ class TripsController < ApplicationController
     @disable_footer = true
     @activities = @trip.activities
     @trip_days = @trip.trip_days
-    @map_hash = set_map_hash(@activities)
+    @map_hash = set_map_hash(@activities) if @activities.length > 0
   end
 
   def create
