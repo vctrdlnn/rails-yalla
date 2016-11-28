@@ -1,9 +1,11 @@
 <!-- PORTFOLIO ITEM -->
-<div id="act-<%= activity.id %>" class="activity-item illustration webdesign brd-red">
+<div id="act-<%= activity.id %>" class="activity-item illustration webdesign <%= 'bg-day'+ [activity.index, 10].min.to_s %>">
   <div class="activity-item-header">
-    <h3 class="work-title font-alt"><%= activity.title %><%= "(#{activity.index})" %></h3>
+    <div class="content-box-title">
+      <%= activity.title %><%= "(#{activity.index})" %>
+    </div>
   </div>
-  <div class="activity-item-content work-descr">
+  <div class="activity-item-content content-box-text">
     <%= link_to edit_activity_path(activity) do %>
       <strong><%= " @ " + activity.establishment %></strong>
       <%= activity.short_description(50) %>

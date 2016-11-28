@@ -5,7 +5,7 @@
   <!-- /PRELOADER -->
 
   <!-- NAVIGATION -->
-  <nav class="navbar navbar-custom <%= "navbar-fixed-top navbar-transparent" if (controller_name == "pages" || "show") %><%= "navbar-custom-black navbar-transparent" if (controller_name != "home") %>" role="navigation">
+  <nav class="navbar navbar-custom <%= "navbar-fixed-top navbar-transparent" if (controller_name == "pages" || !(action_name == "edit" || controller_name == "registrations")) %>" role="navigation">
 
       <div class="container">
         <div class="navbar-header">

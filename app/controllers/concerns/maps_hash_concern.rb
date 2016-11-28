@@ -10,9 +10,9 @@ module MapsHashConcern
       # ex: validates Rails ou perso
       # ex: default_scope { where(approved: true)}
       # ex: MIN_QUANTITY = 1
-    def set_map_hash(activities)
+    def set_map_hash(activities, trip_hash = {})
       map_hash = []
-      trip_hash = set_day_icon(activities.first.trip.trip_days)
+      trip_hash = set_day_icon(activities.first.trip.trip_days) if trip_hash.nil?
       activities.where.not(lat: nil, lon: nil).each do |activity|
 
         map_hash << {
@@ -29,9 +29,9 @@ module MapsHashConcern
     def set_day_icon(trip_days)
       icons = {}
       trip_days.each_with_index do |trip, i|
-        icons[trip.id] = ActionController::Base.helpers.asset_path('numbers/Picture' + (i + 2).to_s + '.png')
+        icons[trip.id] = ActionController::Base.helpers.asset_path('numbers/num' + (i + 1).to_s + '.png')
       end
-      icons[0] = ActionController::Base.helpers.asset_path('numbers/Picture0.png')
+      icons[0] = ActionController::Base.helpers.asset_path('numbers/num6.png')
       return icons
     end
   end
