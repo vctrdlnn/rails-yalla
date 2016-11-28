@@ -1,5 +1,18 @@
 <%= simple_form_for (@activity) do |f| %>
-  <%= f.association :main_category %>
+  <%= f.label :main_category %>
+  <div class="row">
+    <% @main_categories.each do |main_category| %>
+      <div class="col-xs-2">
+        <div class="card-category">
+          <label class="form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" id="inlineRadio1" value="yes">
+            <%= image_tag main_category.icon, :style => "width: 60px" %>
+            <%= main_category.title %>
+          </label>
+        </div>
+      </div>
+    <% end %>
+  </div>
   <%= f.input :address %>
   <%= f.input :establishment, as: :hidden %>
   <%= f.input :city, as: :hidden %>

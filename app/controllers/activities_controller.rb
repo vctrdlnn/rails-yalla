@@ -20,16 +20,18 @@ class ActivitiesController < ApplicationController
   end
 
   def new_act
+    @main_categories = MainCategory.all
     @activity = Activity.new
     authorize @activity
   end
 
   def edit
+    @main_categories = MainCategory.all
   end
 
   def create
-    # @activity = @trip.activities.build(activity_params)
-    @activity = Activity.new(activity_params)
+    @activity = current_user.activities.build(activity_params)
+    authorize @activity
     @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
     if @activity.save
       redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
