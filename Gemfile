@@ -63,3 +63,6 @@ gem 'devise-i18n'
 # admins
 gem 'remotipart', github: 'mshibuya/remotipart'
 gem 'rails_admin', '>= 1.0.0.rc'
+
+# images
+gem 'flickraw'

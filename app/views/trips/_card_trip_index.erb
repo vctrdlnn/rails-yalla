@@ -2,15 +2,20 @@
 <div class="col-sm-6 col-md-3 col-lg-3">
   <div class="post">
     <div class="post-thumbnail">
-      <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
-      <%= link_to "", edit_trip_path(trip), {:class=>"card-trip-link"} %>
+      <%= link_to trip_path(trip) do %>
+        <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
+      <% end %>
     </div>
     <div class="post-header">
-      <%= link_to edit_trip_path(trip), {:class=>""} do %>
+      <%= link_to trip_path(trip), {:class=>""} do %>
         <h2 class="post-title font-alt"><%= trip.title %></h2>
       <% end %>
       <div class="post-meta font-inc">
-        By <a href="#">by <%= trip.user.name %></a> | <%= trip.created_at.strftime('%d %^b %y') %>
+        By <%= link_to trip.user.name, trip %>
+         | <%= trip.created_at.strftime('%d %^b %y') %>
+        <% if policy(trip).edit? %>
+           | <%= link_to "Edit ", edit_trip_path(trip)%>
+        <% end %>
       </div>
     </div>
     <div class="post-entry">

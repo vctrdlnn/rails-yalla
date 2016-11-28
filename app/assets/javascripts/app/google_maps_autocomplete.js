@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  // Code for 'activity address'
   var activity_address = $('#activity_address').get(0);
 
   if (activity_address) {
@@ -18,6 +19,19 @@ $(document).ready(function() {
     var autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'] });
     google.maps.event.addListener(autocomplete, 'place_changed', onActivityPlaceChanged);
     google.maps.event.addDomListener(activity_establishment, 'keydown', function(e) {
+      if (e.keyCode == 13) {
+        e.preventDefault(); // Do not submit the form on Enter.
+      }
+    });
+  }
+
+  // Code for 'trip city'
+  var trip_city = $('#trip_city').get(0);
+
+  if (trip_city) {
+    var autocomplete = new google.maps.places.Autocomplete(trip_city, { types: ['(cities)'] });
+    google.maps.event.addListener(autocomplete, 'place_changed', onTripPlaceChanged);
+    google.maps.event.addDomListener(trip_city, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
       }
@@ -48,6 +62,17 @@ function onActivityPlaceChanged() {
   $('#activity_main_category').val(components.type);
 }
 
+function onTripPlaceChanged() {
+  var place = this.getPlace();
+  var components = getAddressComponents(place);
+
+  $('#trip_city').trigger('blur').val(components.city);
+  $('#trip_country').val(components.country_code);
+  if($('#trip_title').val() == "") {
+    $('#trip_title').val("Week end in " + components.formatted_address);
+  }
+}
+
 function getAddressComponents(place) {
   // If you want lat/lng, you can look at:
   // - place.geometry.location.lat()
@@ -61,7 +86,7 @@ function getAddressComponents(place) {
   var country_code = null;
   var name = null;
   var formatted_address = null;
-  // console.log(place);
+  console.log(place);
   // debugger
   for (var i in place.address_components) {
     var component = place.address_components[i];
@@ -77,6 +102,7 @@ function getAddressComponents(place) {
         city = component.long_name;
       } else if (type == 'country') {
         country_code = component.short_name;
+        country = component.long_name
       }
     }
   }
@@ -89,6 +115,7 @@ function getAddressComponents(place) {
     zip_code: zip_code,
     city: city,
     country_code: country_code,
+    country: country,
     type: type,
     name: name,
     formatted_address: formatted_address
