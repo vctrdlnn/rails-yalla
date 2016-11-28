@@ -91,7 +91,8 @@ class ActivitiesController < ApplicationController
     params.require(:activity).permit(
       :title, :description, :main_category_id,
       :establishment, :city, :address,
-      :lon, :lat, :index, :trip_id, :trip_day_id
+      :lon, :lat, :index, :trip_id, :trip_day_id,
+      :google_category, :google_place_identifier
     )
   end
 

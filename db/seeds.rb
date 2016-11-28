@@ -23,8 +23,8 @@ main_categories =
     color: "theme1"
   },
   {
-    title: "Food & Beverage",
-    icon: "categories/food.png",
+    title: "Restaurants",
+    icon: "categories/restaurants.png",
     color: "theme2"
   },
   {
@@ -38,8 +38,8 @@ main_categories =
     color: "theme4"
   },
   {
-    title: "Night",
-    icon: "categories/night.png",
+    title: "Bar & Nightlife",
+    icon: "categories/bar & nightlife.png",
     color: "theme5"
   },
   {
@@ -47,10 +47,50 @@ main_categories =
     icon: "categories/others.png",
     color: "theme6"
   },
+  # {
+  #   # title: "Sport",
+  #   # icon: "categories/sport.png",
+  #   # color: "theme7"
+  # },
   {
-    title: "Sport",
-    icon: "categories/sport.png",
-    color: "theme7"
+    title: "Communication",
+    icon: "categories/communication.png",
+    color: "theme6"
+  },
+  {
+    title: "Best of City",
+    icon: "categories/Best of City.png",
+    color: "theme6"
+  },
+  {
+    title: "Hotels",
+    icon: "categories/hotels.png",
+    color: "theme6"
+  },
+  {
+    title: "Kids",
+    icon: "categories/kids.png",
+    color: "theme6"
+  },
+  {
+    title: "Outdoor",
+    icon: "categories/outdoor.png",
+    color: "theme6"
+  },
+  {
+    title: "Shopping",
+    icon: "categories/shopping.png",
+    color: "theme6"
+  },
+  {
+    title: "Transportation",
+    icon: "categories/transportation.png",
+    color: "theme6"
+  },
+  {
+    title: "Visits",
+    icon: "categories/visits.png",
+    color: "theme6"
   }
 ]
 
@@ -61,15 +101,15 @@ end
 
 categories =
 [
-{ main_category_id: MainCategory.find_by(title:"Food & Beverage"), google_title: "cafe", title: "Cafe"},
-{ main_category_id: MainCategory.find_by(title:"Food & Beverage"), google_title: "bakery", title: "Bakery"},
-{ main_category_id: MainCategory.find_by(title:"Food & Beverage"), google_title: "grocery_or_supermarket(deprecated)", title: "Grocery Or Supermarket"},
-{ main_category_id: MainCategory.find_by(title:"Food & Beverage"), google_title: "food (deprecated)", title: "Food "},
-{ main_category_id: MainCategory.find_by(title:"Food & Beverage"), google_title: "meal_delivery", title: "Meal Delivery"},
-{ main_category_id: MainCategory.find_by(title:"Food & Beverage"), google_title: "meal_takeaway", title: "Meal Takeaway"},
-{ main_category_id: MainCategory.find_by(title:"Food & Beverage"), google_title: "restaurant", title: "Restaurant"},
-{ main_category_id: MainCategory.find_by(title:"Night"), google_title: "bar", title: "Bar"},
-{ main_category_id: MainCategory.find_by(title:"Night"), google_title: "night_club", title: "Night Club"},
+{ main_category_id: MainCategory.find_by(title:"Restaurants"), google_title: "cafe", title: "Cafe"},
+{ main_category_id: MainCategory.find_by(title:"Restaurants"), google_title: "bakery", title: "Bakery"},
+{ main_category_id: MainCategory.find_by(title:"Restaurants"), google_title: "grocery_or_supermarket(deprecated)", title: "Grocery Or Supermarket"},
+{ main_category_id: MainCategory.find_by(title:"Restaurants"), google_title: "food (deprecated)", title: "Food "},
+{ main_category_id: MainCategory.find_by(title:"Restaurants"), google_title: "meal_delivery", title: "Meal Delivery"},
+{ main_category_id: MainCategory.find_by(title:"Restaurants"), google_title: "meal_takeaway", title: "Meal Takeaway"},
+{ main_category_id: MainCategory.find_by(title:"Restaurants"), google_title: "restaurant", title: "Restaurant"},
+{ main_category_id: MainCategory.find_by(title:"Bar & Nightlife"), google_title: "bar", title: "Bar"},
+{ main_category_id: MainCategory.find_by(title:"Bar & Nightlife"), google_title: "night_club", title: "Night Club"},
 { main_category_id: MainCategory.find_by(title:"Nature"), google_title: "aquarium", title: "Aquarium"},
 { main_category_id: MainCategory.find_by(title:"Nature"), google_title: "amusement_park", title: "Amusement Park"},
 { main_category_id: MainCategory.find_by(title:"Nature"), google_title: "florist", title: "Florist"},

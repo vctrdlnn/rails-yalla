@@ -11,7 +11,7 @@
     <ul class="timeline">
       <% tripday.activities.each_with_index do |activity, index| %>
         <li class="<%= 'timeline-inverted' if index % 2 != 0 %>">
-          <div class="timeline-badge"><%= image_tag("categories/#{activity.main_category.title.downcase}.png", class: 'icones') %></i></div>
+          <div class="timeline-badge"><%= image_tag(activity.main_category.icon, class: 'icones') %></div>
           <div class="timeline-panel">
             <div class="timeline-heading">
               <div class="row">
