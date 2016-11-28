@@ -3,8 +3,8 @@ $(document).ready(function() {
   var activity_address = $('#activity_address').get(0);
 
   if (activity_address) {
-    var autocomplete = new google.maps.places.Autocomplete(activity_address, { types: ['geocode'] });
-    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+    var address_autocomplete = new google.maps.places.Autocomplete(activity_address, { types: ['geocode'] });
+    google.maps.event.addListener(address_autocomplete, 'place_changed', onPlaceChanged);
     google.maps.event.addDomListener(activity_address, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
@@ -16,8 +16,8 @@ $(document).ready(function() {
   var activity_establishment = $('#activity_establishment').get(0);
 
   if (activity_establishment) {
-    var autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'] });
-    google.maps.event.addListener(autocomplete, 'place_changed', onActivityPlaceChanged);
+    var establishment_autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'] });
+    google.maps.event.addListener(establishment_autocomplete, 'place_changed', onActivityPlaceChanged);
     google.maps.event.addDomListener(activity_establishment, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
