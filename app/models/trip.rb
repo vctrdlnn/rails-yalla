@@ -4,7 +4,7 @@ class Trip < ApplicationRecord
   has_many :trip_days, dependent: :destroy
   has_many :activities, dependent: :destroy
 
-  attr_accessor :nb_days, :start_date, :end_date
+  attr_accessor :nb_days, :start_date
 
   validates :title, presence: true
   # validates :category, presence: true

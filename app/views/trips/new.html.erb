@@ -27,8 +27,8 @@
         <div class="row">
           <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
             <h3>Input city and other info</h3>
-            <%= simple_form_for @trip, defaults: { input_html: { class: 'form-inline' } } do |f| %>
-              <%= f.input :nb_days, required: true, collection: 1..3, selected: 1, label: 'Number of days' %>
+            <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
+              <%= f.input :nb_days, required: true, collection: 1..3, selected: 3, label: 'Number of days' %>
               <%= f.input :city %>
               <%= f.input :title %>
               <%= f.input :category,
@@ -36,7 +36,9 @@
                 item_wrapper_class: 'radio-inline',
                 collection: ["Lovers", "Business", "Backpacker", "Friends", "Bachelorette", "Bachelor", "Family", "Cultural"]
                 %>
-              <%= f.input :country, :as => :hidden%>
+              <h5>Optional: </h5>
+              <%= f.input :country, :as => :hidden %>
+              <%= f.input :start_date %>
               <%= f.input :photo, label: "Put a nice picture of the city" %>
               <%= f.input :photo_cache, as: :hidden %>
               <%= f.input :description, :as => :text %>
@@ -53,3 +55,46 @@
 
 <!-- https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=62b4d043cc35b97fb3e86b4fa9330f71&tags=street%2C+exterieur%2C+hdr&text=Londres&license=3%2C4%2C5%2C6%2C7&sort=interestingness-desc&safe_search=1&content_type=1&format=json&auth_token=72157675491863902-8690853b197fec9e&api_sig=708692d91ad0986b4a0b715547de09f2
  -->
+
+<% content_for (:js) do %>
+  <script>
+    $( function() {
+
+      $( "#trip_start_date" ).datepicker({
+        showButtonPanel: true,
+        dateFormat: "d M, y"
+      });
+      var today = new Date();
+      var dateFormat = "d M, yy",
+        from = $( "#from" )
+          .datepicker({
+            defaultDate: today + 7,
+            changeMonth: true,
+            numberOfMonths: 1
+          })
+          .on( "change", function() {
+            to.datepicker( "option", "minDate", getDate( this ) );
+          }),
+        to = $( "#to" ).datepicker({
+          defaultDate:  "+1w",
+          changeMonth: true,
+          numberOfMonths: 1
+        })
+        .on( "change", function() {
+          from.datepicker( "option", "maxDate", getDate( this ) );
+        });
+
+      function getDate( element ) {
+        var date;
+        try {
+          date = $.datepicker.parseDate( dateFormat, element.value );
+        } catch( error ) {
+          date = null;
+        }
+
+        return date;
+
+      }
+    } );
+  </script>
+<% end %>
