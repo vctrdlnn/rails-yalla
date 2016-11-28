@@ -66,3 +66,7 @@ gem 'rails_admin', '>= 1.0.0.rc'
 
 # images
 gem 'flickraw'
+
+#pdf
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

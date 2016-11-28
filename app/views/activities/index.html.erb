@@ -4,8 +4,8 @@
 
 <div class="padded"></div>
 <div class="container text-center">
-<%= link_to 'Add Activity', activities_new_act_path, class: 'btn btn-g' %>
-<%= link_to 'Add Establishment', new_activity_path, class: 'btn btn-g' %>
+<%= render 'form_new_activity_by_category', activity: @activity, main_categories: @main_categories %>
+<%= render 'form_new_activity_by_establishment', activity: @activity %>
 <div class="mini-padded"></div>
   <div class="row">
     <% @activities.each do |activity| %>

@@ -10,6 +10,12 @@ class TripsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "show"   # Excluding ".pdf" extension.
+      end
+    end
   end
 
   def new

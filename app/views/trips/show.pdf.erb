@@ -1,22 +1,32 @@
-<div role="tabpanel"  class="row tab-pane active" id="<%= tripday.title.downcase.gsub(' ', '_') %>">
+<%= wicked_pdf_stylesheet_link_tag "pdf" %>
+
+<div class="text-center">
+    <h1><%= @trip.title %></h1>
+    <h4>By: <%= @trip.user.username %></h4>
+</div>
+<div class="mini-padded"></div>
+ <%= wicked_pdf_image_tag('activity.jpg') %>
+  <!--  la petite map -->
+  <div class="mini-padded"></div>
+
+<% @trip.trip_days.each_with_index do |tripday, index| %>
+  <div role="tabpanel"  class="row tab-pane <%= 'active' if index == 0 %>" id="<%= tripday.title.downcase.gsub(' ', '_') %>">
 <div class="text-center">
   <h3><%= tripday.title %></h3>
   <p>Date: <%= tripday.date %></p>
 </div>
-  <div class="col-xs-12 col-lg-4">
-   <%= image_tag('googlemap.gif', :class => "img_preview" ) %>
-  </div>
+
 
   <div class="col-xs-12 col-lg-8">
     <ul class="timeline">
       <% tripday.activities.each_with_index do |activity, index| %>
         <li class="<%= 'timeline-inverted' if index % 2 != 0 %>">
-          <div class="timeline-badge"><%= image_tag(activity.main_category.icon, class: 'icones') %></div>
+          <div class="timeline-badge"><%= wicked_pdf_image_tag(activity.main_category.icon, class: 'icones') %></div>
             <div class="timeline-panel">
               <div class="timeline-heading">
                 <div class="row">
                   <div class="col-xs-12 col-lg-6">
-                    <%= image_tag('activity.jpg') %>
+                    <%= wicked_pdf_image_tag('activity.jpg') %>
                   </div>
                   <div class="col-xs-12 col-lg-6">
                     <h4 class="timeline-title"><b><%= activity.title %></b></h4>
@@ -34,5 +44,10 @@
     </ul>
   </div>
 </div>
+  <% end %>
+
+
+
+
 
 

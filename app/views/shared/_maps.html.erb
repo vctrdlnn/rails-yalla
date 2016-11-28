@@ -59,9 +59,12 @@
             position: position,
             map: map,
             label: String(position.label),
-            icon: image,
             animation: google.maps.Animation.DROP
           });
+
+          if (image.url) {
+            marker.icon = icon.image;
+          }
           // create infowindow
           var infowindow = new google.maps.InfoWindow({
             content: position.infowindow

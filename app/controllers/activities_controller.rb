@@ -8,6 +8,8 @@ class ActivitiesController < ApplicationController
     @activities = Activity.where.not(lat: nil, lon: nil)
     @activities = policy_scope(Activity)
     @hash = set_map_hash(@activities)
+    @activity = Activity.new
+    @main_categories = MainCategory.all
   end
 
   def show
@@ -19,11 +21,11 @@ class ActivitiesController < ApplicationController
     authorize @activity
   end
 
-  def new_act
-    @main_categories = MainCategory.all
-    @activity = Activity.new
-    authorize @activity
-  end
+  # def new_act
+  #   @main_categories = MainCategory.all
+  #   @activity = Activity.new
+  #   authorize @activity
+  # end
 
   def edit
     @main_categories = MainCategory.all
@@ -31,6 +33,7 @@ class ActivitiesController < ApplicationController
 
   def create
     @activity = current_user.activities.build(activity_params)
+    @activity.index = 1 # TODO : REMOVE THIS
     authorize @activity
     @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
     if @activity.save

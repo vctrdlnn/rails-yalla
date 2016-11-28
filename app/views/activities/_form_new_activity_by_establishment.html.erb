@@ -1,0 +1,25 @@
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModale">Add Establishment</button>
+<!-- Modal -->
+<div id="myModale" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add your activity!</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for (activity) do |f| %>
+          <%= f.input :establishment %>
+          <%= f.input :address, as: :hidden, input_html: { id: 'hidden_address' } %>
+          <%= f.input :city, as: :hidden %>
+          <%= f.input :main_category, as: :hidden %>
+          <%= f.button :submit %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
