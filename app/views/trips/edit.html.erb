@@ -1,13 +1,11 @@
 <div class="trip-edit-wrapper">
-  <div class="container-fuid guides-index heigth100">
+  <div class="container-fuid heigth100">
     <div class="row-fluid text-center heigth100">
       <div class="col-xs-12 col-sm-2 heigth100">
       <!-- Activities not assigned + Add new activity module -->
-        les activites non assignees
-          <button class="btn btn-success">Add activity</button>
-
-        <div id="grid-0" class="activity-grid works-grid works-grid-gut works-hover-w sortable heigth100 brd-grey">
-
+        <p>Unassigned</p>
+        <div id="grid-0" class="activity-grid works-grid works-grid-gut works-hover-w sortable accordion heigth100 brd-grey">
+          <p>(<%= image_tag @trip_icons[0] %>)</p>
           <% @activities.where(trip_day: nil).order(index: :asc).each do |act| %>
             <%= render 'activities/card_activity_index', activity: act %>
           <% end %>
@@ -16,12 +14,12 @@
 
       <div class="col-xs-12 col-sm-6 heigth100">
       <!-- Trip Days and Itiniraries -->
-        les jours
+        <p>Trip day by day</p>
         <div class="row width100 inblock brd-grey heigth100">
           <% @trip_days.each do |td| %>
-            <div class="col-xs-4 inblock trip-day brd-red heigth100">
-              <%= td.title %>
-              <div id="grid-<%= td.id %>" class="activity-grid works-grid works-grid-gut works-hover-w sortable heigth100 brd-grey">
+            <div class="col-xs-4 inblock trip-day heigth100">
+              <div id="grid-<%= td.id %>" class="activity-grid works-grid works-grid-gut works-hover-w sortable accordion heigth100">
+              <p><%= td.title %>(<%= image_tag @trip_icons[td.id] %>)</p>
                 <% @activities.where(trip_day: td).order(index: :asc).each do |act| %>
                   <%= render 'activities/card_activity_index', activity: act %>
                 <% end %>
@@ -31,9 +29,15 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-4 heigth100">
-      <!-- Map, to do, references, etc... -->
+        <!-- Add Activities -->
+        <button class="btn btn-success">Add activity</button>
+        <!-- Map, to do, references, etc... -->
         <div class="map_container" style="width: 100%; height: 50%;">
           <%= render 'shared/maps', map_hash: @map_hash %>
+        </div>
+        <!-- Description of the trip to edit -->
+        <div class="other_container" style="width: 100%; height: 30%;">
+          <%= @trip.description %>
         </div>
       </div>
     </div>
@@ -63,6 +67,13 @@
           stop: function( event, ui ) {
             savePosition(event, ui)
           }
+      });
+
+      $( ".accordion" ).accordion({
+        header: "> div > div",
+        collapsible: true,
+        heightStyle: "content",
+        active: false
       });
 
       function savePosition(event, ui) {
