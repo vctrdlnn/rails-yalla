@@ -3,7 +3,9 @@ class ApplicationRecord < ActiveRecord::Base
 
 
   def short_description(nb)
-    if description.length > nb
+    if description.nil?
+      '...'
+    elsif description.length > nb
       truncate(description, nb, elided = ' ...')
     else
       description
