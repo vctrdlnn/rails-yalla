@@ -27,3 +27,7 @@
 //@import "notifIt";
 
 
+.timeline-panel,
+.timeline-inverted { page-break-inside: avoid; }
+
+.tab-pane { page-break-before: always; }
