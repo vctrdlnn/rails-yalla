@@ -9,6 +9,10 @@ class ActivityPolicy < ApplicationPolicy
     true # tous les users peuvent creer un trip
   end
 
+  def new_act?
+    create?
+  end
+
   def show?
     true # tous les users peuvent creer un trip
   end

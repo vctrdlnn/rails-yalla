@@ -16,10 +16,12 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity = Activity.new
+    authorize @activity
   end
 
   def new_act
     @activity = Activity.new
+    authorize @activity
   end
 
   def edit
@@ -92,7 +94,7 @@ class ActivitiesController < ApplicationController
       :title, :description, :main_category_id,
       :establishment, :city, :address,
       :lon, :lat, :index, :trip_id, :trip_day_id,
-      :google_category, :google_place_identifier
+      :google_category, :google_place_identifier, :user_id
     )
   end
 
