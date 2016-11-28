@@ -8,4 +8,6 @@ class Trip < ApplicationRecord
   validates :category, presence: true
   validates :city, presence: true
 
+  mount_uploader :photo, PhotoUploader
+
 end

@@ -1,5 +1,6 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
+  include MapsHashConcern
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -16,8 +17,8 @@ class TripsController < ApplicationController
   def edit
     @disable_footer = true
     @activities = @trip.activities
-    @activities_unasigned = @activities.where(trip_day: nil)
     @trip_days = @trip.trip_days
+    @map_hash = set_map_hash(@activities)
   end
 
   def create
