@@ -1,2 +1,11 @@
-<h1>Trips#new</h1>
-<p>Find me in app/views/trips/new.html.erb</p>
+<h2>Create a trip now!</h2>
+
+<%= simple_form_for @trip, defaults: { input_html: { class: 'form-inline' } } do |f| %>
+  <%= f.input :city, input_html: { maxlength: 20 } %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :category %>
+  <%= f.input :photo %>
+  <%= f.input :photo_cache, as: :hidden %>
+  <%= f.button :submit %>
+<% end %>
