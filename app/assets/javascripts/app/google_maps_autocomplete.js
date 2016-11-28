@@ -53,8 +53,8 @@ function onPlaceChanged() {
 
 function onActivityPlaceChanged() {
   var place = this.getPlace();
-
   var components = getAddressComponents(place);
+
   $('#activity_establishment').trigger('blur').val(components.name);
   $('#activity_address').val(components.formatted_address);
   $('#activity_city').val(components.city);

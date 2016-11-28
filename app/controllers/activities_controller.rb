@@ -16,18 +16,22 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity = Activity.new
+    authorize @activity
   end
 
   def new_act
+    @main_categories = MainCategory.all
     @activity = Activity.new
+    authorize @activity
   end
 
   def edit
+    @main_categories = MainCategory.all
   end
 
   def create
-    # @activity = @trip.activities.build(activity_params)
-    @activity = Activity.new(activity_params)
+    @activity = current_user.activities.build(activity_params)
+    authorize @activity
     @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
     if @activity.save
       redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
@@ -92,7 +96,7 @@ class ActivitiesController < ApplicationController
       :title, :description, :main_category_id,
       :establishment, :city, :address,
       :lon, :lat, :index, :trip_id, :trip_day_id,
-      :google_category, :google_place_identifier
+      :google_category, :google_place_identifier, :user_id
     )
   end
 
