@@ -1,0 +1,10 @@
+if (window['google'] != undefined && window['google']['loader'] != undefined) {
+if (!window['google']['visualization']) {
+window['google']['visualization'] = {};
+google.visualization.Version = '1.0';
+google.visualization.JSHash = '1195ca6324d5ce101c2f520f3c62c843';
+google.visualization.LoadArgs = 'file\x3dvisualization\x26v\x3d1\x26packages\x3dcorechart%2Cline%2Csankey%2Ctable%2Ctimeline\x26async\x3d2';
+}
+google.loader.writeLoadTag("css", google.loader.ServiceBase + "/api/visualization/1.0/1195ca6324d5ce101c2f520f3c62c843/ui+fr,table+fr.css", true);
+google.loader.writeLoadTag("script", google.loader.ServiceBase + "/api/visualization/1.0/1195ca6324d5ce101c2f520f3c62c843/d3,d3sankey,webfontloader,dygraph,format+fr,default+fr,ui+fr,timeline+fr,line+fr,sankey+fr,table+fr,corechart+fr.I.js", true);
+}
