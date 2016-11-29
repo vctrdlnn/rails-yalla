@@ -1,0 +1,9 @@
+<%= simple_form_for [trip, activity], remote: true do |f| %>
+  <%= f.input :establishment %>
+  <%= f.input :address, as: :hidden, input_html: { id: 'activity_est_address' } %>
+  <%= f.input :city, as: :hidden, input_html: { id: 'activity_est_city' } %>
+  <%= f.input :google_category, as: :hidden, input_html: { id: 'activity_est_google_category' } %>
+  <%= f.input :google_place_identifier, as: :hidden, input_html: { id: 'activity_est_google_place_identifier' } %>
+  <%= f.input :trip_id, as: :hidden, input_html: { id: 'activity_est_trip_id'} %>
+  <%= f.button :submit %>
+<% end %>

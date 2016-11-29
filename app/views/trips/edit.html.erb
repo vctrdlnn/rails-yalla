@@ -3,9 +3,8 @@
     <div class="row-fluid text-center heigth100">
       <div class="col-xs-12 col-sm-2 heigth100">
       <!-- Activities not assigned + Add new activity module -->
-        <p>Unassigned</p>
+        <p>Unassigned(<%= image_tag @trip_icons[0] %>)</p>
         <div id="grid-0" class="activity-grid works-grid works-grid-gut works-hover-w sortable accordion heigth100 brd-grey">
-          <p>(<%= image_tag @trip_icons[0] %>)</p>
           <% @activities.where(trip_day: nil).order(index: :asc).each do |act| %>
             <%= render 'activities/card_activity_index', activity: act %>
           <% end %>
@@ -39,7 +38,7 @@
             <div class="col-xs-12 col-sm-6">
               <!-- Trigger the modal with a button -->
               <button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModal">Add Activity</button>
-              <%= render 'activities/form_new_activity_by_establishment', activity: @activity %>
+              <%= render 'activities/form_new_activity_by_establishment', activity: @activity, trip: @trip %>
             </div>
           </div>
 
