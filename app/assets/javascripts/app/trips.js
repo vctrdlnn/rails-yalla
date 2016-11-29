@@ -3,15 +3,13 @@ $(function () {
 
   $(window).scroll(function() {
 
-  }
+  });
 
   panes.each(function () {
     pane = $(this);
     var panePosition = panes.offset().top;
     var position = panePosition - $(window).scrollTop();
-
-
-  })
+  });
 
   // var panePosition = panes.offset().top; //get the offset top of the element
 
