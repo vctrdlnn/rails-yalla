@@ -1,10 +1,10 @@
 <!-- Modal -->
-<div id="myModale" class="modal fade" role="dialog">
+<div id="modal_establishment" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Add your activity!</h4>
+        <h4 class="modal-title">Enter a place to create activities!</h4>
       </div>
       <div class="modal-body">
         <% if defined?(trip) %>
@@ -12,9 +12,6 @@
         <% else %>
           <%= render 'activities/form_new_establishment', activity: activity %>
         <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

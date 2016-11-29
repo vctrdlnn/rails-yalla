@@ -5,11 +5,11 @@
 <div class="padded"></div>
 <div class="container text-center">
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModale">Add Establishment</button>
+  <button type="button" class="btn btn-g" data-toggle="modal" data-target="#modal_category">Add Activity</button>
   <%= render 'form_new_activity_by_category', activity: @activity, main_categories: @main_categories %>
 
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModal">Add Activity</button>
+  <button type="button" class="btn btn-g" data-toggle="modal" data-target="#modal_establishment">Add Establishment</button>
   <%= render 'form_new_activity_by_establishment', activity: @activity %>
 
 <div class="mini-padded"></div>
