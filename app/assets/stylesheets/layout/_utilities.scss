@@ -40,9 +40,22 @@
   padding-bottom: 1em;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 // Margins
 .no-margin {
   margin: 0;
+}
+
+// Texte
+.left-aligh {
+  text-align: left;
+}
+
+.sm-txt {
+  font-size: 0.8em;
 }
 
 // Backgrounds
@@ -64,13 +77,11 @@
 .bg-day3 { background: $daycolor3; }
 .bg-day4 { background: $daycolor4; }
 .bg-day5 { background: $daycolor5; }
-.bg-day6 { background: $daycolor1; }
-.bg-day7 { background: $daycolor2; }
-.bg-day8 { background: $daycolor3; }
-.bg-day9 { background: $daycolor4; }
-.bg-day10 { background: $daycolor5; }
-
-
+.bg-day6 { background: $color1; }
+.bg-day7 { background: $color2; }
+.bg-day8 { background: $color3; }
+.bg-day9 { background: $color4; }
+.bg-day10 { background: $color5; }
 
 // Bordered
 .brd-lightgry {
