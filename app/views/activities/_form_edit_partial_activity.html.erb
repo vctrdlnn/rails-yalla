@@ -1,0 +1,21 @@
+<%= simple_form_for (@activity), remote: false do |f| %>
+
+  <% if @activity.errors.any? %>
+   <div id="error_explanation">
+     <ul>
+     <% @activity.errors.full_messages.each do |message| %>
+       <li><%= message %></li>
+     <% end %>
+     </ul>
+   </div>
+  <% end %>
+
+  <%= f.input :title %>
+  <%= f.input :description, as: :text %>
+  <%= f.input :establishment, disabled: true %>
+  <%= f.input :address, disabled: true %>
+  <%= f.association :main_category %>
+
+  <%= f.button :submit %>
+<% end %>
+

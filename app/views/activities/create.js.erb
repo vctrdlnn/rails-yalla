@@ -3,18 +3,25 @@ console.log('this is create.js')
 <% if @activity.errors.any? %>
   // Render new review form with errors
 console.log('error')
-  $('#new_activity').html("<%= j render 'activities/form_new_activity_by_establishment', activity: @activity, trip: @trip %>");
+  $('#new_activity').html("<%= j render 'activities/form_new_establishment_from_trip', activity: @activity, trip: @trip %>");
 <% else %>
   // Create a paragraph for the new review. But hide it.
 console.log('cool')
   var new_activity = $("<%= j render 'activities/card_activity_index', activity: @activity %>").hide();
 console.log('super cool')
+  console.log(new_activity)
   // Add it to the DOM, at the end of the existing reviews. It's still hidden.
   $('#grid-0').prepend(new_activity);
+  new_activity.accordion({
+    header: "> div.activity-item-header",
+    collapsible: true,
+    heightStyle: "content",
+    active: false
+  })
 console.log(new_activity)
-console.log($('#grid-0'))
+
   // Show the new review with an animation!
   new_activity.slideDown();
   // Reset the form
-  $('#new_activity').html("<%= j render 'activities/form_new_activity_by_establishment', activity: Activity.new, trip: @trip %>");
+  <% @activity = Activity.new %>
 <% end %>
