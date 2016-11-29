@@ -1,10 +1,10 @@
-<div role="tabpanel"  class="row tab-pane active" id="<%= tripday.title.downcase.gsub(' ', '_') %>">
+<div role="tabpanel"  class="row tab-pane active" id="<%= panel_id(tripday) %>" data-map-affix="true" data-map-affix-target="<%= panel_id(tripday) + '_map' %>">
 <div class="text-center">
   <h3><%= tripday.title %></h3>
   <p>Date: <%= tripday.date %></p>
 </div>
   <div class="col-xs-12 col-lg-4">
-   <%= image_tag('googlemap.gif', :class => "img_preview" ) %>
+   <%= image_tag('googlemap.gif', id: panel_id(tripday) + '_map', :class => "img_preview" ) %>
   </div>
 
   <div class="col-xs-12 col-lg-8">
