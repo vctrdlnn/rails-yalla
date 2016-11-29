@@ -36,7 +36,7 @@ class TripsController < ApplicationController
   def create
     @trip = current_user.trips.build(trip_params)
     authorize @trip
-    create_trip_days(params["trip"]["nb_days"].to_i, params["trip"]["description"].to_date)
+    create_trip_days(params["trip"]["nb_days"].to_i, params["trip"]["start_date"].to_date)
     if @trip.save
       redirect_to @trip, notice: 'Trip was successfully created.'
     else
