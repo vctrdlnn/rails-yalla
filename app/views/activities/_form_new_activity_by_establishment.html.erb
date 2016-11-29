@@ -14,7 +14,7 @@
           <%= f.input :address, as: :hidden, input_html: { id: 'hidden_address' } %>
           <%= f.input :city, as: :hidden %>
           <%= f.input :main_category, as: :hidden %>
-          <%= f.button :submit %>
+          <%= f.button :submit, input_html: {id: 'add_by_establishment'} %>
         <% end %>
       </div>
       <div class="modal-footer">
