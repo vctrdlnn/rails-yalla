@@ -2,7 +2,7 @@
 <div class="col-sm-6 col-md-3 col-lg-3">
   <div class="post">
     <div class="post-thumbnail">
-        <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
+        <%= cl_image_tag(trip.photo, width: 400, height: 300, crop: :fill) %>
         <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
             <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
         <% end %>
