@@ -221,6 +221,30 @@ trips = [
     city: "Budapest",
     country: "Hongrie",
     user: user1
+  },
+  {
+    title: "Weed-end à Amsterdam",
+    description: "c’est à Amsterdam et ca va etre romantique!",
+    category: "Lovers",
+    city: "Amsterdam",
+    country: "Netherlands",
+    user: user1
+  },
+  {
+    title: "Weed-end à Londres",
+    description: "On va visiter Londres, rejoignez-nous!",
+    category: "Cultural",
+    city: "London",
+    country: "UK",
+    user: user2
+  },
+  {
+    title: "Weed-end à Milan",
+    description: "On part a Milan et c'est juste genial",
+    category: "Friends",
+    city: "Milan",
+    country: "Italy",
+    user: user2
   }
 ]
 
