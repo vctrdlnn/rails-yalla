@@ -1,4 +1,4 @@
-<!-- PRELOADER -->
+x<!-- PRELOADER -->
   <div class="page-loader">
     <div class="loader">Loading...</div>
   </div>
@@ -17,13 +17,13 @@
         <% if user_signed_in? %>
         <div class="collapse navbar-collapse" id="custom-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" role="presentation"><%= link_to("Mes voyages", trips_path)%></li>
+            <li class="dropdown" role="presentation"><%= link_to("My trips", trips_path)%></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %></a>
               <ul class="dropdown-menu" role="menu">
 
                 <li class="dropdown">
-                  <%= link_to("Mon profil", edit_user_registration_path)%>
+                  <%= link_to("My profile", edit_user_registration_path)%>
                 </li>
 
                 <li class="dropdown">
