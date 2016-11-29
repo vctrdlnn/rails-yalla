@@ -3,6 +3,7 @@ class Trip < ApplicationRecord
   belongs_to :user
   has_many :trip_days, dependent: :destroy
   has_many :activities, dependent: :destroy
+  has_many :liked_trips, dependent: :destroy
 
   attr_accessor :nb_days, :start_date
 

@@ -5,6 +5,7 @@ class Activity < ApplicationRecord
   belongs_to :trip_day, optional: true
   belongs_to :main_category
   belongs_to :user
+  has_many :pinned_activities, dependent: :destroy
 
   validates :title, presence: true
   validates :address, presence: true

@@ -18,7 +18,7 @@
   <%= f.input :city %>
 
   <%= f.association :trip %>
-  <%= f.input :google_category %>
+  <%= f.input :google_category, as: :hidden %>
   <%= f.association :main_category %>
   <%= f.button :submit %>
   <%= link_to 'Back', activities_path %>
