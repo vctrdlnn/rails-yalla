@@ -12,8 +12,31 @@
   opacity: 0;
 }
 
-.card-trip-img {
+.card-trip-img{
+  //width: 400px;
+  height: 250px;
   position: relative;
+  //margin-bottom: 20px;
+}
+
+.card-trip-img:after {
+  position: absolute;
+  display: block;
+  content: "";
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  -ms-transition: all 0.3s ease-in-out 0s;
+  -o-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.works-grid.works-hover-w .work-item:hover .card-trip-img:after {
+  background: rgba(255, 255, 255, .8);
 }
 
 .card-trip-user {

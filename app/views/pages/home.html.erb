@@ -4,12 +4,16 @@
     <div class="hs-caption container">
       <div class="caption-content">
        <div class="hs-title-size-4 font-alt m-b-30">
-          YA-LA
           <div data-text="Organize your week-end in London"></div>
         </div>
         <div class="hs-title-size-1 font-inc">
-          A wonderful serenity has taken possession of my entire soul, like these<br/> sweet mornings of spring which I enjoy with my whole heart
+          *la petite folie de victor ici*
         </div>
+        <div class="padded"></div>
+        <div class="buttons_home text-center">
+              <%= link_to t("CREATE"), new_trip_path, :class => "btn btn-success btn-lg" %>
+              <%= link_to t("EXPLORE"), trips_path, :class => "btn btn-info btn-lg" %>
+            </div>
       </div>
     </div>
 
@@ -22,14 +26,6 @@
     <!-- PORTFOLIO -->
     <section class="module-small p-b-0">
       <div class="container">
-        <div class="row">
-            <div class="buttons_home text-center">
-              <%= link_to t("CREATE"), new_trip_path, :class => "btn btn-success" %>
-              <%= link_to t("EXPLORE"), trips_path, :class => "btn btn-info" %>
-            </div>
-
-        </div>
-        <div class="padded"></div>
         <!-- PORTFOLIO FILTER -->
         <div class="row">
           <div class="col-sm-12">
@@ -47,9 +43,8 @@
         <!-- /PORTFOLIO FILTER -->
 
 
-
       <!-- PORTFOLIO LIST -->
-      <ul id="works-grid" class="works-grid works-grid-4 works-hover-w">
+      <ul id="works-grid" class="works-grid works-grid-masonry works-grid-3 works-hover-w">
           <% Trip.all.each do |trip| %>
             <%= render 'trips/card_trip_home', trip: trip %>
           <% end %>
@@ -65,14 +60,11 @@
 
 
     <!-- TESTIMONIAL -->
-    <section class="module-small">
-
+    <section class="module-small background-grey">
       <div class="container">
-
         <div class="row">
-
           <!-- MODULE TITLE -->
-          <div class="col-sm-6">
+          <div class="col-sm-12 text-center">
             <h2 class="module-title font-alt">Testimonials</h2>
           </div>
           <!-- /MODULE TITLE -->
@@ -81,8 +73,14 @@
           <!-- BLOCKQUOTE -->
           <div class="col-sm-6">
             <blockquote class="font-serif align-right">
-              <p>This website is absolutely MIND BLOWING. For real. I've been dreaming of such a tool for years and never found something suitable. It's incredible what these guys did.</p>
-              <p class="font-inc font-uppercase">- Victor</p>
+              <p>"This website is absolutely MIND BLOWING. For real. I've been dreaming of such a tool for years and never found something suitable. It's incredible what these guys did."</p>
+              <p class="font-inc font-uppercase"><%= image_tag("victor.jpeg", class: "avatar-large") %>- Victor</p>
+            </blockquote>
+          </div>
+          <div class="col-sm-6">
+            <blockquote class="font-serif align-right">
+              <p>"What an amazing tool! Ya-la is my best friend for planning my trips. I really recommend it..Perfect for instant and easy travel planning!"</p>
+              <p class="font-inc font-uppercase"><%= image_tag("guilaine.jpeg", class: "avatar-large") %>- Guilaine</p>
             </blockquote>
           </div>
           <!-- /BLOCKQUOTE -->
@@ -95,7 +93,7 @@
     <!-- /TESTIMONIAL -->
 
     <!-- ABOUT -->
-    <section class="module p-t-0 p-b-0" data-background="<%= image_path 'about.jpg' %>">
+    <section class="module p-t-0 p-b-0 img_background" data-background="<%= image_path 'about.jpg' %>">
 
       <div class="container-fluid">
 
@@ -117,7 +115,7 @@
 
             <p>THOSE DAYS ARE OVER! Yala lets you aggregate ideas from all the sources, sort them by trip, by category, and organize in the most convenient way your trip so that you never forget anything</p>
 
-            <ul class="social-list">
+            <ul class="social-list text-center">
               <li><a href="#"><span class="icon-facebook"></span></a></li>
               <li><a href="#"><span class="icon-twitter"></span></a></li>
               <li><a href="#"><span class="icon-googleplus"></span></a></li>

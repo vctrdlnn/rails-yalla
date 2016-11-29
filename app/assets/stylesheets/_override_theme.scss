@@ -5,6 +5,7 @@
 .navbar-transparent{
   padding-bottom: 10px;
   padding-top: 10px;
+  background: rgba(0, 0, 0, 0.52);
 .navbar-link{
   color: white;
 }
@@ -35,11 +36,13 @@
 
 .navbar{
   margin-bottom: -22px;
+  font-size: 18px;
 }
 
 button.navbar-toggle {
   background-color: white;
 }
+
 
 
 .up_photo{
@@ -50,3 +53,27 @@ button.navbar-toggle {
 .back a{
   padding-left: 15px;
 }
+
+a.dropdown-toggle{
+  margin-right: 20px;
+}
+
+.navbar-header{
+  margin-left: 20px;
+}
+
+
+.navbar{
+  padding: 0px;
+}
+
+.col-bg {
+  background: rgba(255, 255, 255,0.97);
+  font-size: 13px;
+}
+
+.background-grey{
+  background-color: #FAFCFC;
+}
+
+

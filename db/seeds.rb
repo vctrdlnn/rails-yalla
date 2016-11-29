@@ -6,6 +6,8 @@ TripDay.destroy_all
 Activity.destroy_all
 MainCategory.destroy_all
 
+Cloudinary::Api.delete_resources_by_tag('posted_picture_'+ENV['CLOUDINARY_USER'])
+
 
 user_params = {username: "admin", email: "admin@admin.com", password: "000000", mobile: "0604590059"}
 user1 = User.create!(user_params)
@@ -212,8 +214,8 @@ trips = [
     category: "Discovery",
     city: "Paris",
     country: "France",
-    user: user2,
-    photo: "v1480436546/mkkfhhy5do6ol9a1elcb.jpg"
+    user: user2
+    # remote_photo_url: "v1480436546/mkkfhhy5do6ol9a1elcb.jpg"
   },
   {
     title: "Budapest par Glamour",
@@ -221,8 +223,8 @@ trips = [
     category: "Friends",
     city: "Budapest",
     country: "Hongrie",
-    user: user1,
-    photo: "v1480436465/w4wtv2a5jk8oi3mgaybq.jpg"
+    user: user1
+    # remote_photo_url: "v1480436465/w4wtv2a5jk8oi3mgaybq.jpg"
   },
   {
     title: "Weed-end à Amsterdam",
@@ -230,8 +232,8 @@ trips = [
     category: "Lovers",
     city: "Amsterdam",
     country: "Netherlands",
-    user: user1,
-    photo: "v1480436352/nif1xktixeejrdpfhdfe.jpg"
+    user: user1
+    # remote_photo_url: "v1480436352/nif1xktixeejrdpfhdfe.jpg"
   },
   {
     title: "Weed-end à Londres",
@@ -239,8 +241,8 @@ trips = [
     category: "Cultural",
     city: "London",
     country: "UK",
-    user: user2,
-    photo: "v1480436623/z0oslnoed0tjqdozzrtq.jpg"
+    user: user2
+    # remote_photo_url: "v1480436623/z0oslnoed0tjqdozzrtq.jpg"
   },
   {
     title: "Weed-end à Berlin",
@@ -248,14 +250,20 @@ trips = [
     category: "Friends",
     city: "Berlin",
     country: "Germany",
-    user: user2,
-    photo: "v1480434094/o1bfgj8xgjvydy2aj7pn.jpg"
+    user: user2
+    # remote_photo_url: "v1480434094/o1bfgj8xgjvydy2aj7pn.jpg"
   }
 ]
 
-trips.each do |t|
+trip_photo = Cloudinary::Api.resources_by_tag('city', :max_results => 20 )
+
+trips.each_with_index do |t, i|
   trip = Trip.create!(t)
+  random_photo = trip_photo['resources'][i]['url']
+  trip.remote_photo_url = random_photo
+  trip.save
 end
+
 
 trip_days = [
   {
