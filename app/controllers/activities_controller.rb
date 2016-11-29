@@ -35,11 +35,21 @@ class ActivitiesController < ApplicationController
     @activity = current_user.activities.build(activity_params)
     @activity.index = 1 # TODO : REMOVE THIS
     authorize @activity
-    @activity.title = "Visit of " + @activity.establishment if @activity.title.nil?
+    set_title if @activity.title.nil?
+    if !params["trip_id"].nil?
+      set_trip
+      @activity.trip = @trip
+    end
     if @activity.save
-      redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.'
+      respond_to do |format|
+        format.html { redirect_to edit_activity_path(@activity), notice: 'Activity was successfully created.' }
+        format.js  # <-- will render `app/views/reviews/create.js.erb`
+      end
     else
-      render :new
+      respond_to do |format|
+        format.html { render :new }
+        format.js  # <-- idem
+      end
     end
   end
 
@@ -63,6 +73,13 @@ class ActivitiesController < ApplicationController
   end
 
   private
+  def set_title
+      if @activity.establishment.nil?
+        @activity.title = @activity.main_category.title + " time around " + @activity.address
+      else
+        @activity.title = "Visit of " + @activity.establishment
+      end
+  end
 
   def next_activities(activity)
     if activity.trip_day.nil?
@@ -90,9 +107,9 @@ class ActivitiesController < ApplicationController
     authorize @activity
   end
 
-  # def set_trip
-  #   @trip = Trip.find(params[:trip_id])
-  # end
+  def set_trip
+    @trip = Trip.find(params[:trip_id])
+  end
 
   def activity_params
     params.require(:activity).permit(

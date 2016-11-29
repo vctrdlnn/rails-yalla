@@ -4,8 +4,14 @@
 
 <div class="padded"></div>
 <div class="container text-center">
-<%= render 'form_new_activity_by_category', activity: @activity, main_categories: @main_categories %>
-<%= render 'form_new_activity_by_establishment', activity: @activity %>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModale">Add Establishment</button>
+  <%= render 'form_new_activity_by_category', activity: @activity, main_categories: @main_categories %>
+
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-g" data-toggle="modal" data-target="#myModal">Add Activity</button>
+  <%= render 'form_new_activity_by_establishment', activity: @activity %>
+
 <div class="mini-padded"></div>
   <div class="row">
     <% @activities.each do |activity| %>

@@ -3,19 +3,12 @@
 @import "config/bootstrap_variables";
 
 // External libraries
+@import "jquery-ui.css";
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "bootstrap-datetimepicker";
-
-// Your CSS
-@import "body";
-@import "layout/index";
-@import "components/index";
-@import "pages/index";
-@import "vendor/index";
-@import "models/index";
 @import "simpletextrotator";
 @import "et-line-font";
 @import "magnific-popup";
@@ -23,11 +16,13 @@
 @import "animate";
 @import "style";
 @import "custom";
-@import "override_theme";
 @import "notifIt";
 
-/*
- *= require jquery-ui
- */
-
-
+// Your CSS
+@import "body";
+@import "override_theme";
+@import "layout/index";
+@import "components/index";
+@import "pages/index";
+@import "vendor/index";
+@import "models/index";

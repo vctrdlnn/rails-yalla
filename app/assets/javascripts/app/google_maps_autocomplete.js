@@ -43,11 +43,11 @@ $(document).ready(function() {
 function onPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
-
   $('#activity_address').trigger('blur').val(components.address);
-  $('#activity_establishment').val(components.name);
+  // $('#activity_establishment').val(components.name);
   $('#activity_city').val(components.city);
   $('#activity_google_category').val(components.type);
+  $('#activity_google_place_identifier').val(components.place_id);
 }
 
 
@@ -56,11 +56,13 @@ function onActivityPlaceChanged() {
   var components = getAddressComponents(place);
 
   $('#activity_establishment').trigger('blur').val(components.name);
-  $('#activity_address').val(components.formatted_address);
-  $('#activity_city').val(components.city);
-  $('#activity_google_category').val(components.type);
+  $('#activity_est_address').val(components.formatted_address);
+  $('#activity_est_city').val(components.city);
+  $('#activity_est_google_category').val(components.type);
+  $('#activity_est_google_place_identifier').val(components.place_id);
 }
 
+// Specific to "New Trips"
 function onTripPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
@@ -68,7 +70,7 @@ function onTripPlaceChanged() {
   $('#trip_city').trigger('blur').val(components.city);
   $('#trip_country').val(components.country_code);
   if($('#trip_title').val() == "") {
-    $('#trip_title').val("Week end in " + components.formatted_address);
+    $('#trip_title').val("Week end in " + components.city);
   }
 }
 
@@ -79,12 +81,14 @@ function getAddressComponents(place) {
 
   var street_number = null;
   var route = null;
+  var premise = null;
   var zip_code = null;
   var city = null;
   var type = null;
   var country_code = null;
   var name = null;
   var formatted_address = null;
+  var place_id = null;
   console.log(place);
   // debugger
   for (var i in place.address_components) {
@@ -95,6 +99,8 @@ function getAddressComponents(place) {
         street_number = component.long_name;
       } else if (type == 'route') {
         route = component.long_name;
+      } else if (type == 'natural_feature' || type == 'premise') {
+        premise = component.long_name;
       } else if (type == 'postal_code') {
         zip_code = component.long_name;
       } else if (type == 'locality') {
@@ -108,6 +114,10 @@ function getAddressComponents(place) {
   formatted_address = place.formatted_address
   name = place.name
   type = place.types[0]
+  place_id = place.place_id
+  if (route == null) {
+    route = name + ', ' + city;
+  };
 
   return {
     address: street_number == null ? route : (street_number + ' ' + route),
@@ -117,6 +127,7 @@ function getAddressComponents(place) {
     country: country,
     type: type,
     name: name,
-    formatted_address: formatted_address
+    formatted_address: formatted_address,
+    place_id: place_id
   };
 }

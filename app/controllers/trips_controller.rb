@@ -28,6 +28,8 @@ class TripsController < ApplicationController
     @activities = @trip.activities
     @trip_days = @trip.trip_days
     @trip_icons = set_day_icon(@trip_days)
+    @activity = Activity.new
+    @main_categories = MainCategory.all
     @map_hash = set_map_hash(@activities, @trip_icons) if @activities.length > 0
   end
 
