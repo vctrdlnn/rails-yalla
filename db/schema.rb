@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161128145435) do
+ActiveRecord::Schema.define(version: 20161129101038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,12 +49,30 @@ ActiveRecord::Schema.define(version: 20161128145435) do
     t.index ["main_category_id"], name: "index_categories_on_main_category_id", using: :btree
   end
 
+  create_table "liked_trips", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_liked_trips_on_trip_id", using: :btree
+    t.index ["user_id"], name: "index_liked_trips_on_user_id", using: :btree
+  end
+
   create_table "main_categories", force: :cascade do |t|
     t.string   "title"
     t.string   "icon"
     t.string   "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pinned_activities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "activity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["activity_id"], name: "index_pinned_activities_on_activity_id", using: :btree
+    t.index ["user_id"], name: "index_pinned_activities_on_user_id", using: :btree
   end
 
   create_table "trip_days", force: :cascade do |t|
@@ -116,6 +134,10 @@ ActiveRecord::Schema.define(version: 20161128145435) do
   add_foreign_key "activities", "trips"
   add_foreign_key "activities", "users"
   add_foreign_key "categories", "main_categories"
+  add_foreign_key "liked_trips", "trips"
+  add_foreign_key "liked_trips", "users"
+  add_foreign_key "pinned_activities", "activities"
+  add_foreign_key "pinned_activities", "users"
   add_foreign_key "trip_days", "trips"
   add_foreign_key "trips", "users"
 end

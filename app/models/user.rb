@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_many :trips, dependent: :destroy
   has_many :activities
+  has_many :liked_trips
+  has_many :pinned_activities
 
   mount_uploader :photo, PhotoUploader
 
