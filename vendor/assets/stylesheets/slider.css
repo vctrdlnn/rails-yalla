@@ -166,44 +166,45 @@ Hero Slider
 	        background-size: cover;
 }
 
+
 /* Caption */
 
 .hs-caption {
-	position: relative;
-	display: table;
-	height: 100%;
+  position: relative;
+  display: table;
+  height: 100%;
 }
 
 .hs-caption {
-	position: relative;
-	display: table;
-	height: 100%;
+  position: relative;
+  display: table;
+  height: 100%;
 }
 
 .caption-content {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .caption-content.left {
-	vertical-align: bottom;
-	text-align: left;
-	padding: 140px 0;
+  vertical-align: bottom;
+  text-align: left;
+  padding: 140px 0;
 }
 
 .caption-content.right {
-	vertical-align: bottom;
-	text-align: right;
-	padding: 140px 0;
+  vertical-align: bottom;
+  text-align: right;
+  padding: 140px 0;
 }
 
 @media (max-width: 767px) {
 
-	.caption-content.left,
-	.caption-content.right {
-		vertical-align: middle;
-		text-align: center;
-	}
+  .caption-content.left,
+  .caption-content.right {
+    vertical-align: middle;
+    text-align: center;
+  }
 
 }
