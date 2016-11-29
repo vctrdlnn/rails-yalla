@@ -2,7 +2,7 @@
 class TripsController < ApplicationController
   include MapsHashConcern
   skip_before_action :authenticate_user!, only: [:index, :show ]
-  before_action :set_trip, only: [:show, :edit, :update, :destroy]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like]
 
   def index
     # @trips = Trip.all
@@ -64,6 +64,14 @@ class TripsController < ApplicationController
   def destroy
     @trip.destroy
     redirect_to trips_url, notice: 'Trip was successfully destroyed.'
+  end
+
+  def like
+    if current_user.voted_for? @trip
+      current_user.unvote_for @trip
+    else
+      current_user.up_votes @trip
+    end
   end
 
   private
