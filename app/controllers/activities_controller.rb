@@ -4,6 +4,7 @@ class ActivitiesController < ApplicationController
   # before_action :set_trip, only: [:new, :create]
   before_filter :sanitize_activity_params, only: [:change_position]
 
+
   def index
     @activities = Activity.where.not(lat: nil, lon: nil)
     @activities = policy_scope(Activity)
@@ -36,6 +37,7 @@ class ActivitiesController < ApplicationController
     @activity.index = 1 # TODO : REMOVE THIS
     authorize @activity
     set_title if @activity.title.nil?
+    find_main_category unless (@activity.google_category.nil? || !@activity.main_category.nil?)
     if !params["trip_id"].nil?
       set_trip
       @activity.trip = @trip
@@ -73,6 +75,12 @@ class ActivitiesController < ApplicationController
   end
 
   private
+
+  def find_main_category
+binding.pry
+    @activity.main_category =  Category.find_by(google_title: @activity.google_category).main_category || MainCategory.find_by(title: "Others")
+  end
+
   def set_title
       if @activity.establishment.nil?
         @activity.title = @activity.main_category.title + " time around " + @activity.address

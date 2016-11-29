@@ -1,0 +1,26 @@
+<%= simple_form_for (@activity) do |f| %>
+
+  <% if @activity.errors.any? %>
+   <div id="error_explanation">
+     <ul>
+     <% @activity.errors.full_messages.each do |message| %>
+       <li><%= message %></li>
+     <% end %>
+     </ul>
+   </div>
+  <% end %>
+
+
+  <%= f.input :title %>
+  <%= f.input :description, as: :text %>
+  <%= f.input :establishment %>
+  <%= f.input :address %>
+  <%= f.input :city %>
+
+  <%= f.association :trip %>
+  <%= f.input :google_category, as: :hidden %>
+  <%= f.association :main_category %>
+  <%= f.button :submit %>
+  <%= link_to 'Back', activities_path %>
+<% end %>
+
