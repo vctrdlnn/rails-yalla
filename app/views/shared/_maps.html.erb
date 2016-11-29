@@ -51,20 +51,23 @@
         window.setTimeout(function() {
 
           // ensure proper sizing of image
-          var image = {
-            url: position.picture,
+          if (position.picture == null){
+            var image = { url: "http://maps.google.com/mapfiles/ms/micons/yellow.png" };
+          } else {
+            var image = { url: position.picture };
           }
           // create marker
           var marker = new google.maps.Marker({
             position: position,
             map: map,
             label: String(position.label),
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            icon: image
           });
 
-          if (image.url) {
-            marker.icon = icon.image;
-          }
+          // if (image.url) {
+          //   marker.icon = image;
+          // }
           // create infowindow
           var infowindow = new google.maps.InfoWindow({
             content: position.infowindow

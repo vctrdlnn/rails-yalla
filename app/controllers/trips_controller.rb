@@ -28,16 +28,28 @@ class TripsController < ApplicationController
     @activities = @trip.activities
     @trip_days = @trip.trip_days
     @trip_icons = set_day_icon(@trip_days)
+    @activity = Activity.new
+    @main_categories = MainCategory.all
     @map_hash = set_map_hash(@activities, @trip_icons) if @activities.length > 0
   end
 
   def create
     @trip = current_user.trips.build(trip_params)
     authorize @trip
+    create_trip_days(params["trip"]["nb_days"].to_i, params["trip"]["description"].to_date)
     if @trip.save
       redirect_to @trip, notice: 'Trip was successfully created.'
     else
       render :new
+    end
+  end
+
+  def create_trip_days(nb_days, start_date)
+    day = start_date || Date.today
+    nb_days.times do
+      @trip.trip_days.build(title: day.strftime('%A'), date: day)
+      @trip.save
+      day = day.next
     end
   end
 

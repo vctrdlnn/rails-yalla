@@ -209,7 +209,7 @@ trips = [
   {
     title: "Week-end à Paris",
     description: "While the Right Bank of Paris has seen internationalism and the irrepressible rise of bobos (the Parisian form of hipsters) change its landscape in recent years, the Left Bank has been able to preserve the soul of the French capital. Walk through the Latin Quarter’s crooked cobblestone corridors or down the grand plane-tree-lined boulevards of St.-Germain-des-Prés and, more than once, you’ll think you’re inside a black-and-white Robert Doisneau photo.",
-    category: "decouverte",
+    category: "Discovery",
     city: "Paris",
     country: "France",
     user: user2
@@ -217,7 +217,7 @@ trips = [
   {
     title: "Budapest par Glamour",
     description: "c’est à Budapest que ça se passe  Encore méconnue, Budapest attire la jeunesse européenne en quête de découvertes placées sous le signe du design et de l’art. Cette ville cosmopolite, foisonne de boutiques insolites, de petits cafés et de galeries d’art où se délasse la nouvelle scène artistique hongroise. Glamour vous fait faire le tour des lieux à ne pas manquer lors d’un week-end dans l’une des capitales les plus cool d’Europe.",
-    category: "entre copines",
+    category: "Friends",
     city: "Budapest",
     country: "Hongrie",
     user: user1
