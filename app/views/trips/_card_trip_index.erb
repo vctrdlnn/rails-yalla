@@ -2,9 +2,10 @@
 <div class="col-sm-6 col-md-3 col-lg-3">
   <div class="post">
     <div class="post-thumbnail">
-      <%= link_to trip_path(trip) do %>
         <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
-      <% end %>
+        <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
+            <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
+        <% end %>
     </div>
     <div class="post-header">
       <%= link_to trip_path(trip), {:class=>""} do %>
@@ -28,3 +29,12 @@
   </div>
 </div>
 <!-- /POST ITEM -->
+<% content_for(:js) do %>
+  <script>
+    $(document).ready(function() {
+      $( ".heart > .fa" ).click(function() {
+        $( this ).toggleClass( "red-heart pink-heart" );
+      });
+    });
+  </script>
+<% end %>

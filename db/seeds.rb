@@ -228,7 +228,8 @@ trips = [
     category: "Lovers",
     city: "Amsterdam",
     country: "Netherlands",
-    user: user1
+    user: user1,
+    photo: "v1480434094/o1bfgj8xgjvydy2aj7pn.jpg"
   },
   {
     title: "Weed-end à Londres",
