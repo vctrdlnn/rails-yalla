@@ -44,19 +44,21 @@
 <% content_for :js do %>
 
   <%= javascript_tag do %>
-    $('#tab_all').on('click',function(e){
-      $('#tab_all').parent().addClass('active');
-      $('.tab-pane').addClass('active in');
-      $('[data-toggle="tab"]').parent().removeClass('active');
-    });
+    $(function () {
+      $('#tab_all').on('click',function(e){
+        $('#tab_all').parent().addClass('active');
+        $('.tab-pane').addClass('active in');
+        $('[data-toggle="tab"]').parent().removeClass('active');
+      });
 
-    $('[data-toggle="tab"]').click(function (e) {
-      $('.noassigned').hide();
-    });
+      $('[data-toggle="tab"]').click(function (e) {
+        $('.noassigned').hide();
+      });
 
-    $('[data-show-unassigned="true"]').click(function (e) {
-      $('.noassigned').show();
-    });
+      $('[data-show-unassigned="true"]').click(function (e) {
+        $('.noassigned').show();
+      });
+    })
   <% end %>
 
 <% end %>

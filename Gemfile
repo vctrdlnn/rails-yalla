@@ -70,3 +70,6 @@ gem 'flickraw'
 #pdf
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+
+#likes
+gem 'acts_as_votable', '~> 0.10.0'

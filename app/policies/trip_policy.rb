@@ -22,6 +22,10 @@ class TripPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
+  def like?
+    !user_is_owner?
+  end
+
   private
 
   def user_is_owner_or_admin?
@@ -31,4 +35,7 @@ class TripPolicy < ApplicationPolicy
     user.admin || record.user == user if user
   end
 
+  def user_is_owner?
+    record.user == user if user
+  end
 end

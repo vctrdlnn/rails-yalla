@@ -212,7 +212,8 @@ trips = [
     category: "Discovery",
     city: "Paris",
     country: "France",
-    user: user2
+    user: user2,
+    photo: "v1480436546/mkkfhhy5do6ol9a1elcb.jpg"
   },
   {
     title: "Budapest par Glamour",
@@ -220,14 +221,41 @@ trips = [
     category: "Friends",
     city: "Budapest",
     country: "Hongrie",
-    user: user1
+    user: user1,
+    photo: "v1480436465/w4wtv2a5jk8oi3mgaybq.jpg"
+  },
+  {
+    title: "Weed-end à Amsterdam",
+    description: "c’est à Amsterdam et ca va etre romantique!",
+    category: "Lovers",
+    city: "Amsterdam",
+    country: "Netherlands",
+    user: user1,
+    photo: "v1480436352/nif1xktixeejrdpfhdfe.jpg"
+  },
+  {
+    title: "Weed-end à Londres",
+    description: "On va visiter Londres, rejoignez-nous!",
+    category: "Cultural",
+    city: "London",
+    country: "UK",
+    user: user2,
+    photo: "v1480436623/z0oslnoed0tjqdozzrtq.jpg"
+  },
+  {
+    title: "Weed-end à Berlin",
+    description: "On part a Berlin et c'est juste genial",
+    category: "Friends",
+    city: "Berlin",
+    country: "Germany",
+    user: user2,
+    photo: "v1480434094/o1bfgj8xgjvydy2aj7pn.jpg"
   }
 ]
 
 trips.each do |t|
   trip = Trip.create!(t)
 end
-
 
 trip_days = [
   {
