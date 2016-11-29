@@ -9,18 +9,23 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "bootstrap-datetimepicker";
-@import "simpletextrotator";
-@import "et-line-font";
-@import "magnific-popup";
-@import "flexslider";
+
+// Vendor Theme
 @import "animate";
+@import "et-line-font";
+@import "flexslider";
+@import "linecons";
+@import "magnific-popup";
+@import "notifIt";
+@import "simpletextrotator";
+@import "slider";
+@import "vertical";
 @import "style";
 @import "custom";
-@import "notifIt";
+@import "override_theme";
 
 // Your CSS
 @import "body";
-@import "override_theme";
 @import "layout/index";
 @import "components/index";
 @import "pages/index";

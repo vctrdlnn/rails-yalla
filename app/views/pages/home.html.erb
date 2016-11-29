@@ -1,294 +1,203 @@
-<section id="home" class="module-hero module-parallax module-fade bg-dark-30" data-background="<%= image_path('background.jpg') %>">
+  <!-- HOME -->
+  <section id="home" class="module-hero module-parallax module-fade module-full-height bg-dark-30" data-background="<%= image_path('background.jpg') %>">
 
-  <div class="hs-caption container">
-    <div class="caption-content">
-      <div class="hs-title-size-4 font-alt m-b-30">
-        YA-LA
-        <div id="slogan" data-text="Organize your week-end in London"></div>
-      </div>
-
-      <div class="buttons_home text-center">
-        <%= link_to t("CREATE"), new_trip_path, :class => "btn btn-primary" %>
-        <%= link_to t("EXPLORE"), trips_path, :class => "btn btn-info" %>
+    <div class="hs-caption container">
+      <div class="caption-content">
+       <div class="hs-title-size-4 font-alt m-b-30">
+          YA-LA
+          <div data-text="Organize your week-end in London"></div>
+        </div>
+        <div class="hs-title-size-1 font-inc">
+          A wonderful serenity has taken possession of my entire soul, like these<br/> sweet mornings of spring which I enjoy with my whole heart
+        </div>
       </div>
     </div>
+
+  </section >
+  <!-- /HOME -->
+
+  <!-- WRAPPER -->
+  <div class="wrapper">
+
+    <!-- PORTFOLIO -->
+    <section class="module-small p-t-20 p-b-0 p-t-sm-0">
+
+      <div class="container">
+
+        <div class="row">
+
+            <div class="buttons_home text-center">
+              <%= link_to t("CREATE"), new_trip_path, :class => "btn btn-success" %>
+              <%= link_to t("EXPLORE"), trips_path, :class => "btn btn-info" %>
+            </div>
+
+        </div>
+
+        <!-- PORTFOLIO FILTER -->
+        <div class="row">
+          <div class="col-sm-12">
+
+            <ul id="filters" class="filter font-inc">
+              <li><a href="#" data-filter="*" class="current wow fadeInUp">All</a></li>
+              <li><a href="#" data-filter=".illustration" class="wow fadeInUp" data-wow-delay="0.2s">Illustration</a></li>
+              <li><a href="#" data-filter=".marketing" class="wow fadeInUp" data-wow-delay="0.4s">Marketing</a></li>
+              <li><a href="#" data-filter=".photography" class="wow fadeInUp" data-wow-delay="0.6s">Photography</a></li>
+              <li><a href="#" data-filter=".webdesign" class="wow fadeInUp" data-wow-delay="0.8s">Web Design</a></li>
+            </ul>
+
+          </div>
+        </div>
+        <!-- /PORTFOLIO FILTER -->
+
+      </div>
+
+      <!-- PORTFOLIO LIST -->
+      <ul id="works-grid" class="works-grid works-grid-masonry works-grid-3 works-hover-w">
+
+        <!-- PORTFOLIO ITEM -->
+        <li class="work-item illustration webdesign">
+          <a href="portfolio-single-1.html">
+            <div class="work-image">
+              <img src="assets/images/work-masonry-1.jpg" alt="">
+            </div>
+            <div class="work-caption">
+              <h3 class="work-title font-alt">Corporate Identity</h3>
+              <div class="work-descr font-inc">
+                Illustration
+              </div>
+            </div>
+          </a>
+        </li>
+        <!-- /PORTFOLIO ITEM -->
+
+      </ul>
+      <!-- /PORTFOLIO LIST -->
+
+    </section>
+    <!-- /PORTFOLIO -->
+
+    <!-- ABOUT -->
+    <section class="module p-t-0 p-b-0" data-background="assets/images/section-4.jpg">
+
+      <div class="container-fluid">
+
+        <div class="row relative">
+
+          <div class="col-sm-12 col-md-6 col-md-offset-6 col-bg">
+
+            <h2 class="module-title font-alt">About</h2>
+
+            <div class="module-subtitle font-inc">
+              Create trips really tailor made and organize as you will
+            </div>
+
+            <p>When travelling for week ends or holidays, you want to enjoy each moment with things you really like to do, that are worth it, and you don't want to miss out on the highlights of the city you're visiting.</p>
+
+            <p>To achieve this, you ask friends for recommandation, you buy guides, magazines, you check websites, apps, you save addresses, take notes, etc....</p>
+
+            <p>You end up lost in too much data. On the ground, you never know what to do. Once back, you realize you forgot tons of things</p>
+
+            <p>THOSE DAYS ARE OVER! Yala lets you aggregate ideas from all the sources, sort them by trip, by category, and organize in the most convenient way your trip so that you never forget anything</p>
+
+            <ul class="social-list">
+              <li><a href="#"><span class="icon-facebook"></span></a></li>
+              <li><a href="#"><span class="icon-twitter"></span></a></li>
+              <li><a href="#"><span class="icon-googleplus"></span></a></li>
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /ABOUT -->
+
+    <!-- TESTIMONIAL -->
+    <section class="module-small">
+
+      <div class="container">
+
+        <div class="row">
+
+          <!-- MODULE TITLE -->
+          <div class="col-sm-6">
+            <h2 class="module-title font-alt">Someone quote</h2>
+          </div>
+          <!-- /MODULE TITLE -->
+
+
+          <!-- BLOCKQUOTE -->
+          <div class="col-sm-6">
+            <blockquote class="font-serif align-right">
+              <p>The languages only differ in their grammar, their pronunciation and their most common words. Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators.</p>
+              <p class="font-inc font-uppercase">- Thomas Anderson</p>
+            </blockquote>
+          </div>
+          <!-- /BLOCKQUOTE -->
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /TESTIMONIAL -->
+
+
+    <!-- CONTACT -->
+    <section class="module-small">
+
+      <div class="container">
+
+        <div class="row">
+
+          <!-- CONTENT BOX -->
+          <div class="col-sm-4">
+            <div class="content-box">
+              <div class="content-box-icon">
+                <span class="icon-map-pin"></span>
+              </div>
+              <div class="content-box-title font-inc">
+                Lille
+              </div>
+            </div>
+          </div>
+          <!-- /CONTENT BOX -->
+
+          <!-- CONTENT BOX -->
+          <div class="col-sm-4">
+            <div class="content-box">
+              <div class="content-box-icon">
+                <span class="icon-phone"></span>
+              </div>
+              <div class="content-box-title font-inc">
+                +33 3 20 00 00 00
+              </div>
+            </div>
+          </div>
+          <!-- /CONTENT BOX -->
+
+          <!-- CONTENT BOX -->
+          <div class="col-sm-4">
+            <div class="content-box">
+              <div class="content-box-icon">
+                <span class="icon-envelope"></span>
+              </div>
+              <div class="content-box-title font-inc">
+                something@gmail.com
+              </div>
+            </div>
+          </div>
+          <!-- /CONTENT BOX -->
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /CONTACT -->
   </div>
-
-</section >
-<!-- /HOME -->
-
-<!-- WRAPPER -->
-<div class="wrapper">
-
-  <!-- PORTFOLIO -->
-  <section class="module-small p-t-20 p-b-0 p-t-sm-0">
-
-    <div class="container hidden-xs">
-
-      <!-- PORTFOLIO FILTER -->
-      <div class="row">
-        <div class="col-sm-12">
-
-          <ul id="filters" class="filter font-inc">
-            <li><a href="#" data-filter="*" class="current wow fadeInUp">All</a></li>
-            <li><a href="#" data-filter=".nature" class="wow fadeInUp" data-wow-delay="0.2s">Nature</a></li>
-            <li><a href="#" data-filter=".romantique" class="wow fadeInUp" data-wow-delay="0.4s">Romantique</a></li>
-            <li><a href="#" data-filter=".night" class="wow fadeInUp" data-wow-delay="0.6s">Night</a></li>
-            <li><a href="#" data-filter=".sportif" class="wow fadeInUp" data-wow-delay="0.8s">Sportif</a></li>
-          </ul>
-
-        </div>
-      </div>
-      <!-- /PORTFOLIO FILTER -->
-
-    </div>
-
-    <!-- PORTFOLIO LIST -->
-    <ul id="works-grid" class="works-grid works-grid-masonry works-grid-3 works-hover-w">
-
-      <!-- PORTFOLIO ITEM -->
-      <li class="work-item nature sportif">
-        <a href="portfolio-single-1.html">
-          <div class="work-image">
-            <img src="assets/images/work-masonry-1.jpg" alt="">
-          </div>
-          <div class="work-caption">
-            <h3 class="work-title font-alt">Corporate Identity</h3>
-            <div class="work-descr font-inc">
-              nature
-            </div>
-          </div>
-        </a>
-      </li>
-      <!-- /PORTFOLIO ITEM -->
-
-      <!-- PORTFOLIO ITEM -->
-      <li class="work-item romantique night">
-        <a href="portfolio-single-1.html">
-          <div class="work-image">
-            <img src="assets/images/work-2.jpg" alt="">
-          </div>
-          <div class="work-caption">
-            <h3 class="work-title font-alt">Bag MockUp</h3>
-            <div class="work-descr font-inc">
-              romantique
-            </div>
-          </div>
-        </a>
-      </li>
-      <!-- /PORTFOLIO ITEM -->
-
-      <!-- PORTFOLIO ITEM -->
-      <li class="work-item nature night">
-        <a href="portfolio-single-1.html">
-          <div class="work-image">
-            <img src="assets/images/work-3.jpg" alt="">
-          </div>
-          <div class="work-caption">
-            <h3 class="work-title font-alt">Disk Cover</h3>
-            <div class="work-descr font-inc">
-              nature
-            </div>
-          </div>
-        </a>
-      </li>
-      <!-- /PORTFOLIO ITEM -->
-
-      <!-- PORTFOLIO ITEM -->
-      <li class="work-item romantique night">
-        <a href="portfolio-single-1.html">
-          <div class="work-image">
-            <img src="assets/images/work-4.jpg" alt="">
-          </div>
-          <div class="work-caption">
-            <h3 class="work-title font-alt">Business Card</h3>
-            <div class="work-descr font-inc">
-              night
-            </div>
-          </div>
-        </a>
-      </li>
-      <!-- /PORTFOLIO ITEM -->
-
-      <!-- PORTFOLIO ITEM -->
-      <li class="work-item nature sportif">
-        <a href="portfolio-single-1.html">
-          <div class="work-image">
-            <img src="assets/images/work-masonry-2.jpg" alt="">
-          </div>
-          <div class="work-caption">
-            <h3 class="work-title font-alt">Business Cards</h3>
-            <div class="work-descr font-inc">
-              Webdesign
-            </div>
-          </div>
-        </a>
-      </li>
-      <!-- /PORTFOLIO ITEM -->
-
-      <!-- PORTFOLIO ITEM -->
-      <li class="work-item romantique sportif">
-        <a href="portfolio-single-1.html">
-          <div class="work-image">
-            <img src="assets/images/work-6.jpg" alt="">
-          </div>
-          <div class="work-caption">
-            <h3 class="work-title font-alt">Business Cards in paper clip</h3>
-            <div class="work-descr font-inc">
-              Marketing
-            </div>
-          </div>
-        </a>
-      </li>
-      <!-- /PORTFOLIO ITEM -->
-
-      <!-- PORTFOLIO ITEM -->
-      <li class="work-item romantique sportif">
-        <a href="portfolio-single-1.html">
-          <div class="work-image">
-            <img src="assets/images/work-7.jpg" alt="">
-          </div>
-          <div class="work-caption">
-            <h3 class="work-title font-alt">Business Cards in paper clip</h3>
-            <div class="work-descr font-inc">
-              Marketing
-            </div>
-          </div>
-        </a>
-      </li>
-      <!-- /PORTFOLIO ITEM -->
-
-    </ul>
-    <!-- /PORTFOLIO LIST -->
-
-  </section>
-  <!-- /PORTFOLIO -->
-
-  <!-- TESTIMONIAL -->
-  <section class="module-small">
-
-    <div class="container">
-
-      <div class="row">
-
-        <!-- MODULE TITLE -->
-        <div class="col-sm-6">
-          <h2 class="module-title font-alt">Someone quote</h2>
-        </div>
-        <!-- /MODULE TITLE -->
-
-        <!-- BLOCKQUOTE -->
-        <div class="col-sm-6">
-          <blockquote class="font-serif align-right">
-            <p>The languages only differ in their grammar, their pronunciation and their most common words. Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators.</p>
-            <p class="font-inc font-uppercase">- Thomas Anderson</p>
-          </blockquote>
-        </div>
-        <!-- /BLOCKQUOTE -->
-
-      </div>
-
-    </div>
-
-  </section>
-  <!-- /TESTIMONIAL -->
-
-  <!-- ABOUT -->
-  <section class="module p-t-0 p-b-0" data-background="assets/images/section-4.jpg">
-
-    <div class="container-fluid">
-
-      <div class="row relative">
-
-        <div class="col-sm-12 col-md-6 col-md-offset-6 col-bg">
-
-          <h2 class="module-title font-alt">About</h2>
-
-          <div class="module-subtitle font-inc">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-          </div>
-
-          <p>The languages only differ in their grammar, their pronunciation and their most common words. Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators.</p>
-
-          <p>To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words. If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages.</p>
-
-          <ul class="social-list">
-            <li><a href="#"><span class="icon-facebook"></span></a></li>
-            <li><a href="#"><span class="icon-twitter"></span></a></li>
-            <li><a href="#"><span class="icon-googleplus"></span></a></li>
-          </ul>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-  <!-- /ABOUT -->
-
-  <!-- CONTACT -->
-  <section class="module-small">
-
-    <div class="container">
-
-      <div class="row">
-
-        <!-- CONTENT BOX -->
-        <div class="col-sm-4">
-          <div class="content-box">
-            <div class="content-box-icon">
-              <span class="icon-map-pin"></span>
-            </div>
-            <div class="content-box-title font-inc">
-              007 Steet, City, USA
-            </div>
-          </div>
-        </div>
-        <!-- /CONTENT BOX -->
-
-        <!-- CONTENT BOX -->
-        <div class="col-sm-4">
-          <div class="content-box">
-            <div class="content-box-icon">
-              <span class="icon-phone"></span>
-            </div>
-            <div class="content-box-title font-inc">
-              +1 234 567 89 00
-            </div>
-          </div>
-        </div>
-        <!-- /CONTENT BOX -->
-
-        <!-- CONTENT BOX -->
-        <div class="col-sm-4">
-          <div class="content-box">
-            <div class="content-box-icon">
-              <span class="icon-envelope"></span>
-            </div>
-            <div class="content-box-title font-inc">
-              semantic@email.com
-            </div>
-          </div>
-        </div>
-        <!-- /CONTENT BOX -->
-
-      </div>
-
-    </div>
-
-  </section>
-  <!-- /CONTACT -->
-
-
-</div>
-<!-- /WRAPPER -->
-
-<!-- Scroll-up -->
-<div class="scroll-up">
-  <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
-</div>
-
 
 
 <% content_for(:js) do %>
@@ -302,8 +211,8 @@
               var defaults = $.extend({
                   search: '',
                   replace: [],
-                  speed: 50,
-                  delay: 2000
+                  speed: 70,
+                  delay: 5000
               }, options);
 
               var bintext = function(length){
