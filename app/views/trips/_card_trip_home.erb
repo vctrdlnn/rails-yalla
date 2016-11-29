@@ -1,0 +1,29 @@
+<li class="col-sm-6 col-md-3 col-lg-3 work-item <%= trip.category.downcase %>">
+  <div class="post">
+    <div class="post-thumbnail">
+      <%= link_to trip_path(trip) do %>
+        <%= image_tag "cities/city" + Random.rand(1..8).to_s + ".jpg" , class: "card-trip-img" %>
+      <% end %>
+    </div>
+    <div class="post-header">
+      <%= link_to trip_path(trip), {:class=>""} do %>
+        <h2 class="post-title font-alt"><%= trip.title %></h2>
+      <% end %>
+      <div class="post-meta font-inc">
+        By <%= link_to trip.user.name, trip %>
+         | <%= trip.created_at.strftime('%d %^b %y') %>
+        <% if policy(trip).edit? %>
+           | <%= link_to "Edit ", edit_trip_path(trip)%>
+        <% end %>
+      </div>
+    </div>
+    <div class="post-entry">
+      <p><%= trip.category%></p>
+      <p><%= trip.short_description(120) %></p>
+    </div>
+    <div class="post-more font-inc">
+      <!-- TODO: Edit links -->
+      <%= link_to "Read more", trip %>
+    </div>
+  </div>
+</li>
