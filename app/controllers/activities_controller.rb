@@ -65,7 +65,6 @@ class ActivitiesController < ApplicationController
 
   def destroy
     @activity.destroy
-    redirect_to :back, notice: 'Activity was deleted.'
   end
 
   def change_position
