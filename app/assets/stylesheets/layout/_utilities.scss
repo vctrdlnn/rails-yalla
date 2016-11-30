@@ -77,11 +77,19 @@
 .bg-day3 { background: $daycolor3; }
 .bg-day4 { background: $daycolor4; }
 .bg-day5 { background: $daycolor5; }
-.bg-day6 { background: $color1; }
-.bg-day7 { background: $color2; }
-.bg-day8 { background: $color3; }
-.bg-day9 { background: $color4; }
-.bg-day10 { background: $color5; }
+.bg-day6 { background: $daycolor1; }
+.bg-day7 { background: $daycolor2; }
+.bg-day8 { background: $daycolor3; }
+.bg-day9 { background: $daycolor4; }
+.bg-day10 { background: $daycolor5; }
+
+// Main Categories
+.fun { background: $yellow-fun; }
+.nature { background: $green-nature; }
+.shopping { background: $pink-shopping; }
+.food { background: $purple-food; }
+.visites { background: $blue-visites; }
+.others { background: $gray-others; }
 
 // Bordered
 .brd-lightgry {
@@ -97,5 +105,3 @@
 .panel{
   margin-top: 50px;
 }
-
-

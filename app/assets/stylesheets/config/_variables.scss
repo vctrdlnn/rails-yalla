@@ -33,17 +33,6 @@ $orange: #E67E22;
 $green: #32B796;
 $gray: #000000;
 
-
-
-/* Coolors Exported Palette - coolors.co/0b3954-087e8b-bfd7ea-ff5a5f-c81d25 */
-
-/* RGB */
-$color1: rgba(11, 57, 84, 1);
-$color2: rgba(8, 126, 139, 1);
-$color3: rgba(191, 215, 234, 1);
-$color4: rgba(255, 90, 95, 1);
-$color5: rgba(200, 29, 37, 1);
-
 /* Coolors Exported Palette - coolors.co/fdd1c8-fae2cd-fcf3d3-e2eaf4-bbcad9 */
 
 /* RGB */
@@ -53,17 +42,23 @@ $daycolor3: rgba(252, 243, 211, 1);
 $daycolor4: rgba(226, 234, 244, 1);
 $daycolor5: rgba(187, 202, 217, 1);
 
-/* RGB */
-$color6: rgba(249, 162, 142, 1);
-$color7: rgba(191, 215, 181, 1);
-$color8: rgba(170, 159, 177, 1);
-$color9: rgba(220, 182, 213, 1);
-$color10: rgba(174, 236, 239, 1);
-
+/* Coolors Exported Palette - coolors.co/0b3954-087e8b-bfd7ea-ff5a5f-c81d25 */
 
 /* RGB */
-$color11: rgba(221, 213, 208, 1);
-$color12: rgba(207, 192, 189, 1);
-$color13: rgba(184, 184, 170, 1);
-$color14: rgba(230, 199, 156, 1);
-$color15: rgba(198, 135, 149, 1);
+// $color1: rgba(11, 57, 84, 1); // nature
+// $color2: rgba(8, 126, 139, 1); // sport
+// $color3: rgba(191, 215, 234, 1);
+// $color4: rgba(255, 90, 95, 1);
+// $color5: rgba(200, 29, 37, 1);
+
+
+/* Main Categories */
+$green-nature: rgba(197, 226, 209, 1);
+$blue-visites: rgba(174, 208, 242, 1);
+$pink-shopping: rgba(255, 211, 219, 1);
+$yellow-fun: rgba(255, 246, 206, 1);
+$purple-food: rgba(205, 190, 209, 1);
+$gray-others: #efefef;
+
+
+
