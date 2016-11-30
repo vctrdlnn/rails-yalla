@@ -1,9 +1,9 @@
-<%= simple_form_for (@activity), remote: false do |f| %>
+<%= simple_form_for (activity), remote: false do |f| %>
 
-  <% if @activity.errors.any? %>
+  <% if activity.errors.any? %>
    <div id="error_explanation">
      <ul>
-     <% @activity.errors.full_messages.each do |message| %>
+     <% activity.errors.full_messages.each do |message| %>
        <li><%= message %></li>
      <% end %>
      </ul>

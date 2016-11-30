@@ -1,0 +1,36 @@
+<!-- Modal -->
+<div id="myEditModal-<%= activity.id%>" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit this activity</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for (activity), remote: false do |f| %>
+          <% if activity.errors.any? %>
+           <div id="error_explanation">
+             <ul>
+             <% activity.errors.full_messages.each do |message| %>
+               <li><%= message %></li>
+             <% end %>
+             </ul>
+           </div>
+          <% end %>
+          <%= f.input :title %>
+          <%= f.input :description, as: :text %>
+          <%= f.input :url, as: :url, placeholder: "https://my-activity-source.com" %>
+          <%= f.input :establishment, disabled: true %>
+          <%= f.input :address, disabled: true %>
+          <%= f.association :main_category %>
+          <%= f.input :photo %>
+          <%= f.button :submit %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-g" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->

@@ -23,8 +23,8 @@
 
       <div class="col-xs-12 col-sm-6 heigth100">
       <!-- Trip Days and Itiniraries -->
-        <p>Trip day by day</p>
-        <div class="row width100 inblock brd-grey heigth100">
+        <p class="font-alt"><%= @trip.title %></p>
+        <div class="row width100 inblock side-brd-grey heigth100">
           <% @trip_days.each do |td| %>
             <div class="col-xs-4 inblock trip-day heigth100">
               <div id="grid-<%= td.id %>" class="activity-grid works-hover-w sortable accordion heigth100">
@@ -38,11 +38,21 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-4 heigth100">
-
-        <!-- Magic button -->
-        <div class="other_container" style="width: 100%; height: 10%;">
-          <%= button_to "Make my day !", make_my_day_trip_path(@trip), class: "btn btn-lg btn-success", method: :put %>
+        <div class="buttons margined" style="width: 100%;">
+          <div class="row">
+            <div class="col-xs-6">
+              <%= button_to @trip, class: "btn btn-info" do %>
+                <span class="icon-printer"></span> Print
+              <% end %>
+            </div>
+            <div class="col-xs-6">
+              <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success", method: :put do %>
+                <span class="icon-genius"></span>Make my day
+              <% end %>
+            </div>
+          </div>
         </div>
+
         <!-- Map, to do, references, etc... -->
         <div class="map_container" style="width: 100%; height: 50%;">
           <%= render 'shared/maps', map_hash: @map_hash %>
