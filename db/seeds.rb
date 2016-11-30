@@ -9,12 +9,12 @@ MainCategory.destroy_all
 Cloudinary::Api.delete_resources_by_tag('posted_picture_'+ENV['CLOUDINARY_USER'])
 
 
-user_params = {username: "admin", email: "admin@admin.com", password: "000000", mobile: "0604590059"}
+user_params = {username: "admin", email: "admin@admin.com", password: "000000", phone: "0604590059"}
 user1 = User.create!(user_params)
 user1.admin = true
 user1.save
 
-user_params = {username: "victor01", email: "victor010101@gmail.com", password: "000000", mobile: "0055314810"}
+user_params = {username: "victor01", email: "victor010101@gmail.com", password: "000000", phone: "0055314810"}
 user2 = User.create!(user_params)
 
 main_categories =
