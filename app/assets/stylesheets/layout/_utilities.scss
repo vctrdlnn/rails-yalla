@@ -44,6 +44,10 @@
   padding: 0 !important;
 }
 
+.no-h-padding {
+  padding: 8px 0 !important;
+}
+
 // Margins
 .no-margin {
   margin: 0;
@@ -84,12 +88,12 @@
 .bg-day10 { background: $daycolor5; }
 
 // Main Categories
-.fun { background: $yellow-fun; }
-.nature { background: $green-nature; }
-.shopping { background: $pink-shopping; }
-.food { background: $purple-food; }
-.visites { background: $blue-visites; }
-.others { background: $gray-others; }
+.bg-fun { background: $color-fun; }
+.bg-nature { background: $color-nature; }
+.bg-shopping { background: $color-shopping; }
+.bg-food { background: $color-food; }
+.bg-visites { background: $color-visites; }
+.bg-others { background: $color-others; }
 
 // Bordered
 .brd-lightgry {

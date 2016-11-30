@@ -4,6 +4,16 @@
   position: relative;
   margin: 10px 0;
 }
+.activity-logo-cat {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.activity-item-header {
+  background: transparent;
+}
 
 .activity-logo {
   height: 20px;
@@ -21,9 +31,6 @@
   min-height: 40px;
 }
 
-.activity-item-header {
-  background: transparent;
-}
 
 .activity-item-content {
   background: transparent;

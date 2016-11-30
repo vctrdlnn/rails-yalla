@@ -7,25 +7,10 @@
         <h4 class="modal-title">Add your activity!</h4>
       </div>
       <div class="modal-body">
-        <%= simple_form_for (activity) do |f| %>
-          <%= f.label :main_category %>
-          <div class="row">
-            <% main_categories.each do |main_category| %>
-              <div id="cat-<%= main_category.id.to_s %>" class="col-xs-2 card-category">
-                <label class="form-check-inline category-logo">
-                  <input class="form-check-input" type="radio" name="radio" id="inlineRadio1" value="yes">
-                  <%= image_tag main_category.icon, :style => "height: 60px" %>
-                  <%= main_category.title %>
-                </label>
-              </div>
-            <% end %>
-          </div>
-          <%= f.input :address %>
-          <%= f.input :main_category_id, as: :hidden, required: true %>
-          <%= f.input :city, as: :hidden %>
-          <%= f.input :google_category, as: :hidden %>
-          <%= f.input :google_place_identifier, as: :hidden %>
-          <%= f.button :submit %>
+        <% if defined?(trip) %>
+          <%= render 'activities/form_new_category_from_trip', activity: activity, trip: trip, main_categories: main_categories %>
+        <% else %>
+          <%= render 'activities/form_new_category', activity: activity, main_categories: main_categories  %>
         <% end %>
       </div>
       <div class="modal-footer">
