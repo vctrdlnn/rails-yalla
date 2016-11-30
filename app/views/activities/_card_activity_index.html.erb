@@ -1,6 +1,9 @@
 <!-- PORTFOLIO ITEM -->
-<div id="act-<%= activity.id %>" class="activity-item illustration webdesign <%= 'bg-day'+ [activity.index, 10].min.to_s %>">
+<div id="act-<%= activity.id %>" class="activity-item illustration webdesign <%= activity.main_category.color %>">
   <div class="activity-item-header">
+    <div class="activity-logo-cat">
+      <%= image_tag(activity.main_category.icon, class: 'avatar-small') %>
+    </div>
     <div class="content-box-title">
       <%= activity.title %>
     </div>
@@ -8,16 +11,14 @@
   <div class="activity-item-content content-box-text no-padding">
     <div class="left-aligh sm-txt">
       <p><span class="font-alt">Establishment:</span><%= activity.establishment %></p>
-
-      <h6 class="font-alt">Description</h6>
-      <p><%= activity.short_description(80) %></p>
-
-      <h6 class="font-alt">Link</h6>
-      <p><%= activity.source %></p>
-
-      <h4>
+      <p><span class="font-alt">Description:</span><%= activity.short_description(80) %></p>
+      <p><span class="font-alt">URL:</span><%= activity.source %></p>
+      <p><span class="font-alt">Address:</span><%= activity.address %></p>
+      <p><span class="font-alt">Category:</span><%= activity.main_category.title %></p>
+      <p><span class="font-alt">Photo:</span><%= cl_image_tag(activity.photo, width: 30, heigh: 20, crop: :fill) unless activity.photo == "" %></p>
+      <h4 class="text-center">
         <%= link_to edit_activity_path(activity) do %>
-          <span class="icon-recycle"></span>
+          <span class="icon-pencil"></span><%= "  -  " %>
         <% end %>
         <%= link_to activity, method: :delete, remote: true, data: {confirm: "Are you sure?"} do %>
           <span class="icon-scissors"></span>

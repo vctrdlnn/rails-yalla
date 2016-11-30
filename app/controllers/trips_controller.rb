@@ -25,12 +25,10 @@ class TripsController < ApplicationController
 
   def edit
     @disable_footer = true
-    @activities = @trip.activities.order(:lat, :lon)
-    @trip_days = @trip.trip_days
-    @trip_icons = set_day_icon(@trip_days)
+
+    mapping_icons
     @activity = Activity.new
     @main_categories = MainCategory.all
-    @map_hash = set_map_hash(@activities, @trip_icons) if @activities.length > 0
   end
 
   def create
@@ -38,7 +36,7 @@ class TripsController < ApplicationController
     authorize @trip
     create_trip_days(params["trip"]["nb_days"].to_i, params["trip"]["start_date"].to_date)
     if @trip.save
-      redirect_to @trip, notice: 'Trip was successfully created.'
+      redirect_to edit_trip_path(@trip), notice: 'Trip was successfully created.'
     else
       render :new
     end
@@ -76,10 +74,18 @@ class TripsController < ApplicationController
 
   def make_my_day
     shortest_trip_days(@trip)
+    mapping_icons
     redirect_to edit_trip_path(@trip), notice: 'Magic has happen, this is the best itinirary!'
   end
 
   private
+
+  def mapping_icons
+    @activities = @trip.activities.order(:lat, :lon)
+    @trip_days = @trip.trip_days
+    @trip_icons = set_day_icon(@trip_days)
+    @map_hash = set_map_hash(@activities, @trip_icons) if @activities.length > 0
+  end
 
   def set_trip
     @trip = Trip.find(params[:id])
@@ -102,47 +108,52 @@ class TripsController < ApplicationController
     shortest_solution = best_path(points, trip.trip_days.length)
     day_index = 0
     shortest_solution.each_pair do |key, value|
-      value.each_with_index do |act, i|
-        activity = Activity.find(act[:id])
-        activity.trip_day_id = trip.trip_days[day_index].id
-        activity.index = i + 1
-        activity.save
+      if value.class == Array
+        value.each_with_index do |act, i|
+          activity = Activity.find(act[:id])
+          activity.trip_day_id = trip.trip_days[day_index].id
+          activity.index = i + 1
+          activity.save
+        end
+        day_index += 1
       end
-      day_index += 1
     end
   end
 
   def best_path(points, days)
     days = 3
-    if points.length < days * 2
+    if points.length < days * 3
       return nil
+      redirect_to :back, alert: "Only works with at least #{(days * 3)} activities"
     end
     possible_trips = all_combinaisons(points, days)
-    shortest = possible_trips.values.min_by { |trip| distance(trip[:day1]) + distance(trip[:day2]) + distance(trip[:day3]) }
+    shortest = possible_trips.values.min_by { |trip| trip[:distance] }
   end
 
   def all_combinaisons(points, days)
     combos = {}
     i = 1
-    a_max = points.length - 2 * (days - 1)
+    min_by_day = (points.length / (days + 1)).floor
+    a_max = points.length - min_by_day * (days - 1)
 
-    (2..a_max).each do |a|
+    (min_by_day..a_max).each do |a|
       points_a = points
       combos[i] = {} if combos[i].nil?
       # find which combination of a length is the shortest to only iterate on this one
-      combos[i][:day1] = points_a.combination(a).to_a.min_by { |route| distance(route) }
+      combos[i][:day1] = points_a.combination(a).to_a.min_by { |route| center_distance(route) }
 
       # TODO: rendre le truc iteratif et repasser dans le code au dessus mais avec le nouveau subpoint
       # les points d'origine sont en fait le sous ensemble et on le fait sur 2 jours au lieu de 3
       points_b = points_a - combos[i][:day1]
-      b_max = points_b.length - 2 * (days - 2)
-      (2..b_max).each do |b|
+      b_max = points_b.length - min_by_day * (days - 2)
+      (min_by_day..b_max).each do |b|
         if combos[i].nil?
           combos[i] = {}
           combos[i][:day1] = combos[i-1][:day1]
         end
         # find which combination of b length is the shortest to only iterate on this one
-        combos[i][:day2] = points_b.combination(b).to_a.min_by { |route| distance(route) }
+
+        combos[i][:day2] = points_b.combination(b).to_a.min_by { |route| center_distance(route) }
 
         # C can only be the remaining!
         combos[i][:day3] = points_b - combos[i][:day2]
@@ -155,16 +166,21 @@ class TripsController < ApplicationController
         #     combos[i][:day1] = combos[i-1][:day1]
         #     combos[i][:day2] = combos[i-1][:day2]
         #   end
-        #   combos[i][:day3] = points_c.combination(c).to_a.min_by { |route| distance(route) }
+        #   combos[i][:day3] = points_c.combination(c).to_a.min_by { |route| center_distance(route) }
         # end
 
-          i += 1
+        # TODO: OPTIMIZE CALCULATION OF PERMUTATION - TOO LONG!
+        # combos[i].each_pair do |key, path|
+        #     combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
+        # end
+        # combos[i][:distance] = path_length(combos[i][:day1]) + path_length(combos[i][:day2]) + path_length(combos[i][:day3])
+        i += 1
       end
     end
     return combos
   end
 
-  def distance(points)
+  def path_length(points)
     sum = 0
     if points.length >= 2
       points.each_cons(2) do |a, b|
@@ -172,5 +188,11 @@ class TripsController < ApplicationController
       end
     end
     return sum
+  end
+
+  def center_distance(points)
+    lat_cen = points.inject(0){ |sum, a| sum += a[:lat] } / points.length
+    lon_cen = points.inject(0){ |sum, a| sum += a[:lon] } / points.length
+    points.inject(0) { |sum, a| sum += Math.sqrt((lat_cen - a[:lat])**2 + (lon_cen - a[:lon])**2) }
   end
 end
