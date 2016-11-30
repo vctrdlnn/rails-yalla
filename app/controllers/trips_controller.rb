@@ -25,7 +25,7 @@ class TripsController < ApplicationController
 
   def edit
     @disable_footer = true
-    @activities = @trip.activities
+    @activities = @trip.activities.order(:lat, :lon)
     @trip_days = @trip.trip_days
     @trip_icons = set_day_icon(@trip_days)
     @activity = Activity.new
