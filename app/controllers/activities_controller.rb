@@ -76,7 +76,11 @@ class ActivitiesController < ApplicationController
   private
 
   def find_main_category
-    @activity.main_category =  Category.find_by(google_title: @activity.google_category).main_category || MainCategory.find_by(title: "Others")
+    if Category.find_by(google_title: @activity.google_category).nil?
+      @activity.main_category =  MainCategory.find_by(title: "Others")
+    else
+      @activity.main_category =  Category.find_by(google_title: @activity.google_category).main_category
+    end
   end
 
   def set_title
