@@ -1,4 +1,4 @@
-<div class="banner_trip" style="background:url(<%= image_path 'cities/city' + Random.rand(1..8).to_s + '.jpg' %>); height: 350px; background-repeat:no-repeat; background-size:cover">
+<div class="banner_trip" style="background:url(<%= @trip.photo %>); height: 350px; background-repeat:no-repeat; background-size:cover">
   <div class="trip_descri text-center">
     <h1><%= @trip.title %></h1>
     <h4>By: <%= @trip.user.username %></h4>
@@ -13,14 +13,54 @@
     <% end %>
       <li class="active" role="presentation" data-show-unassigned="true" id="tab_all"><a href="#" aria-controls="home" role="tab" data-toggle="tab">Your week-end</a></li>
   </ul>
-  <div class="imprim text-center">
-  <div class="mini-padded"></div>
-    <%= link_to trip_path(@trip, format: :pdf), target: '_blank' do %>
-      <i class="fa fa-print fa-2x" aria-hidden="true"></i>
-    <% end %>
-    <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
-    <i class="fa fa-thumb-tack fa-2x" aria-hidden="true"></i>
+  <div class="imprim">
+    <div class="mini-padded"></div>
+      <div class="content-box padded-icon">
+        <div class="content-box-icon">
+            <%= link_to trip_path(@trip, format: :pdf), target: 'blank' do %>
+            <div class="icon-printer" ></div>
+            <% end %>
+        </div>
+        <div class="content-box-title font-inc">
+                Print
+        </div>
+      </div>
+      <% unless @trip.user == current_user %>
+      <div class="content-box padded-icon">
+        <div class="content-box-icon">
+          <div class="icon-heart"></div>
+        </div>
+        <div class="content-box-title font-inc">
+                Like
+        </div>
+      </div>
+      <% end %>
+      <div class="content-box padded-icon">
+        <div class="content-box-icon">
+          <div class="icon-rss"></div>
+        </div>
+        <div class="content-box-title font-inc">
+                Share
+        </div>
+      </div>
+      <% if @trip.user == current_user %>
+      <div class="content-box padded-icon">
+        <div class="content-box-icon">
+          <div class="icon-pencil"></div>
+        </div>
+        <div class="content-box-title font-inc">
+                Edit
+        </div>
+      </div>
+      <% end %>
   </div>
+  <div class="padded"></div>
+  <div class="col-xs-12 text-center">
+    <blockquote class="font-serif">
+      <p>"<%= @trip.description %>"</p>
+    </blockquote>
+  </div>
+
 <div class="container_day tab-content">
   <% @trip.trip_days.each_with_index do |tripday, index| %>
   <%= render 'card_trip_show', tripday:tripday , index:index %>
