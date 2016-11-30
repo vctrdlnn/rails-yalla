@@ -40,9 +40,22 @@
   padding-bottom: 1em;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 // Margins
 .no-margin {
   margin: 0;
+}
+
+// Texte
+.left-aligh {
+  text-align: left;
+}
+
+.sm-txt {
+  font-size: 0.8em;
 }
 
 // Backgrounds
@@ -77,6 +90,7 @@
 .activities { background: $purple-activities; }
 .others { background: $blue-others; }
 
+
 // Bordered
 .brd-lightgry {
   border: 1px solid lightgrey;
@@ -91,5 +105,3 @@
 .panel{
   margin-top: 50px;
 }
-
-

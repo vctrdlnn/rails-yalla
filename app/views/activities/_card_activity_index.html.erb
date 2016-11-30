@@ -5,15 +5,25 @@
       <%= activity.title %>
     </div>
   </div>
-  <div class="activity-item-content content-box-text">
-    <%= link_to edit_activity_path(activity) do %>
-      <strong><%= activity.establishment %></strong>
-      <%= activity.short_description(50) %>
-    <% end %>
-    <%= "(#{activity.index})" %>
-    <%= link_to edit_activity_path(activity) do %>
-      <i class="fa fa-pencil activity-edit" aria-hidden="true"></i>
-    <% end %>
+  <div class="activity-item-content content-box-text no-padding">
+    <div class="left-aligh sm-txt">
+      <p><span class="font-alt">Establishment:</span><%= activity.establishment %></p>
+
+      <h6 class="font-alt">Description</h6>
+      <p><%= activity.short_description(80) %></p>
+
+      <h6 class="font-alt">Link</h6>
+      <p><%= activity.source %></p>
+
+      <h4>
+        <%= link_to edit_activity_path(activity) do %>
+          <span class="icon-recycle"></span>
+        <% end %>
+        <%= link_to activity, method: :delete, remote: true, data: {confirm: "Are you sure?"} do %>
+          <span class="icon-scissors"></span>
+        <% end %>
+      </h4>
+    </div>
   </div>
 </div>
 <!-- /PORTFOLIO ITEM -->
