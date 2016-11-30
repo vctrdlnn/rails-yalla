@@ -9,7 +9,6 @@ class Trip < ApplicationRecord
   attr_accessor :nb_days, :start_date
 
   validates :title, presence: true
-  # validates :category, presence: true
   validates :city, presence: true
   validates :category,
     inclusion: {

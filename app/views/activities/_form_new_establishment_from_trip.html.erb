@@ -1,15 +1,22 @@
-<%= simple_form_for [trip, activity], remote: true, html: { class: 'form-inline' }, defaults: { input_html: { class: 'input-group-lg', style: 'width:100%;' } }  do |f| %>
-  <div class="row">
-    <div class="col-xs-8">
+<%= simple_form_for [trip, activity], remote: true, html: { class: '' }, defaults: { input_html: { class: 'input-group-lg', style: 'width:100%;' } }  do |f| %>
+<!--   <div class="row">
+    <div class="col-xs-8"> -->
       <%= f.input :establishment, label: false %>
-    </div>
+<!--     </div> -->
+    <%= f.input :title, input_html: { id: 'activity_est_title' } , label: false, placeholder: 'Add a nice title' %>
     <%= f.input :address, as: :hidden, input_html: { id: 'activity_est_address' } %>
     <%= f.input :city, as: :hidden, input_html: { id: 'activity_est_city' } %>
     <%= f.input :google_category, as: :hidden, input_html: { id: 'activity_est_google_category' } %>
     <%= f.input :google_place_identifier, as: :hidden, input_html: { id: 'activity_est_google_place_identifier' } %>
     <%= f.input :trip_id, as: :hidden, input_html: { id: 'activity_est_trip_id'} %>
-    <div class="col-xs-4">
+<!--     <div class="col-xs-4"> -->
       <%= f.button :submit, "Add activity!", class: "btn-g btn-round" %>
-    </div>
-  </div>
+<!--     </div>
+  </div> -->
+<% end %>
+
+<% content_for (:js) do %>
+  <script>
+    var def_title = true;
+  </script>
 <% end %>

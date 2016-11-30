@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129121237) do
+ActiveRecord::Schema.define(version: 20161130153036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20161129121237) do
     t.string   "google_place_identifier"
     t.string   "google_category"
     t.integer  "user_id"
-    t.string   "source"
+    t.string   "url"
     t.string   "photo"
     t.index ["main_category_id"], name: "index_activities_on_main_category_id", using: :btree
     t.index ["trip_day_id"], name: "index_activities_on_trip_day_id", using: :btree
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20161129121237) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "username"
-    t.string   "mobile"
+    t.string   "phone"
     t.string   "photo"
     t.string   "hometown"
     t.string   "provider"

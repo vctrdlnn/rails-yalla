@@ -12,6 +12,7 @@
     <% end %>
   </div>
   <%= f.input :address %>
+  <%= f.input :title %>
   <%= f.input :main_category_id, as: :hidden, required: true %>
   <%= f.input :city, as: :hidden %>
   <%= f.input :google_category, as: :hidden %>
@@ -19,3 +20,16 @@
   <%= f.input :trip_id, as: :hidden %>
   <%= f.button :submit, "Add activity!", class: "btn-g btn-round" %>
 <% end %>
+
+<% content_for (:js) do %>
+  <script>
+    var def_title = true;
+    var cat_select = "";
+    $('.card-category').on('click', function(event) {
+      $('#activity_main_category_id').val(this.id.split("-").pop());
+      cat_select = this.innerText + " around "
+    });
+
+  </script>
+<% end %>
+

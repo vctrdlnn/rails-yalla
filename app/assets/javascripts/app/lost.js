@@ -1,3 +1,4 @@
+
 // /*
 //  *
 //  * @author Sakri Rosenstrom
@@ -995,3 +996,4 @@
 //             setTimeout(commitResize, 100);
 //         }
 //     }
+
