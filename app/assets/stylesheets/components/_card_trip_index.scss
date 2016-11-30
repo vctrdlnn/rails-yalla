@@ -1,3 +1,17 @@
+.works-grid {
+  overflow: hidden;
+}
+
+.work-caption {
+  z-index: -100;
+}
+
+.work-item {
+  a {
+    background-color: white;
+  }
+}
+
 .card-trip {
   position: relative;
 }
@@ -14,8 +28,8 @@
 
 .card-trip-img{
   //width: 400px;
-  height: 250px;
   position: relative;
+  margin-bottom: 30px;
   //margin-bottom: 20px;
 }
 
