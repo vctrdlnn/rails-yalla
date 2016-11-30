@@ -3,16 +3,18 @@
 
     <div class="hs-caption container">
       <div class="caption-content">
-       <div class="hs-title-size-4 font-alt m-b-30">
-          <div data-text="Organize your week-end in London"></div>
+        <div class="hs-title-size-4 font-alt m-b-30">
+          <div>Plan your very own</div>
+          <div id="slogan" data-text="weekend in London"></div>
         </div>
-        <div class="hs-title-size-1 font-inc">
-          *la petite folie de victor ici*
+        <div class="hs-title-size-2 font-alt m-b-30">
+          <div>Yala is the best tool to prepare</div>
+          <div>a tailor made weekend in your city of choice</div>
         </div>
         <div class="padded"></div>
         <div class="buttons_home text-center">
-              <%= link_to t("CREATE"), new_trip_path, :class => "btn btn-success btn-lg" %>
-              <%= link_to t("EXPLORE"), trips_path, :class => "btn btn-info btn-lg" %>
+              <%= link_to t("START YOUR TRIP"), new_trip_path, :class => "btn btn-success btn-lg" %>
+              <%= link_to t("EXPLORE THE WORLD"), trips_path, :class => "btn btn-primary btn-lg" %>
             </div>
       </div>
     </div>
@@ -337,8 +339,16 @@
 
       $(function(){
         $('#slogan').typer({
-          search: 'week-end in London',
-          replace: ['lover getaway in Paris', 'bachelor party in Berlin', 'shopping in Milan', 'birthday in Amsterdam']
+          search: 'weekend in London',
+          replace: ['lovers getaway to Paris', 'bachelor party in Berlin', 'shopping in Milan', 'family trip to Barcelona']
+        })
+        $('#slogan2').typer({
+          search: 'week-end',
+          replace: ['lover getaway', 'bachelor party', 'shopping', 'birthday']
+        })
+        $('#slogan3').typer({
+          search: 'London',
+          replace: ['Paris', 'Berlin', 'Milan', 'Amsterdam']
         })
       })
 

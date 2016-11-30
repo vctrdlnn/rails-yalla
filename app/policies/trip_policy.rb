@@ -26,6 +26,10 @@ class TripPolicy < ApplicationPolicy
     !user_is_owner?
   end
 
+  def make_my_day?
+    user_is_owner_or_admin?
+  end
+
   private
 
   def user_is_owner_or_admin?
