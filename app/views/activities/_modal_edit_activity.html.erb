@@ -7,7 +7,7 @@
         <h4 class="modal-title">Edit this activity</h4>
       </div>
       <div class="modal-body">
-        <%= simple_form_for (activity), remote: false do |f| %>
+        <%= simple_form_for (activity) do |f| %>
           <% if activity.errors.any? %>
            <div id="error_explanation">
              <ul>
@@ -17,13 +17,13 @@
              </ul>
            </div>
           <% end %>
-          <%= f.input :title %>
-          <%= f.input :description, as: :text %>
-          <%= f.input :url, as: :url, placeholder: "https://my-activity-source.com" %>
-          <%= f.input :establishment, disabled: true %>
-          <%= f.input :address, disabled: true %>
-          <%= f.association :main_category %>
-          <%= f.input :photo %>
+          <%= f.input :title, input_html: { id: 'activity_edit_title' } %>
+          <%= f.input :description, as: :text, input_html: { id: 'activity_edit_description' } %>
+          <%= f.input :url, as: :url, placeholder: "https://my-activity-source.com", input_html: { id: 'activity_edit_url' } %>
+          <%= f.input :establishment, disabled: true, input_html: { id: 'activity_edit_establishment' } %>
+          <%= f.input :address, disabled: true, input_html: { id: 'activity_edit_address' } %>
+          <%= f.association :main_category, input_html: { id: 'activity_edit_category' } %>
+          <%= f.input :photo, input_html: { id: 'activity_edit_photo' } %>
           <%= f.button :submit %>
         <% end %>
       </div>
