@@ -6,12 +6,6 @@
   z-index: -100;
 }
 
-.work-item {
-  a {
-    background-color: white;
-  }
-}
-
 .card-trip {
   position: relative;
 }
@@ -31,6 +25,10 @@
   position: relative;
   margin-bottom: 30px;
   //margin-bottom: 20px;
+}
+
+.card-trip-background{
+  margin-bottom: 30px;
 }
 
 .card-trip-img:after {
@@ -98,4 +96,40 @@
 .post-more{
   position: absolute;
   bottom: 3px;
+}
+
+.card-content{
+  position: relative;
+}
+
+.overlay{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.52);;
+}
+
+p.title-city{
+  position: relative;
+  top: 13px;
+  left: 10px;
+  color: white;
+}
+h3.font-alt{
+  color: white;
+  position: relative;
+  top: 73px;
+}
+
+h3.post-title.font-alt{
+  font-size: 19px;
+}
+
+.post-meta.font-inc{
+  position: relative;
+  top: 100px;
+  color: white;
+  a{
+    color:white;
+  }
 }
