@@ -22,12 +22,12 @@ main_categories =
   {
     title: "Cultural",
     icon: "categories/cultural.png",
-    color: "bg-nature"
+    color: "bg-visites"
   },
   {
     title: "Restaurants",
     icon: "categories/restaurants.png",
-    color: "bg-activities"
+    color: "bg-food"
   },
   {
     title: "Fun",
@@ -42,7 +42,7 @@ main_categories =
   {
     title: "Bar & Nightlife",
     icon: "categories/bar & nightlife.png",
-    color: "bg-activities"
+    color: "bg-food"
   },
   {
     title: "Others",
@@ -52,22 +52,22 @@ main_categories =
   {
     title: "Sport",
     icon: "categories/sport.png",
-    color: "bg-others"
+    color: "bg-fun"
   },
   {
     title: "Communication",
     icon: "categories/communication.png",
-    color: "bg-accomodation"
+    color: "bg-others"
   },
   {
     title: "Best of City",
     icon: "categories/Best of City.png",
-    color: "bg-others"
+    color: "bg-visites"
   },
   {
     title: "Hotels",
     icon: "categories/hotels.png",
-    color: "bg-accomodation"
+    color: "bg-others"
   },
   {
     title: "Kids",
@@ -77,22 +77,22 @@ main_categories =
   {
     title: "Outdoor",
     icon: "categories/outdoor.png",
-    color: "bg-fun"
+    color: "bg-nature"
   },
   {
     title: "Shopping",
     icon: "categories/shopping.png",
-    color: "bg-activities"
+    color: "bg-shopping"
   },
   {
     title: "Transportation",
     icon: "categories/transportation.png",
-    color: "bg-accomodation"
+    color: "bg-others"
   },
   {
     title: "Visits",
     icon: "categories/visits.png",
-    color: "bg-nature"
+    color: "bg-visites"
   }
 ]
 
