@@ -67,9 +67,11 @@ function onActivityPlaceChanged() {
   $('#activity_est_google_place_identifier').val(components.place_id);
   if (def_title) {
     if($('#activity_est_title').val() == "") {
-      $('#activity_est_title').val(components.type.replace("_", " ").replace(/\b\w/g, l => l.toUpperCase()) + " at "
- + components.name);
+      var categ = components.type.replace("_", " ");
+      categ = categ.charAt(0).toUpperCase() + categ.slice(1)+ " at ";
+      $('#activity_est_title').val(categ + components.name);
     }
+    console.log("by activity")
   }
 }
 
