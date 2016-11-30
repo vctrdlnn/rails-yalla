@@ -30,14 +30,11 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-4 heigth100">
-        <!-- Add Activities -->
-          <div class="row new-activities">
-            <div class="col-xs-12 col-sm-6">
-              <!-- Trigger the modal with a button -->
-             </div>
-          </div>
 
-
+        <!-- Magic button -->
+        <div class="other_container" style="width: 100%; height: 10%;">
+          <%= button_to "Make my day !", make_my_day_trip_path(@trip), class: "btn btn-lg btn-success", method: :put %>
+        </div>
         <!-- Map, to do, references, etc... -->
         <div class="map_container" style="width: 100%; height: 50%;">
           <%= render 'shared/maps', map_hash: @map_hash %>

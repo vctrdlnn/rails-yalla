@@ -77,7 +77,6 @@ class ActivitiesController < ApplicationController
   private
 
   def find_main_category
-binding.pry
     @activity.main_category =  Category.find_by(google_title: @activity.google_category).main_category || MainCategory.find_by(title: "Others")
   end
 

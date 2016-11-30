@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       member do
         put 'like'
         get 'print'
+        put 'make_my_day'
       end
     end
 
