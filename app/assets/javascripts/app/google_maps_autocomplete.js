@@ -48,6 +48,11 @@ function onPlaceChanged() {
   $('#activity_city').val(components.city);
   $('#activity_google_category').val(components.type);
   $('#activity_google_place_identifier').val(components.place_id);
+  if (def_title) {
+    if($('#activity_title').val() == "") {
+      $('#activity_title').val(cat_select + components.address);
+    }
+  }
 }
 
 
@@ -60,6 +65,12 @@ function onActivityPlaceChanged() {
   $('#activity_est_city').val(components.city);
   $('#activity_est_google_category').val(components.type);
   $('#activity_est_google_place_identifier').val(components.place_id);
+  if (def_title) {
+    if($('#activity_est_title').val() == "") {
+      $('#activity_est_title').val(components.type.replace("_", " ").replace(/\b\w/g, l => l.toUpperCase()) + " at "
+ + components.name);
+    }
+  }
 }
 
 // Specific to "New Trips"
@@ -84,6 +95,7 @@ function getAddressComponents(place) {
   var premise = null;
   var zip_code = null;
   var city = null;
+  var city_backup = null;
   var type = null;
   var country_code = null;
   var name = null;
@@ -105,16 +117,21 @@ function getAddressComponents(place) {
         zip_code = component.long_name;
       } else if (type == 'locality') {
         city = component.long_name;
-      } else if (type == 'country') {
+      } else if (type == 'administrative_area_level_3') {
+        city_backup = component.long_name
+      }else if (type == 'country') {
         country_code = component.short_name;
         country = component.long_name
       }
     }
   }
-  formatted_address = place.formatted_address
-  name = place.name
-  type = place.types[0]
-  place_id = place.place_id
+  formatted_address = place.formatted_address;
+  name = place.name;
+  type = place.types[0];
+  place_id = place.place_id;
+  if (city == null) {
+    city = city_backup;
+  };
   if (route == null) {
     route = name + ', ' + city;
   };

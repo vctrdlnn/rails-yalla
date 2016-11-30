@@ -73,9 +73,13 @@ class TripsController < ApplicationController
   end
 
   def make_my_day
-    shortest_trip_days(@trip)
-    mapping_icons
-    redirect_to edit_trip_path(@trip), notice: 'Magic has happen, this is the best itinirary!'
+    if @trip.activities.where.not(lat: nil, lon: nil).length < @trip.trip_days.length * 3
+      redirect_to :back, alert: "Only works with at least 9 activities"
+    else
+      shortest_trip_days(@trip)
+      mapping_icons
+      redirect_to edit_trip_path(@trip), notice: 'Magic has happen, this is the best itinirary!'
+    end
   end
 
   private
@@ -96,7 +100,7 @@ class TripsController < ApplicationController
     params.require(:trip).permit(
       :title, :description, :category,
       :city, :country, :lat, :lon,
-      :photo, :photo_cache, :public, :user_id
+      :photo, :photo_cache, :public
     )
   end
 
@@ -104,7 +108,7 @@ class TripsController < ApplicationController
   # MAKE MY DAY ALGORITHM
 
   def shortest_trip_days(trip)
-    points = trip.activities.map{ |a| {id: a.id, lat: a.lat, lon: a.lon} }
+    points = trip.activities.where.not(lat: nil, lon: nil).map{ |a| {id: a.id, lat: a.lat, lon: a.lon} }
     shortest_solution = best_path(points, trip.trip_days.length)
     day_index = 0
     shortest_solution.each_pair do |key, value|
@@ -122,10 +126,6 @@ class TripsController < ApplicationController
 
   def best_path(points, days)
     days = 3
-    if points.length < days * 3
-      return nil
-      redirect_to :back, alert: "Only works with at least #{(days * 3)} activities"
-    end
     possible_trips = all_combinaisons(points, days)
     shortest = possible_trips.values.min_by { |trip| trip[:distance] }
   end
