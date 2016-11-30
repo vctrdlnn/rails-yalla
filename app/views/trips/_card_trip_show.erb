@@ -16,19 +16,22 @@
             <div class="timeline-panel">
               <div class="timeline-heading">
                 <div class="row">
-                  <div class="col-xs-12 col-lg-6">
-                    <%= image_tag('activity.jpg') %>
+                      <div class="col-xs-12 col-lg-6">
+                        <h4 class="timeline-title"><b><%= activity.title %></b></h4>
+                        <p><i><%= activity.address %></p></i>
+                      </div>
+                      <% if activity.photo != nil %>
+                      <div class="col-xs-12 col-lg-6 align-right">
+                        <%= cl_image_tag activity.photo , width: 100, height: 60, crop: :fill %>
+                      </div>
+                      <% end %>
+                    </div>
+                      <p><small class="text-muted"><%= activity.main_category.title %></small></p>
                   </div>
-                  <div class="col-xs-12 col-lg-6">
-                    <h4 class="timeline-title"><b><%= activity.title %></b></h4>
-                    <p><i><%= activity.address %></p></i>
-                  </div>
+                <div class="timeline-body">
+                  <p><%= activity.description %></p>
                 </div>
-                  <p><small class="text-muted"><%= activity.main_category.title %></small></p>
-              </div>
-            <div class="timeline-body">
-              <p><%= activity.description %></p>
-            </div>
+
           </div>
         </li>
       <% end %>
