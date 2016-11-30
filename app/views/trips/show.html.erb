@@ -18,7 +18,7 @@
       <div class="content-box padded-icon">
         <div class="content-box-icon">
             <%= link_to trip_path(@trip, format: :pdf), target: 'blank' do %>
-            <div class="icon-printer" ></div>
+            <div class="icon-printer icon-grey" ></div>
             <% end %>
         </div>
         <div class="content-box-title font-inc">
@@ -55,17 +55,19 @@
       <% end %>
   </div>
   <div class="padded"></div>
-  <div class="col-xs-12 text-center">
+  <div class="col-xs-12 text-center border-bottom">
     <blockquote class="font-serif">
       <p>"<%= @trip.description %>"</p>
     </blockquote>
   </div>
+  <div class="padded"></div>
 
-<div class="container_day tab-content">
-  <% @trip.trip_days.each_with_index do |tripday, index| %>
-  <%= render 'card_trip_show', tripday:tripday , index:index %>
-  <% end %>
-</div>
+  <div class="container_day tab-content">
+    <% @trip.trip_days.each_with_index do |tripday, index| %>
+    <%= render 'card_trip_show', tripday:tripday , index:index %>
+    <% end %>
+  </div>
+
 
 <div class="container noassigned">
   <h3 class="text-center">No assigned activities</h3>
