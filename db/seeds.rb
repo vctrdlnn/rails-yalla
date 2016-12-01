@@ -279,7 +279,7 @@ trips = [
   {
     title: "Best bachelor in Lille",
     description: "Lille is the only city in France where beer versus wine is the drink of choice",
-    category: "Bachelor(ette)",
+    category: "Bachelor",
     city: "Lille",
     country: "France",
     user: user2,
