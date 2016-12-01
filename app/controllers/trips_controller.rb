@@ -85,7 +85,7 @@ class TripsController < ApplicationController
   private
 
   def mapping_icons
-    @activities = @trip.activities.order(:lat, :lon)
+    @activities = @trip.activities
     @trip_days = @trip.trip_days
     @trip_icons = set_day_icon(@trip_days)
     @map_hash = set_map_hash(@activities, @trip_icons) if @activities.length > 0
@@ -170,10 +170,14 @@ class TripsController < ApplicationController
         # end
 
         # TODO: OPTIMIZE CALCULATION OF PERMUTATION - TOO LONG!
-        # combos[i].each_pair do |key, path|
-        #     combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
-        # end
-        # combos[i][:distance] = path_length(combos[i][:day1]) + path_length(combos[i][:day2]) + path_length(combos[i][:day3])
+        combos[i].each_pair do |key, path|
+          if path.length > 9
+            combos[i][key] = path.sort { |x,y| y[:lat] <=> x[:lat] }
+          else
+            combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
+          end
+        end
+        combos[i][:distance] = path_length(combos[i][:day1]) + path_length(combos[i][:day2]) + path_length(combos[i][:day3])
         i += 1
       end
     end
