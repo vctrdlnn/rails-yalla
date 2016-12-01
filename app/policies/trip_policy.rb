@@ -30,6 +30,10 @@ class TripPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
+  def map_markers?
+    update?
+  end
+
   private
 
   def user_is_owner_or_admin?

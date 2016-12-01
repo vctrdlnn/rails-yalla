@@ -292,6 +292,10 @@ GEM
     simple_form (3.3.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
+    simple_token_authentication (1.14.0)
+      actionmailer (>= 3.2.6, < 6)
+      actionpack (>= 3.2.6, < 6)
+      devise (>= 3.2, < 6)
     slop (3.6.0)
     spring (2.0.0)
       activesupport (>= 4.2)
@@ -375,6 +379,7 @@ DEPENDENCIES
   sass-rails
   simple-form-datepicker
   simple_form
+  simple_token_authentication
   spring
   spring-watcher-listen (~> 2.0.0)
   uglifier

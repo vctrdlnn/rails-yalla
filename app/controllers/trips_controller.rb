@@ -85,6 +85,9 @@ class TripsController < ApplicationController
   end
 
   def map_markers
+    respond_to do |format|
+      format.json
+    end
   end
 
   private

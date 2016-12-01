@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         put 'like'
         get 'print'
         put 'make_my_day'
+        get 'map_markers', format: :json
       end
     end
 
@@ -33,7 +34,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :trips, only: [ :index ]
+      resources :trips, only: [ :index, :show ]
     end
   end
 

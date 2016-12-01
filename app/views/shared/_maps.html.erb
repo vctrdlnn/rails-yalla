@@ -1,7 +1,7 @@
 <div id="map" style="width: 100%; height: 90%;"></div>
 <div id="floating-panel" style="width: 100%; height: 10%;">
-  <input id="hideAll" type=button value="Hide Markers" class="btn btn-xs btn-g">
-  <input id="showAll" type=button value="Show All Markers" class="btn btn-xs btn-g">
+<!--   <input id="hideAll" type=button value="Hide Markers" class="btn btn-xs btn-g">
+  <input id="showAll" type=button value="Show All Markers" class="btn btn-xs btn-g"> -->
   <input id="refreshAll" type=button value="Refresh Markers" class="btn btn-xs btn-g">
 </div>
 
@@ -10,7 +10,11 @@
   <script>
     $(document).ready(function() {
 
-      var activities = <%= raw map_hash.to_json %>;
+
+      // var activities = <%= raw map_hash.to_json %>;
+      var activities = []
+      var trip_id = <%= raw trip_id %>;
+
       var markers = [];
       var map;
       var stylesLight = [{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e9e9e9"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":21}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}];
@@ -30,7 +34,8 @@
       function draw_map() {
         initMap();
         console.log("drop ? ")
-        drop();
+        // drop();
+        updateActivities();
         console.log("dropped !")
       }
 
@@ -44,12 +49,14 @@
 
       function drop() {
         clearMarkers();
-        for (var i = 0; i < activities.length; i++) {
-          addMarkerWithTimeoutandLabel(activities[i], i, i * 300);
-          loc = new google.maps.LatLng(activities[i].lat, activities[i].lng);
-          bounds.extend(loc);
-          map.fitBounds(bounds);
-          map.panToBounds(bounds);
+        if (typeof(activities) !== 'undefined') {
+          for (var i = 0; i < activities.length; i++) {
+            addMarkerWithTimeoutandLabel(activities[i], i, i * 300);
+            loc = new google.maps.LatLng(activities[i].lat, activities[i].lng);
+            bounds.extend(loc);
+            map.fitBounds(bounds);
+            map.panToBounds(bounds);
+          }
         }
       }
 
@@ -104,9 +111,8 @@
       });
 
       $("#refreshAll").on("click", function() {
-        drop();
+        updateActivities();
       });
-
 
       // Adds a marker to the map and push to the array.
       function addMarker(location) {
@@ -114,7 +120,23 @@
           position: location,
           map: map
         });
+        markers = [];
         markers.push(marker);
+      }
+
+      function updateActivities() {
+        $.ajax({
+          type: "GET",
+          url: "map_markers.json",
+          success: function(data) {
+            activities = data;
+            drop();
+            console.log("success");
+          },
+          error: function(jqXHR) {
+            console.error(jqXHR.responseText);
+          }
+        });
       }
 
       // Sets the map on all markers in the array.
