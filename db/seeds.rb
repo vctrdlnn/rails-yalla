@@ -17,6 +17,12 @@ user1.save
 user_params = {username: "victor01", email: "victor010101@gmail.com", password: "000000", phone: "0055314810"}
 user2 = User.create!(user_params)
 
+user_params = {username: "guilaine", email: "guilaine.ghossoub4@gmail.com", password: "000000", phone: "0056714810"}
+user3 = User.create!(user_params)
+
+user_params = {username: "del", email: "del.martinache@gmail.com", password: "000000", phone: "0056714810"}
+user4 = User.create!(user_params)
+
 main_categories =
 [
   {
@@ -214,8 +220,8 @@ trips = [
     category: "Discovery",
     city: "Paris",
     country: "France",
-    user: user2
-    # remote_photo_url: "v1480436546/mkkfhhy5do6ol9a1elcb.jpg"
+    user: user2,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592374/paris_nfibly.jpg"
   },
   {
     title: "Budapest par Glamour",
@@ -223,8 +229,8 @@ trips = [
     category: "Friends",
     city: "Budapest",
     country: "Hongrie",
-    user: user1
-    # remote_photo_url: "v1480436465/w4wtv2a5jk8oi3mgaybq.jpg"
+    user: user4,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592744/budapest_hm3qvp.jpg"
   },
   {
     title: "Weed-end à Amsterdam",
@@ -232,8 +238,8 @@ trips = [
     category: "Lovers",
     city: "Amsterdam",
     country: "Netherlands",
-    user: user1
-    # remote_photo_url: "v1480436352/nif1xktixeejrdpfhdfe.jpg"
+    user: user3,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592735/ult3lortvhn62dyeun9y.jpg"
   },
   {
     title: "Weed-end à Londres",
@@ -241,8 +247,8 @@ trips = [
     category: "Cultural",
     city: "London",
     country: "UK",
-    user: user2
-    # remote_photo_url: "v1480436623/z0oslnoed0tjqdozzrtq.jpg"
+    user: user3,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592906/london_geyl3z.jpg"
   },
   {
     title: "Weed-end à Berlin",
@@ -250,30 +256,57 @@ trips = [
     category: "Friends",
     city: "Berlin",
     country: "Germany",
-    user: user2
-    # remote_photo_url: "v1480434094/o1bfgj8xgjvydy2aj7pn.jpg"
+    user: user2,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592736/fxcw83arx1aqhs13uwg5.jpg"
+  },
+  {
+    title: "Beautiful Florence",
+    description: "Known for its rich history, Florence is a destination for those seeking vibrant culinary, artistic and musical experiences",
+    category: "Family",
+    city: "Florence",
+    country: "Italy",
+    user: user3,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480593549/florence_lowwcx.jpg"
+  },
+  {
+    title: "Business in Dubai",
+    description: "Dubai has emerged as an ethnically diverse metropolis where the world’s populations mingle in markets, galleries and international restaurants, both humble and high-end",
+    category: "Business",
+    city: "Dubai",
+    country: "UAE",
+    user: user4,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480594101/dubai_cz0qmg.jpg"
+  },
+  {
+    title: "Best bachelor in Lille",
+    description: "Lille is the only city in France where beer versus wine is the drink of choice",
+    category: "Bachelor(ette)",
+    city: "Lille",
+    country: "France",
+    user: user2,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480594424/lille_cmw6kj.jpg"
   }
 ]
 
-trip_photo = Cloudinary::Api.resources_by_tag('city', :max_results => 20 )
+# trip_photo = Cloudinary::Api.resources_by_tag('city', :max_results => 20 )
 
 trips.each_with_index do |t, i|
   trip = Trip.create!(t)
-  random_photo = trip_photo['resources'][i]['url']
-  trip.remote_photo_url = random_photo
+  # random_photo = trip_photo['resources'][i]['url']
+  trip.remote_photo_url = t[:photo]
   trip.save
 end
 
 
 trip_days = [
   {
-    title: "Vendredi aprem", date: "42713", trip: Trip.first
+    title: "Vendredi", trip: Trip.first
   },
   {
-    title: "Samedi", date: "42714", trip: Trip.first
+    title: "Samedi", trip: Trip.first
   },
   {
-    title: "Dimanche", date: "42715", trip: Trip.first
+    title: "Dimanche", trip: Trip.first
   }
 ]
 
