@@ -1,32 +1,31 @@
 <li class="col-sm-12 col-md-3 col-lg-3 work-item <%= trip_type_class(trip) %>">
   <div class="card-content">
-  <div class="overlay"></div>
-  <div class="card-trip-background", style = "background-image:url(<%= cl_image_path(trip.photo, width: 400, height: 300, crop: :fill) %>); height: 300px;">
-    <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
-        <% if current_user.voted_for? trip %>
-          <i class="fa fa-heart red-heart fa-2x" aria-hidden="true"></i>
-        <% else %>
-          <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
+    <div class="overlay"></div>
+    <div class="card-trip-background", style = "background-image:url(<%= trip_photo_index_path(trip) %>); height: 300px;">
+      <div class="post-header">
+        <p class="post-title font-alt title-city"><%= trip.city %></p>
+      </div>
+      <div class="post-like">
+        <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
+          <% if current_user.voted_for? trip %>
+            <i class="fa fa-heart red-heart fa-2x" aria-hidden="true"></i>
+          <% else %>
+            <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
+          <% end %>        <% end %>
+      </div>
+      <div class="post-body">
+        <%= link_to trip_path(trip), {:class=>"text-center"} do %>
+          <h3 class="post-title font-alt"><%= trip.title %></h3>
         <% end %>
-    <% end %>
-
-    <div class="post-header">
-      <p class="post-title font-alt title-city"><%= trip.city %></p>
+      </div>
+      <div class="post-meta font-inc text-center">
+        By <%= trip.user.name %>
+        |  <%= trip.created_at.strftime('%^b %y') %>
+        <% if policy(trip).edit? %>
+          |  <%= link_to "Edit ", edit_trip_path(trip)%>
+        <% end %>
+      </div>
     </div>
-    <div class="post-body">
-      <%= link_to trip_path(trip), {:class=>"text-center"} do %>
-        <h3 class="post-title font-alt"><%= trip.title %></h3>
-      <% end %>
-    </div>
-    <div class="post-meta font-inc text-center">
-      By <%= trip.user.name %>
-       | <%= trip.created_at.strftime('%d %^b %y') %>
-      <% if policy(trip).edit? %>
-       | <%= link_to "Edit ", edit_trip_path(trip)%>
-      <% end %>
-    </div>
-  <div>
-  </div>
 </li>
 <!-- /POST ITEM -->
 

@@ -17,6 +17,12 @@ user1.save
 user_params = {username: "victor01", email: "victor010101@gmail.com", password: "000000", phone: "0055314810"}
 user2 = User.create!(user_params)
 
+user_params = {username: "guilaine", email: "guilaine.ghossoub4@gmail.com", password: "000000", phone: "0056714810"}
+user3 = User.create!(user_params)
+
+user_params = {username: "del", email: "del.martinache@gmail.com", password: "000000", phone: "0056714810"}
+user4 = User.create!(user_params)
+
 main_categories =
 [
   {
@@ -98,7 +104,6 @@ main_categories =
 
 main_categories.each do |mn|
   main = MainCategory.create!(mn)
-
 end
 
 categories =
@@ -214,8 +219,8 @@ trips = [
     category: "Discovery",
     city: "Paris",
     country: "France",
-    user: user2
-    # remote_photo_url: "v1480436546/mkkfhhy5do6ol9a1elcb.jpg"
+    user: user2,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592374/paris_nfibly.jpg"
   },
   {
     title: "Budapest par Glamour",
@@ -223,8 +228,8 @@ trips = [
     category: "Friends",
     city: "Budapest",
     country: "Hongrie",
-    user: user1
-    # remote_photo_url: "v1480436465/w4wtv2a5jk8oi3mgaybq.jpg"
+    user: user4,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592744/budapest_hm3qvp.jpg"
   },
   {
     title: "Weed-end à Amsterdam",
@@ -232,8 +237,8 @@ trips = [
     category: "Lovers",
     city: "Amsterdam",
     country: "Netherlands",
-    user: user1
-    # remote_photo_url: "v1480436352/nif1xktixeejrdpfhdfe.jpg"
+    user: user2,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480600016/amsterdam_ornexg.jpg"
   },
   {
     title: "Weed-end à Londres",
@@ -241,8 +246,8 @@ trips = [
     category: "Cultural",
     city: "London",
     country: "UK",
-    user: user2
-    # remote_photo_url: "v1480436623/z0oslnoed0tjqdozzrtq.jpg"
+    user: user3,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592906/london_geyl3z.jpg"
   },
   {
     title: "Weed-end à Berlin",
@@ -250,30 +255,62 @@ trips = [
     category: "Friends",
     city: "Berlin",
     country: "Germany",
-    user: user2
-    # remote_photo_url: "v1480434094/o1bfgj8xgjvydy2aj7pn.jpg"
+    user: user3,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480600112/berlin_wizlvq.jpg"
+  },
+  {
+    title: "Beautiful Florence",
+    description: "Known for its rich history, Florence is a destination for those seeking vibrant culinary, artistic and musical experiences",
+    category: "Family",
+    city: "Florence",
+    country: "Italy",
+    user: user3,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480593549/florence_lowwcx.jpg"
+  },
+  {
+    title: "Business in Dubai",
+    description: "Dubai has emerged as an ethnically diverse metropolis where the world’s populations mingle in markets, galleries and international restaurants, both humble and high-end",
+    category: "Business",
+    city: "Dubai",
+    country: "UAE",
+    user: user4,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480594101/dubai_cz0qmg.jpg"
+  },
+  {
+    title: "Best bachelor in Lille",
+    description: "Lille is the only city in France where beer versus wine is the drink of choice",
+    category: "Bachelor(ette)",
+    city: "Lille",
+    country: "France",
+    user: user2,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480594424/lille_cmw6kj.jpg"
+  },
+  {
+    title: "Love Vancouver",
+    description: "An abundance of outdoor options — whether it is hiking or biking in Stanley Park, kayaking in False Creek or skiing on nearby Grouse Mountain — only adds to the appeal. The city doesn’t take its natural gifts for granted; in recent years it has become so eco-friendly that some stores don’t even offer plastic bags. With its multitude of immigrant communities and northwest Canadian culture of extreme friendliness, Vancouver feels just different enough to be intriguingly foreign but familiar enough to be easily conquered in a weekend.",
+    category: "Lovers",
+    city: "Vancouver",
+    country: "Canada",
+    user: user3,
+    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480595370/vancouver_ndchwa.jpg"
   }
 ]
 
-trip_photo = Cloudinary::Api.resources_by_tag('city', :max_results => 20 )
-
 trips.each_with_index do |t, i|
   trip = Trip.create!(t)
-  random_photo = trip_photo['resources'][i]['url']
-  trip.remote_photo_url = random_photo
+  trip.remote_photo_url = t[:photo]
   trip.save
 end
 
-
 trip_days = [
   {
-    title: "Vendredi aprem", date: "42713", trip: Trip.first
+    title: "Vendredi", trip: Trip.first
   },
   {
-    title: "Samedi", date: "42714", trip: Trip.first
+    title: "Samedi", trip: Trip.first
   },
   {
-    title: "Dimanche", date: "42715", trip: Trip.first
+    title: "Dimanche", trip: Trip.first
   }
 ]
 
@@ -283,27 +320,27 @@ trip_days.each do |td|
 end
 
 
-some_activities = [
+activities_paris = [
   {
-    title: "APPETITE AWAKENER",
-    description: "will prime you for the weekend’s culinary delights",
-    main_category: MainCategory.all.sample,
-    establishment: "Taste of St.-Germain",
-    address: "8 rue du Cherche-Midi, 75006, Paris",
-    city: "Paris",
-    index: "1",
-    trip: Trip.first
+  title: "APPETITE AWAKENER",
+  description: "will prime you for the weekend’s culinary delights",
+  main_category: MainCategory.all.sample,
+  establishment: "Taste of St.-Germain",
+  address: "8 rue du Cherche-Midi, 75006, Paris",
+  city: "Paris",
+  index: "1",
+  trip: Trip.first
   },
   {
-    title: "Marche",
-    description: "where moneyed locals scoop up their saucisson, fresh milk and seasonal produce",
-    main_category: MainCategory.all.sample,
-    establishment: "Le Marché Couvert",
-    address: "4-6 Rue Lobineau, Paris",
-    city: "Paris",
-    index: "2",
-    trip: Trip.first,
-    trip_day: TripDay.first
+  title: "Marche",
+  description: "where moneyed locals scoop up their saucisson, fresh milk and seasonal produce",
+  main_category: MainCategory.all.sample,
+  establishment: "Le Marché Couvert",
+  address: "4-6 Rue Lobineau, Paris",
+  city: "Paris",
+  index: "2",
+  trip: Trip.first,
+  trip_day: TripDay.first
   },
   {
   title: "To the top",
@@ -402,8 +439,102 @@ some_activities = [
   }
 ]
 
+activities_amsterdam = [
+  {
+  title: "STYLE UPGRADE",
+  description: "Gathershop is a serene space opened in late 2014 that’s filled with beautiful art, clothing and more ",
+  main_category: MainCategory.all.sample,
+  establishment: "Gathershop",
+  address: "Hannie Dankbaarpassage 19, 1053 RT Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "PHOTO FIX",
+  description: "Dutch painters of the 17th century are renowned for their mastery of light, a skill that is now celebrated in a more modern medium at Fotografiemuseum Amsterdam",
+  main_category: MainCategory.all.sample,
+  establishment: "Foam",
+  address: "Keizersgracht 609, 1017 DS Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "FAR EAST FLAVORS",
+  description: "At Terpentijn, which opened last May, join groups of after-work Amsterdammers catching up over dishes like Donut Duck",
+  main_category: MainCategory.all.sample,
+  establishment: "Terpentijn",
+  address: "Rokin 103, 1012 KM Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "DE PIJP DRINKS",
+  description: "At the natural-wine bar Glouglou, the atmosphere is gezellig (untranslatably cozy) with dark wood walls, elegant Jugendstil-esque windows, and wooden tables at which to sip a glass of sparkling pét-nat.",
+  main_category: MainCategory.all.sample,
+  establishment: "Glouglou",
+  address: "Tweede van der Helststraat 3, 1073 AE Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "MORNING ROAST",
+  description: "Of the city’s many new third-wave coffee specialists, this is the finest. Baristas pull perfect espressos, accompanied by tasting notes for your beans, amid an eminently Instagrammable interior — wood-plank bar, hanging plants and parquet-wood benches.",
+  main_category: MainCategory.all.sample,
+  establishment: "Bocca Coffee",
+  address: "Kerkstraat 96HS, 1017 GP Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "HOME GROWN",
+  description: "Tulips aren’t the only things growing in the Netherlands. For proof, follow locals to Boerenmarkt, an organic weekly market on Noordermarkt",
+  main_category: MainCategory.all.sample,
+  establishment: "Boerenmarkt",
+  address: "Noordermarkt, 1015 NA Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "SUPERIOR INTERIORS",
+  description: "At Neef Louis Design, enormous warehouses are packed to the rafters with everything from midcentury chairs and industrial light fixtures to giant spotlights for your next film shoot.",
+  main_category: MainCategory.all.sample,
+  establishment: "Neef Louis Design",
+  address: "Papaverweg 46, 1032 KJ Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "FOOD HALL FAME",
+  description: "Foodhallen opened in a former tram depot in 2014 with about two dozen stalls, many occupied by well-known local businesses.",
+  main_category: MainCategory.all.sample,
+  establishment: "Foodhallen",
+  address: "Bellamyplein 51, 1053 AT Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  },
+  {
+  title: "WALL WORKS",
+  description: "Bright Side Gallery, housed in a former garage looking over the canal, features rotating exhibitions like a recent solo show of somber paintings from the up-and-coming Dutch artist Wouter Nijland.",
+  main_category: MainCategory.all.sample,
+  establishment: "Bright Side Gallery",
+  address: "Prinsengracht 737HS, 1017 JX Amsterdam, Netherlands",
+  city: "Amsterdam",
+  index: "1",
+  }
+]
 
-some_activities.each do |a|
-  activity = Activity.create!(a)
+activities_paris.each do |a|
+  activity = Trip.find_by(city: "Paris").activities.build(a)
+  activity.save
 end
+
+
+activities_amsterdam.each do |a|
+  activity = Trip.find_by(city: "Amsterdam").activities.build(a)
+  activity.save
+end
+
+# some_activities.each do |a|
+#   activity = Activity.create!(a)
+# end
 
