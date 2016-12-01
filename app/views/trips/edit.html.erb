@@ -1,7 +1,9 @@
 <div class="trip-edit-wrapper">
   <div class="container-fuid heigth100">
     <div class="row-fluid text-center heigth100">
-      <div class="col-xs-12 col-sm-2 heigth100">
+
+      <!-- AUTRES -->
+      <div class="col-xs-8 col-sm-2 heigth100">
       <!-- Activities not assigned + Add new activity module -->
         <p>Unassigned(<%= image_tag @trip_icons[0], class: "avatar-mini" %>)</p>
         <div class="row">
@@ -12,7 +14,7 @@
             <button type="button" class="btn btn-g width100 no-h-padding" data-toggle="modal" data-target="#modal_category">Add an activity</button>
           </div>
         </div>
-        <div id="grid-0" class="activity-grid works-hover-w sortable accordion heigth100 brd-grey">
+        <div id="grid-0" class="activity-grid works-hover-w sortable accordion heigth80">
           <% @activities.where(trip_day: nil).order(index: :asc).each do |act| %>
             <%= render 'activities/card_activity_index', activity: act %>
           <% end %>
@@ -20,14 +22,16 @@
         <%= render 'activities/modal_new_activity_by_establishment', activity: @activity, trip: @trip %>
         <%= render 'activities/modal_new_activity_by_category', activity: @activity, trip: @trip, main_categories: @main_categories %>
       </div>
+
+      <!-- LE VOYAGE JOUR PAR JOUR -->
       <div class="col-xs-12 col-sm-6 heigth100">
         <!-- Trip Days and Itiniraries -->
         <p class="font-alt"><%= @trip.title %></p>
-        <div class="row width100 inblock side-brd-grey heigth100">
+        <div class="row width100 inblock side-brd-grey heigth90">
           <% @trip_days.each do |td| %>
             <div class="col-xs-4 inblock trip-day heigth100">
               <p><%= td.title %>(<%= image_tag @trip_icons[td.id], class: "avatar-mini" %>)</p>
-              <div id="grid-<%= td.id %>" class="activity-grid works-hover-w sortable accordion heigth100">
+              <div id="grid-<%= td.id %>" class="activity-grid works-hover-w sortable accordion heigth90">
                 <% @activities.where(trip_day: td).order(index: :asc).each do |act| %>
                   <%= render 'activities/card_activity_index', activity: act %>
                 <% end %>
@@ -36,17 +40,27 @@
           <% end %>
         </div>
       </div>
+      <!-- /LE VOYAGE JOUR PAR JOUR -->
+
+      <!-- AUTRES -->
       <div class="col-xs-12 col-sm-4 heigth100">
+
+        <!-- BOUTONS -->
         <div class="buttons margined" style="width: 100%;">
           <div class="row">
-            <div class="col-xs-6">
-              <%= button_to @trip, class: "btn btn-info" do %>
+            <div class="col-xs-4 mini-h-padding">
+              <%= button_to trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
                 <span class="icon-printer"></span> Print
               <% end %>
             </div>
-            <div class="col-xs-6">
-              <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success", method: :put do %>
+            <div class="col-xs-4 mini-h-padding">
+              <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success  width100 text-center no-h-padding", method: :put do %>
                 <span class="icon-genius"></span>Make my day
+              <% end %>
+            </div>
+            <div class="col-xs-4 mini-h-padding">
+              <%= button_to trip_path(@trip), class: "btn btn-danger width100 text-center no-h-padding", method: :delete, data: {confirm: "CAUTION !!! THIS IS NOT REVERSIBLE - Are you sure you want to delete the entire trip?"} do %>
+                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>DELETE
               <% end %>
             </div>
           </div>
