@@ -296,29 +296,27 @@ trips = [
   }
 ]
 
+trip_days = [
+  {
+    title: "Vendredi"
+  },
+  {
+    title: "Samedi"
+  },
+  {
+    title: "Dimanche"
+  }
+]
+
 trips.each_with_index do |t, i|
   trip = Trip.create!(t)
   trip.remote_photo_url = t[:photo]
   trip.save
+  trip_days.each do |td|
+    trip.trip_days.build(td)
+    trip.save
+  end
 end
-
-trip_days = [
-  {
-    title: "Vendredi", trip: Trip.first
-  },
-  {
-    title: "Samedi", trip: Trip.first
-  },
-  {
-    title: "Dimanche", trip: Trip.first
-  }
-]
-
-
-trip_days.each do |td|
-  trip_day = TripDay.create!(td)
-end
-
 
 activities_paris = [
   {
