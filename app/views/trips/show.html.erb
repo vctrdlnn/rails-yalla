@@ -1,10 +1,7 @@
-<div class="banner_trip" style="background:url(<%= @trip.photo %>); height: 350px; background-repeat:no-repeat; background-size:cover">
+<div class="banner_trip" style="background:url(<%= trip_photo_show_path(@trip) %>); height: 350px; background-repeat:no-repeat; background-size:cover">
   <div class="trip_descri text-center">
     <h1><%= @trip.title %></h1>
     <h4>By: <%= @trip.user.username %></h4>
-    <% if policy(@trip).edit? %>
-      <%= link_to "Edit ", edit_trip_path(@trip)%>
-    <% end %>
   </div>
 </div>
     <ul class="nav nav-tabs" role="tablist">
@@ -25,7 +22,7 @@
                 Print
         </div>
       </div>
-      <% unless @trip.user == current_user %>
+      <% if policy(@trip).like? %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
           <div class="icon-heart"></div>
@@ -43,7 +40,7 @@
                 Share
         </div>
       </div>
-      <% if @trip.user == current_user %>
+      <% if policy(@trip).edit? %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
           <%= link_to edit_trip_path,format: :pdf do %>
@@ -87,8 +84,7 @@
 
 
 <% content_for :js do %>
-
-  <%= javascript_tag do %>
+  <script>
     $(function () {
       $('#tab_all').on('click',function(e){
         $('#tab_all').parent().addClass('active');
@@ -104,5 +100,5 @@
         $('.noassigned').show();
       });
     })
-  <% end %>
+  </script>
 <% end %>

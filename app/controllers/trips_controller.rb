@@ -40,7 +40,8 @@ class TripsController < ApplicationController
   def create
     @trip = current_user.trips.build(trip_params)
     authorize @trip
-    create_trip_days(params["trip"]["nb_days"].to_i, params["trip"]["start_date"].to_date)
+    params["trip"]["nb_days"].to_i == 0 ? nb_days = 3 : nb_days = params["trip"]["nb_days"].to_i
+    create_trip_days(nb_days, params["trip"]["start_date"].to_date)
     if @trip.save
       redirect_to edit_trip_path(@trip), notice: 'Trip was successfully created.'
     else
@@ -80,7 +81,7 @@ class TripsController < ApplicationController
 
   def make_my_day
     if @trip.activities.where.not(lat: nil, lon: nil).length < @trip.trip_days.length * 3
-      redirect_to :back, alert: "Only works with at least 9 activities"
+      redirect_to :back, alert: "Only works with at least 6 activities"
     else
       shortest_trip_days(@trip)
       mapping_icons
