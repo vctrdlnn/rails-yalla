@@ -1,4 +1,4 @@
-<div class="banner_trip" style="background:url(<%= @trip.photo %>); height: 350px; background-repeat:no-repeat; background-size:cover">
+<div class="banner_trip" style="background:url(<%= trip_photo_show_path(@trip) %>); height: 350px; background-repeat:no-repeat; background-size:cover">
   <div class="trip_descri text-center">
     <h1><%= @trip.title %></h1>
     <h4>By: <%= @trip.user.username %></h4>
