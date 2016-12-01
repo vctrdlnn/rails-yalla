@@ -1,29 +1,41 @@
 $(document).ready(function() {
   // Code for 'activity address'
+  var options = {};
+  if ($('#city_coordinates').text().length > 6) {
+    var lat = parseFloat($('#city_coordinates').text())
+    var lng = parseFloat($('#city_coordinates').text().split("|").pop())
+    var latLng = new google.maps.LatLng(lat, lng);/*San Diego*/
+    var radius = 100000;/*meters*/
+    var circle = new google.maps.Circle({center: latLng, radius: radius});
+    var defaultBounds= circle.getBounds();
+    options = {
+          bounds: defaultBounds
+      };
+  };
   var activity_address = $('#activity_address').get(0);
 
   if (activity_address) {
-    var address_autocomplete = new google.maps.places.Autocomplete(activity_address, { types: ['geocode'] });
+    var address_autocomplete = new google.maps.places.Autocomplete(activity_address, { options });
     google.maps.event.addListener(address_autocomplete, 'place_changed', onPlaceChanged);
     google.maps.event.addDomListener(activity_address, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
       }
     });
-  }
+  };
 
   // Code for 'activity establishment'
-  var activity_establishment = $('#activity_establishment').get(0);
+  var activity_establishment = $('#activity_est_establishment').get(0);
 
   if (activity_establishment) {
-    var establishment_autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'] });
+    var establishment_autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'], options });
     google.maps.event.addListener(establishment_autocomplete, 'place_changed', onActivityPlaceChanged);
     google.maps.event.addDomListener(activity_establishment, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
       }
     });
-  }
+  };
 
   // Code for 'trip city'
   var trip_city = $('#trip_city').get(0);
@@ -36,7 +48,7 @@ $(document).ready(function() {
         e.preventDefault(); // Do not submit the form on Enter.
       }
     });
-  }
+  };
 });
 
 
@@ -44,7 +56,9 @@ function onPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
   $('#activity_address').trigger('blur').val(components.address);
-  // $('#activity_establishment').val(components.name);
+  if (city == null) {
+    $('#activity_establishment').val(components.name);
+  }
   $('#activity_city').val(components.city);
   $('#activity_google_category').val(components.type);
   $('#activity_google_place_identifier').val(components.place_id);
@@ -60,7 +74,7 @@ function onActivityPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
 
-  $('#activity_establishment').trigger('blur').val(components.name);
+  $('#activity_est_establishment').trigger('blur').val(components.name);
   $('#activity_est_address').val(components.formatted_address);
   $('#activity_est_city').val(components.city);
   $('#activity_est_google_category').val(components.type);

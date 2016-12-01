@@ -1,7 +1,7 @@
 <div id="map" style="width: 100%; height: 90%;"></div>
 <div id="floating-panel" style="width: 100%; height: 10%;">
-<!--   <input id="hideAll" type=button value="Hide Markers" class="btn btn-xs btn-g">
-  <input id="showAll" type=button value="Show All Markers" class="btn btn-xs btn-g"> -->
+  <input id="autoRefresh" type=button style="display:none;" value="Hide Markers" class="btn btn-xs btn-g">
+<!--   <input id="showAll" type=button value="Show All Markers" class="btn btn-xs btn-g"> -->
   <input id="refreshAll" type=button value="Refresh Markers" class="btn btn-xs btn-g">
 </div>
 
@@ -10,10 +10,8 @@
   <script>
     $(document).ready(function() {
 
-
       // var activities = <%= raw map_hash.to_json %>;
       var activities = []
-      var trip_id = <%= raw trip_id %>;
 
       var markers = [];
       var map;
@@ -49,9 +47,10 @@
 
       function drop() {
         clearMarkers();
+        bounds  = new google.maps.LatLngBounds();
         if (typeof(activities) !== 'undefined') {
           for (var i = 0; i < activities.length; i++) {
-            addMarkerWithTimeoutandLabel(activities[i], i, i * 300);
+            addMarkerWithTimeoutandLabel(activities[i], i, i * 0);
             loc = new google.maps.LatLng(activities[i].lat, activities[i].lng);
             bounds.extend(loc);
             map.fitBounds(bounds);
@@ -74,7 +73,7 @@
             position: position,
             map: map,
             label: String(position.label),
-            animation: google.maps.Animation.DROP,
+            // animation: google.maps.Animation.DROP,
             icon: image
           });
 
@@ -102,8 +101,8 @@
         markers = [];
       }
 
-      $("#showAll").on("click", function() {
-        setMapOnAll(map);
+      $("#autoRefresh").on("click", function() {
+        updateActivities();
       });
 
       $("#hideAll").on("click", function() {
@@ -125,6 +124,7 @@
       }
 
       function updateActivities() {
+        console.log('updating markers');
         $.ajax({
           type: "GET",
           url: "map_markers.json",

@@ -22,8 +22,9 @@ console.log('super cool')
   new_activity.slideDown();
   // Reset the form
   <% @activity = Activity.new %>
-  $('#activity_establishment').val('')
-  $('#activity_est_title').val('')
-  $('#activity_address').val('')
-  $('#activity_title').val('')
+  $('#activity_establishment').val('');
+  $('#activity_est_title').val('');
+  $('#activity_address').val('');
+  $('#activity_title').val('');
+  $('#autoRefresh').click();
 <% end %>

@@ -48,7 +48,8 @@ class TripsController < ApplicationController
 
   def create_trip_days(nb_days, start_date)
     day = start_date || Date.today
-    nb_days.times do
+    days = [nb_days, 3].max
+    days.times do
       @trip.trip_days.build(title: day.strftime('%A'), date: day)
       @trip.save
       day = day.next
