@@ -3,9 +3,9 @@
   <div class="row">
     <% main_categories.each do |main_category| %>
       <div id="cat-<%= main_category.id.to_s %>" class="col-xs-2 card-category">
+        <label class="form-check-inline category-logo">
         <input class="form-check-input" type="radio" name="radio" id="inlineRadio1" value="yes">
         <br/>
-        <label class="form-check-inline category-logo">
           <%= image_tag main_category.icon, :style => "height: 40px" %>
           <br/><%= main_category.title %>
         </label>
@@ -13,7 +13,7 @@
     <% end %>
   </div>
   <%= f.input :address %>
-  <%= f.input :title %>
+  <%= f.input :title, input_html: { id: "activity_cat_title"} %>
   <%= f.input :establishment, as: :hidden %>
   <%= f.input :main_category_id, as: :hidden, required: true %>
   <%= f.input :city, as: :hidden %>

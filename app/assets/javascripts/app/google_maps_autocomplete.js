@@ -56,15 +56,15 @@ function onPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
   $('#activity_address').trigger('blur').val(components.address);
-  if (city == null) {
+  if (components.city == null) {
     $('#activity_establishment').val(components.name);
   }
   $('#activity_city').val(components.city);
   $('#activity_google_category').val(components.type);
   $('#activity_google_place_identifier').val(components.place_id);
   if (def_title) {
-    if($('#activity_title').val() == "") {
-      $('#activity_title').val(cat_select + components.address);
+    if($('#activity_cat_title').val() == "") {
+      $('#activity_cat_title').val(cat_select + components.address);
     }
   }
 }
