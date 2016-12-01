@@ -15,7 +15,7 @@
       <div class="content-box padded-icon">
         <div class="content-box-icon">
             <%= link_to trip_path(@trip, format: :pdf), target: 'blank' do %>
-            <div class="icon-printer icon-grey" ></div>
+            <div class="fa fa-print icon-grey" ></div>
             <% end %>
         </div>
         <div class="content-box-title font-inc">
@@ -25,7 +25,13 @@
       <% if policy(@trip).like? %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
-          <div class="icon-heart"></div>
+          <%= link_to like_trip_path(@trip), method: :put do %>
+            <% if current_user.voted_for? @trip %>
+              <div class="fa fa-heart red-heart"></div>
+            <% else %>
+              <div class="fa fa-heart icon-grey"></div>
+            <% end %>
+          <% end %>
         </div>
         <div class="content-box-title font-inc">
                 Like
@@ -34,7 +40,7 @@
       <% end %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
-          <div class="icon-rss"></div>
+          <div class="fa fa-share-alt icon-grey"></div>
         </div>
         <div class="content-box-title font-inc">
                 Share
@@ -85,20 +91,24 @@
 
 <% content_for :js do %>
   <script>
-    $(function () {
-      $('#tab_all').on('click',function(e){
-        $('#tab_all').parent().addClass('active');
-        $('.tab-pane').addClass('active in');
-        $('[data-toggle="tab"]').parent().removeClass('active');
-      });
+      $(function () {
+        $('#tab_all').on('click',function(e){
+          $('#tab_all').parent().addClass('active');
+          $('.tab-pane').addClass('active in');
+          $('[data-toggle="tab"]').parent().removeClass('active');
+        });
 
-      $('[data-toggle="tab"]').click(function (e) {
-        $('.noassigned').hide();
-      });
+        $('[data-toggle="tab"]').click(function (e) {
+          $('.noassigned').hide();
+        });
 
-      $('[data-show-unassigned="true"]').click(function (e) {
-        $('.noassigned').show();
-      });
+        $('[data-show-unassigned="true"]').click(function (e) {
+          $('.noassigned').show();
+        });
+
+        $( ".fa-heart" ).click(function() {
+          $( this ).toggleClass( "red-heart icon-grey" );
+        });
     })
   </script>
 <% end %>
