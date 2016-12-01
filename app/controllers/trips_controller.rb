@@ -13,6 +13,7 @@ class TripsController < ApplicationController
 
   def my_trips
     @trips = current_user.trips
+    @trips += current_user.find_voted_items
   end
 
   def show
