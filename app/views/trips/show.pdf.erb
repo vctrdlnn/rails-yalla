@@ -6,11 +6,15 @@
     <h4>By: <%= @trip.user.username %></h4>
 </div>
 <div class="mini-padded"></div>
- <%= wicked_pdf_image_tag('activity.jpg') %>
+
   <!--  la petite map -->
   <div class="mini-padded"></div>
 
 <% @trip.trip_days.each_with_index do |tripday, index| %>
+  <div class="<%= 'pagebreak' unless index == 0 %>">
+      <div class="text-center">
+  <%= wicked_pdf_image_tag(tripday.static_map_url(width = 500, height = 300)) %>
+  </div>
   <div role="tabpanel"  class="row tab-pane <%= 'active' if index == 0 %>" id="<%= tripday.title.downcase.gsub(' ', '_') %>">
 <div class="text-center">
   <h3><%= tripday.title %></h3>
@@ -45,6 +49,7 @@
     <% end %>
   </ul>
 </div>
+  </div>
 <% end %>
 
 
