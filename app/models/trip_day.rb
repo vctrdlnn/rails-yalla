@@ -3,9 +3,9 @@ class TripDay < ApplicationRecord
   belongs_to :trip
   has_many :activities, dependent: :destroy
 
-  def static_map_url
+  def static_map_url(width = 600, height = 600)
     base = "https://maps.googleapis.com/maps/api/staticmap?"
-    params = "?center=#{self.trip.lat},#{self.trip.lon}&size=600x600&maptype=roadmap&visible="
+    params = "?center=#{self.trip.lat},#{self.trip.lon}&size=" + width.to_s + "x" + height.to_s + "&maptype=roadmap&visible="
     key = "&key=" + ENV['GOOGLE_API_BROWSER_KEY']
     markers = ""
     path = "&path=color:0x0000ff70%7Cweight:3"

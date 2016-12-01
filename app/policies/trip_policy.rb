@@ -23,7 +23,7 @@ class TripPolicy < ApplicationPolicy
   end
 
   def like?
-    !user_is_owner?
+    !user_is_owner? && user_is_logged?
   end
 
   def make_my_day?
@@ -41,6 +41,10 @@ class TripPolicy < ApplicationPolicy
     # record => @trip
     # user => current_user
     user.admin || record.user == user if user
+  end
+
+  def user_is_logged?
+    user
   end
 
   def user_is_owner?

@@ -6,11 +6,17 @@
       <div class="post-header">
         <p class="post-title font-alt title-city"><%= trip.city %></p>
       </div>
-      <div class="post-like">
-        <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
-          <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
-        <% end %>
-      </div>
+      <% if policy(trip).like? %>
+        <div class="post-like">
+          <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
+            <% if current_user && current_user.voted_for?(trip) %>
+              <i class="fa fa-heart red-heart fa-2x" aria-hidden="true"></i>
+            <% else %>
+              <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
       <div class="post-body">
         <%= link_to trip_path(trip), {:class=>"text-center"} do %>
           <h3 class="post-title font-alt"><%= trip.title %></h3>
@@ -24,7 +30,6 @@
         <% end %>
       </div>
     </div>
-  </div>
 </li>
 <!-- /POST ITEM -->
 

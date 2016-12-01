@@ -13,7 +13,7 @@ class Trip < ApplicationRecord
   validates :category,
     inclusion: {
 
-      in: ["Discovery", "Lovers", "Business", "Friends", "Bachelor(ette)", "Family", "Cultural"],
+      in: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"],
 
       message: "%{value} is not a valid category"
       }

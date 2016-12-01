@@ -5,7 +5,7 @@
   <!-- /PRELOADER -->
 
   <!-- NAVIGATION -->
-  <nav class="navbar navbar-custom <%= "navbar-fixed-top navbar-transparent" if (controller_name == "pages" || !(  action_name == "edit" || controller_name == "registrations" || controller_name == "sessions" )) %>" role="navigation">
+  <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
 
       <div class="container-fluid">
         <div class="navbar-header">
@@ -15,27 +15,42 @@
         </div>
 
         <% if user_signed_in? %>
-        <div class="collapse navbar-collapse" id="custom-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" role="presentation"><%= link_to("My trips", my_trips_path)%></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %></a>
-              <ul class="dropdown-menu" role="menu">
+          <!-- Right nav bar user sign in -->
+          <div class="collapse navbar-collapse" id="custom-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown" role="presentation"><%= link_to("My trips", my_trips_path)%></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %></a>
+                <ul class="dropdown-menu" role="menu">
 
-                <li class="dropdown">
-                  <%= link_to("My profile", edit_user_registration_path)%>
-                </li>
+                  <li class="dropdown">
+                    <%= link_to("My profile", edit_user_registration_path)%>
+                  </li>
 
-                <li class="dropdown">
-                  <%= link_to("Sign out", destroy_user_session_path, method: :delete) %>
-                </li>
-              </ul>
-            </li>
+                  <li class="dropdown">
+                    <%= link_to("Sign out", destroy_user_session_path, method: :delete) %>
+                  </li>
+                </ul>
+              </li>
 
-          </ul>
-        </div>
+            </ul>
+          </div>
         <% else %>
-          <div class="collapse navbar-collapse" id="navcol-1">
+          <!-- Right nav bar visitor -->
+          <div class="collapse navbar-collapse" id="custom-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <ul class="dropdown-menu" role="menu">
+
+                  <li class="dropdown">
+                    <%= link_to("sign in", new_user_session_path, class: "navbar-link login") %>
+                  </li>
+
+                  <li class="dropdown">
+                    <%= link_to("sign up", new_user_registration_path, class: "btn btn-g btn-round action-button", role: "button") %>
+                  </li>
+                </ul>
+              </li>
             <p class="navbar-text navbar-right actions ">
               <%= link_to("sign in", new_user_session_path, class: "navbar-link login") %>
               <%= link_to("sign up", new_user_registration_path, class: "btn btn-g btn-round action-button", role: "button") %>
