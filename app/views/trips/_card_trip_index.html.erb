@@ -2,10 +2,6 @@
   <div class="card-content">
   <div class="overlay"></div>
   <div class="card-trip-background", style = "background-image:url(<%= trip_photo_index_path(trip) %>); height: 300px;">
-    <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
-          <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
-    <% end %>
-
     <div class="post-header">
       <p class="post-title font-alt title-city"><%= trip.city %></p>
     </div>
@@ -21,6 +17,10 @@
        | <%= link_to "Edit ", edit_trip_path(trip)%>
       <% end %>
     </div>
+    <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
+      <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
+    <% end %>
+
   <div>
   </div>
 </li>
