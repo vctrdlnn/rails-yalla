@@ -33,6 +33,7 @@ class ActivitiesController < ApplicationController
 
   def create
     @activity = current_user.activities.build(activity_params)
+    p activity_params
     @activity.index = 1 # TODO : REMOVE THIS
     authorize @activity
     set_title if @activity.title.nil?
