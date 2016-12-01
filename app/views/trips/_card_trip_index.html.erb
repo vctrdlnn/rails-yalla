@@ -3,7 +3,11 @@
   <div class="overlay"></div>
   <div class="card-trip-background", style = "background-image:url(<%= cl_image_path(trip.photo, width: 400, height: 300, crop: :fill) %>); height: 300px;">
     <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
+        <% if current_user.voted_for? trip %>
+          <i class="fa fa-heart red-heart fa-2x" aria-hidden="true"></i>
+        <% else %>
           <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
+        <% end %>
     <% end %>
 
     <div class="post-header">
