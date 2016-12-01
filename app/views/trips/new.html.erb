@@ -30,7 +30,7 @@
             <h3 class="text-center">Input city and other info</h3>
             <div class="mini-padded"></div>
             <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
-              <%= f.input :nb_days, required: true, collection: 1..3, selected: 3, label: 'Number of days' %>
+              <%= f.input :nb_days, required: true, collection: 2..3, selected: 3, label: 'Number of days' %>
               <%= f.input :city %>
               <%= f.input :title %>
               <%= f.input :category,
