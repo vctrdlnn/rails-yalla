@@ -18,6 +18,10 @@ class TripPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
+  def properties?
+    update?
+  end
+
   def destroy?
     user_is_owner_or_admin?
   end

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         get 'print'
         put 'make_my_day'
         get 'map_markers', format: :json
+        get 'properties'
       end
     end
 

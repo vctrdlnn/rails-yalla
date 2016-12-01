@@ -1,7 +1,7 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show ]
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
   skip_after_action :verify_authorized, only: [:my_trips]
 
@@ -32,6 +32,10 @@ class TripsController < ApplicationController
   def edit
     @activity = Activity.new
     @main_categories = MainCategory.all
+  end
+
+  def properties
+
   end
 
   def create
