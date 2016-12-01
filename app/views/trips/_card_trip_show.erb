@@ -4,6 +4,7 @@
   <h3><%= tripday.title %></h3>
   <p>Date: <%= tripday.date %></p>
 </div>
+<% if tripday.activities.count > 0 %>
   <div class="col-xs-12 col-lg-4">
     <img src="<%= tripday.static_map_url %>"></img>
   </div>
@@ -37,6 +38,11 @@
       <% end %>
     </ul>
   </div>
+  <% else %>
+    <div class="text-center">
+      <h5>No activity yet</h5>
+    </div>
+  <% end %>
 </div>
 
 
