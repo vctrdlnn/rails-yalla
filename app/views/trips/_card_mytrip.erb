@@ -1,4 +1,3 @@
-
 <li class="col-sm-12 col-md-3 col-lg-3 work-item <%= trip_type_class(trip) %>">
   <div class="card-content">
   <div class="overlay"></div>
@@ -17,15 +16,11 @@
     </div>
     <div class="post-meta font-inc text-center">
       By <%= trip.user.name %>
-        <%= trip.created_at.strftime('%d %^b %y') %>
+       | <%= trip.created_at.strftime('%d %^b %y') %>
       <% if policy(trip).edit? %>
-        <%= link_to "Edit ", edit_trip_path(trip)%>
+       | <%= link_to "Edit ", edit_trip_path(trip)%>
       <% end %>
-      <div class="work-caption">
-        <h2 class="work-title font-alt"><%= trip.title %></h2>
-          <div class="work-descr font-inc"><%= trip.user.name %>
-          </div>
-      </div>
+    </div>
+  <div>
+  </div>
 </li>
-<!-- /POST ITEM -->
-

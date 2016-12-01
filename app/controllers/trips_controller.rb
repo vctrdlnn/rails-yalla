@@ -4,9 +4,15 @@ class TripsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show ]
   before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day]
 
+  skip_after_action :verify_authorized, only: [:my_trips]
+
   def index
     # @trips = Trip.all
     @trips = policy_scope(Trip)
+  end
+
+  def my_trips
+    @trips = current_user.trips
   end
 
   def show
