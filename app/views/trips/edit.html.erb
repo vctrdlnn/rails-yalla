@@ -70,7 +70,7 @@
 
         <!-- Map, to do, references, etc... -->
         <div class="map_container" style="width: 100%; height: 50%;">
-          <%= render 'shared/maps', map_hash: set_map_hash(@trip.activities, trip_icons), trip_id: @trip.id %>
+          <%= render 'shared/maps', map_hash: set_map_hash(@trip.activities, trip_icons) %>
         </div>
 
         <!-- Description of the trip to edit -->
@@ -136,7 +136,9 @@
           url: '/activities/' + activity_id + '/change_position/',
           data: data,
           success: function(data) {
-            console.log(data);
+            //console.log(data);
+            console.log('index updated');
+            $('#autoRefresh').click();
             // callback(data); // return data in callback
           },
           error: function(jqXHR) {
