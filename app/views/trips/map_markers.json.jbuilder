@@ -1,5 +1,5 @@
 trip_hash = set_day_icon(@trip.trip_days)
-json.array! @trip.activities.order(:trip_day_id, :index) do |act|
+json.array! @trip.activities.where.not(lat: nil, lon: nil).order(:trip_day_id, :index) do |act|
   json.extract! act, :lat
   json.lng act.lon
   json.label act.index.to_s
