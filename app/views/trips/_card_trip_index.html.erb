@@ -1,28 +1,17 @@
-<li class="col-sm-12 col-md-3 col-lg-3 work-item <%= trip_type_class(trip) %>">
-  <div class="card-content">
-  <div class="overlay"></div>
-  <div class="card-trip-background", style = "background-image:url(<%= cl_image_path(trip.photo, width: 400, height: 300, crop: :fill) %>); height: 300px;">
-    <%= link_to like_trip_path(trip), method: :put, class: "heart" do %>
-          <i class="fa fa-heart pink-heart fa-2x" aria-hidden="true"></i>
-    <% end %>
-
-    <div class="post-header">
-      <p class="post-title font-alt title-city"><%= trip.city %></p>
-    </div>
-    <div class="post-body">
-      <%= link_to trip_path(trip), {:class=>"text-center"} do %>
-        <h3 class="post-title font-alt"><%= trip.title %></h3>
+<li class="col-sm-12 col-md-3 col-lg-3 work-item <%= trip.category.downcase %>">
+      <%= link_to trip_path(trip) do %>
+        <div class="card-trip-img">
+          <%= cl_image_tag(trip.photo, width: 400, height: 300, crop: :fill) %>
+        </div>
+        <div class="card-trip-city font-alt">
+          <p class="post-title font-alt title-city"><%= trip.city %></p>
+        </div>
       <% end %>
-    </div>
-    <div class="post-meta font-inc text-center">
-      By <%= trip.user.name %>
-       | <%= trip.created_at.strftime('%d %^b %y') %>
-      <% if policy(trip).edit? %>
-       | <%= link_to "Edit ", edit_trip_path(trip)%>
-      <% end %>
-    </div>
-  <div>
-  </div>
+      <div class="work-caption">
+        <h2 class="work-title font-alt"><%= trip.title %></h2>
+          <div class="work-descr font-inc"><%= trip.user.name %>
+          </div>
+      </div>
 </li>
 <!-- /POST ITEM -->
 

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       end
     end
 
+    get 'my_trips', to: 'trips#my_trips'
+
     # get 'activities/new_act', to: 'activities#new_act'
     # post 'activities/new_act', to: 'activities#create'
 
