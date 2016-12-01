@@ -100,26 +100,17 @@
           <!-- MODULE TITLE -->
             <div class="col-xs-12 text-center">
               <h2 class="module-title no-margin font-alt">Browse our best trips</h2>
+              <div class="mini-padded"></div>
+              <div class="mini-padded"></div>
             </div>
           <!-- /MODULE TITLE -->
-          <div class="col-xs-12">
-
-            <ul id="filters" class="filter font-inc">
-              <li><a href="#" data-filter="*" class="current wow fadeInUp">All</a></li>
-              <li><a href="#" data-filter=".discovery" class="wow fadeInUp" data-wow-delay="0.2s">Discovery</a></li>
-              <li><a href="#" data-filter=".friends" class="wow fadeInUp" data-wow-delay="0.4s">Friends</a></li>
-              <li><a href="#" data-filter=".cultural" class="wow fadeInUp" data-wow-delay="0.6s">Cultural</a></li>
-              <li><a href="#" data-filter=".lovers" class="wow fadeInUp" data-wow-delay="0.8s">Lovers</a></li>
-            </ul>
-
-          </div>
         </div>
         <!-- /PORTFOLIO FILTER -->
 
 
       <!-- PORTFOLIO LIST -->
       <ul id="works-grid" class="works-grid works-grid-masonry works-grid-3 works-hover-w">
-          <% Trip.all.each do |trip| %>
+          <% Trip.all.first(6).each do |trip| %>
             <%= render 'trips/card_trip_home', trip: trip %>
           <% end %>
       </ul>
@@ -140,6 +131,7 @@
           <!-- MODULE TITLE -->
           <div class="col-xs-12 text-center">
             <h2 class="module-title no-margin font-alt">Testimonials</h2>
+            <div class="mini-padded"></div>
           </div>
           <!-- /MODULE TITLE -->
 

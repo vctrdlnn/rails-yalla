@@ -2,9 +2,6 @@
   <div class="trip_descri text-center">
     <h1><%= @trip.title %></h1>
     <h4>By: <%= @trip.user.username %></h4>
-    <% if policy(@trip).edit? %>
-      <%= link_to "Edit ", edit_trip_path(@trip)%>
-    <% end %>
   </div>
 </div>
     <ul class="nav nav-tabs" role="tablist">
@@ -25,7 +22,7 @@
                 Print
         </div>
       </div>
-      <% unless @trip.user == current_user %>
+      <% if policy(@trip).like? %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
           <div class="icon-heart"></div>
@@ -43,7 +40,7 @@
                 Share
         </div>
       </div>
-      <% if @trip.user == current_user %>
+      <% if policy(@trip).edit? %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
           <%= link_to edit_trip_path,format: :pdf do %>
@@ -57,13 +54,13 @@
       </div>
       <% end %>
   </div>
-  <div class="padded"></div>
+  <div class="mini-padded"></div>
   <div class="col-xs-12 text-center border-bottom">
     <blockquote class="font-serif col-xs-10 col-xs-offset-1">
       <p>"<%= @trip.description %>"</p>
     </blockquote>
   </div>
-  <div class="padded"></div>
+  <div class="mini-padded"></div>
 
   <div class="container_day tab-content">
     <% @trip.trip_days.each_with_index do |tripday, index| %>
@@ -87,8 +84,7 @@
 
 
 <% content_for :js do %>
-
-  <%= javascript_tag do %>
+  <script>
     $(function () {
       $('#tab_all').on('click',function(e){
         $('#tab_all').parent().addClass('active');
@@ -104,5 +100,5 @@
         $('.noassigned').show();
       });
     })
-  <% end %>
+  </script>
 <% end %>
