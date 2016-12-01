@@ -1,8 +1,7 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
-  include MapsHashConcern
   skip_before_action :authenticate_user!, only: [:index, :show ]
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers]
 
   skip_after_action :verify_authorized, only: [:my_trips]
 
@@ -30,9 +29,6 @@ class TripsController < ApplicationController
   end
 
   def edit
-    @disable_footer = true
-
-    mapping_icons
     @activity = Activity.new
     @main_categories = MainCategory.all
   end
@@ -84,19 +80,14 @@ class TripsController < ApplicationController
       redirect_to :back, alert: "Only works with at least 6 activities"
     else
       shortest_trip_days(@trip)
-      mapping_icons
       redirect_to edit_trip_path(@trip), notice: 'Magic has happen, this is the best itinirary!'
     end
   end
 
-  private
-
-  def mapping_icons
-    @activities = @trip.activities
-    @trip_days = @trip.trip_days
-    @trip_icons = set_day_icon(@trip_days)
-    @map_hash = set_map_hash(@activities, @trip_icons) if @activities.length > 0
+  def map_markers
   end
+
+  private
 
   def set_trip
     @trip = Trip.find(params[:id])

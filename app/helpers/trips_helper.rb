@@ -14,6 +14,7 @@ module TripsHelper
 
   end
 
+  # Photo cover pour card background url
   def trip_photo_index_path(trip)
     if trip.photo_url.nil?
       cl_image_path("watch_window_default.jpg", width: 400, height: 300, :crop=>"fill")
@@ -22,6 +23,7 @@ module TripsHelper
     end
   end
 
+  # Photo cover pour card image
   def trip_photo_index_tag(trip)
     if trip.photo_url.nil?
       cl_image_tag("watch_window_default.jpg", width: 400, height: 300, :crop=>"fill")
@@ -30,6 +32,7 @@ module TripsHelper
     end
   end
 
+  # Photo cover pour background
   def trip_photo_show_path(trip)
     if trip.photo_url.nil?
       cl_image_path("watch_window_default.jpg", height: 350, width: 1400, :crop=>"fill")

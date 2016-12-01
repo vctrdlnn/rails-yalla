@@ -1,3 +1,5 @@
+<% @disable_footer = true %>
+<% trip_icons = set_day_icon(@trip.trip_days) %>
 <div class="trip-edit-wrapper">
   <div class="container-fuid heigth100">
     <div class="row-fluid text-center heigth100">
@@ -5,7 +7,7 @@
       <!-- AUTRES -->
       <div class="col-xs-8 col-sm-2 heigth100">
       <!-- Activities not assigned + Add new activity module -->
-        <p>Unassigned(<%= image_tag @trip_icons[0], class: "avatar-mini" %>)</p>
+        <p>Unassigned(<%= image_tag trip_icons.first, class: "avatar-mini" %>)</p>
         <div class="row">
           <div class="col-xs-12">
             <button type="button" class="btn btn-g width100 no-h-padding" data-toggle="modal" data-target="#modal_establishment">Add a place</button>
@@ -15,7 +17,7 @@
           </div>
         </div>
         <div id="grid-0" class="activity-grid works-hover-w sortable accordion heigth80">
-          <% @activities.where(trip_day: nil).order(index: :asc).each do |act| %>
+          <% @trip.activities.where(trip_day: nil).order(index: :asc).each do |act| %>
             <%= render 'activities/card_activity_index', activity: act %>
           <% end %>
         </div>
@@ -28,11 +30,11 @@
         <!-- Trip Days and Itiniraries -->
         <p class="font-alt"><%= @trip.title %></p>
         <div class="row width100 inblock side-brd-grey heigth90">
-          <% @trip_days.each do |td| %>
+          <% @trip.trip_days.each do |td| %>
             <div class="col-xs-4 inblock trip-day heigth100">
-              <p><%= td.title %>(<%= image_tag @trip_icons[td.id], class: "avatar-mini" %>)</p>
+              <p><%= td.title %>(<%= image_tag trip_icons[td.id], class: "avatar-mini" %>)</p>
               <div id="grid-<%= td.id %>" class="activity-grid works-hover-w sortable accordion heigth90">
-                <% @activities.where(trip_day: td).order(index: :asc).each do |act| %>
+                <% @trip.activities.where(trip_day: td).order(index: :asc).each do |act| %>
                   <%= render 'activities/card_activity_index', activity: act %>
                 <% end %>
               </div>
@@ -68,7 +70,7 @@
 
         <!-- Map, to do, references, etc... -->
         <div class="map_container" style="width: 100%; height: 50%;">
-          <%= render 'shared/maps', map_hash: @map_hash %>
+          <%= render 'shared/maps', map_hash: set_map_hash(@trip.activities, trip_icons) %>
         </div>
 
         <!-- Description of the trip to edit -->

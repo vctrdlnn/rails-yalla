@@ -31,5 +31,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :trips, only: [ :index ]
+    end
+  end
+
   devise_for :users, only: [:omniauth_callbacks, :registrations], controllers: {omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'registrations'}
 end

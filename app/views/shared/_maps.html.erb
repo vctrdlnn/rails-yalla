@@ -1,4 +1,9 @@
-<div id="map" style="width: 100%; height: 100%;"></div>
+<div id="map" style="width: 100%; height: 90%;"></div>
+<div id="floating-panel" style="width: 100%; height: 10%;">
+  <input id="hideAll" type=button value="Hide Markers" class="btn btn-xs btn-g">
+  <input id="showAll" type=button value="Show All Markers" class="btn btn-xs btn-g">
+  <input id="refreshAll" type=button value="Refresh Markers" class="btn btn-xs btn-g">
+</div>
 
 
 <% content_for(:js) do %>
@@ -20,11 +25,14 @@
 
       var bounds  = new google.maps.LatLngBounds();
 
-      initMap();
-      console.log("drop ? ")
-      drop();
-      console.log("dropped !")
+      draw_map();
 
+      function draw_map() {
+        initMap();
+        console.log("drop ? ")
+        drop();
+        console.log("dropped !")
+      }
 
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -87,8 +95,35 @@
         markers = [];
       }
 
-    });
+      $("#showAll").on("click", function() {
+        setMapOnAll(map);
+      });
 
+      $("#hideAll").on("click", function() {
+        setMapOnAll(null);
+      });
+
+      $("#refreshAll").on("click", function() {
+        drop();
+      });
+
+
+      // Adds a marker to the map and push to the array.
+      function addMarker(location) {
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        markers.push(marker);
+      }
+
+      // Sets the map on all markers in the array.
+      function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+    });
   </script>
 <% end %>
 
