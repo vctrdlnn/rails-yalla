@@ -237,7 +237,7 @@
                 <span class="icon-envelope"></span>
               </div>
               <div class="content-box-title font-inc">
-                victor010101@gmail.com
+                mail
               </div>
             </div>
           </div>
@@ -403,18 +403,14 @@
       })(jQuery)
 
       $(function(){
-        $('#slogan').typer({
-          search: 'family trip to Barcelona',
-          replace: ['lovers getaway to Paris', 'bachelor party in Berlin', 'shopping in Milan', 'weekend in London']
-        })
-        $('#slogan2').typer({
-          search: 'week-end',
-          replace: ['lover getaway', 'bachelor party', 'shopping', 'birthday']
-        })
-        $('#slogan3').typer({
-          search: 'London',
-          replace: ['Paris', 'Berlin', 'Milan', 'Amsterdam']
-        })
+        if (window.matchMedia("(min-width: 768px)").matches) {
+          $('#slogan').typer({
+            search: 'family trip to Barcelona',
+            replace: ['lovers getaway to Paris', 'bachelor party in Berlin', 'shopping in Milan', 'weekend in London']
+          })
+        } else {
+          $('#slogan').html("family trip to Barcelona")
+        }
       })
 
     });
