@@ -11,7 +11,7 @@ $(document).ready(function() {
     options = {
           bounds: defaultBounds
       };
-  };
+  }
   var activity_address = $('#activity_address').get(0);
 
   if (activity_address) {
@@ -22,20 +22,20 @@ $(document).ready(function() {
         e.preventDefault(); // Do not submit the form on Enter.
       }
     });
-  };
+  }
 
   // Code for 'activity establishment'
   var activity_establishment = $('#activity_est_establishment').get(0);
 
   if (activity_establishment) {
-    var establishment_autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'], options });
+    var establishment_autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'] });
     google.maps.event.addListener(establishment_autocomplete, 'place_changed', onActivityPlaceChanged);
     google.maps.event.addDomListener(activity_establishment, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
       }
     });
-  };
+  }
 
   // Code for 'trip city'
   var trip_city = $('#trip_city').get(0);
@@ -48,7 +48,7 @@ $(document).ready(function() {
         e.preventDefault(); // Do not submit the form on Enter.
       }
     });
-  };
+  }
 });
 
 
