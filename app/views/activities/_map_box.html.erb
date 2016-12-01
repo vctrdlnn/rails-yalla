@@ -1,5 +1,5 @@
 <div class="map_box">
-  <h3><%= activity.title %></h3>
+  <p><%= activity.title %></p>
   <p><%= activity.address %></p>
-  <%= link_to "Details", activity_path(activity), target: :blank, class: "btn btn-warning" %>
+  <span class="icon-pencil" data-toggle="modal" data-target="#myEditModal-<%= activity.id%>"></span>
 </div>

@@ -20,4 +20,8 @@ class Trip < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
+  def markers
+
+  end
+
 end

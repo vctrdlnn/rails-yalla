@@ -56,6 +56,9 @@ gem 'jquery-ui-rails'
 # authorizations:
 gem 'pundit'
 
+# authentification
+gem 'simple_token_authentication'
+
 # internationalization
 gem 'rails-i18n', '~> 5.0.0'
 gem 'devise-i18n'

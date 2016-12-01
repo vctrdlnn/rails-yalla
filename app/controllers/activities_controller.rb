@@ -1,5 +1,4 @@
 class ActivitiesController < ApplicationController
-  include MapsHashConcern
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position]
   # before_action :set_trip, only: [:new, :create]
   before_filter :sanitize_activity_params, only: [:change_position]
