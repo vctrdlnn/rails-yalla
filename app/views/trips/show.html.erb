@@ -23,20 +23,18 @@
         </div>
       </div>
       <% if policy(@trip).like? %>
-      <div class="content-box padded-icon">
-        <div class="content-box-icon">
-          <%= link_to like_trip_path(@trip), method: :put do %>
-            <% if current_user.voted_for? @trip %>
-              <div class="fa fa-heart red-heart"></div>
-            <% else %>
-              <div class="fa fa-heart icon-grey"></div>
+        <div class="content-box padded-icon">
+          <div class="content-box-icon">
+            <%= link_to like_trip_path(@trip), method: :put do %>
+                <% if current_user && current_user.voted_for?(@trip) %>
+                  <div class="fa fa-heart red-heart"></div>
+                <% else%>
+                  <div class="fa fa-heart icon-grey"></div>
+                <% end %>
             <% end %>
-          <% end %>
+          </div>
+          <div class="content-box-title font-inc">Like</div>
         </div>
-        <div class="content-box-title font-inc">
-                Like
-        </div>
-      </div>
       <% end %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
