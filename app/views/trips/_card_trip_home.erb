@@ -3,9 +3,12 @@
         <div class="card-trip-img">
           <%= cl_image_tag(trip.photo, width: 400, height: 300, crop: :fill) %>
         </div>
+        <div class="card-trip-city font-alt">
+          <p class="post-title font-alt title-city"><%= trip.city %></p>
+        </div>
       <% end %>
       <div class="work-caption">
-        <h3 class="work-title font-alt"><%= trip.title %></h3>
+        <h2 class="work-title font-alt"><%= trip.title %></h2>
           <div class="work-descr font-inc"><%= trip.user.name %>
           </div>
       </div>

@@ -1,3 +1,4 @@
+// TODO: Move to override_theme.scss
 .works-grid {
   overflow: hidden;
 }
@@ -5,6 +6,20 @@
 .work-caption {
   z-index: -100;
 }
+
+.works-grid.works-hover-w .work-item:hover .card-trip-img:after {
+  background: rgba(255, 255, 255, .8);
+}
+
+.post-meta.font-inc{
+  position: relative;
+  top: 100px;
+  color: white;
+  a{
+    color:white;
+  }
+}
+// move
 
 .card-trip {
   position: relative;
@@ -47,9 +62,6 @@
   transition: all 0.3s ease-in-out 0s;
 }
 
-.works-grid.works-hover-w .work-item:hover .card-trip-img:after {
-  background: rgba(255, 255, 255, .8);
-}
 
 .card-trip-user {
   position: absolute;
@@ -68,15 +80,24 @@
   bottom: 10px;
   left: 10px;
 }
+
 .card-trip-description h2 {
   font-size: 24px;
 }
+
 .card-trip-description p {
   font-size: 13px;
-  }
+}
 
 .card-trip-link:hover{
   opacity: 0.1;
+}
+
+.card-trip-city {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  color: black;
 }
 
 .red-heart {
@@ -125,11 +146,3 @@ h3.post-title.font-alt{
   font-size: 19px;
 }
 
-.post-meta.font-inc{
-  position: relative;
-  top: 100px;
-  color: white;
-  a{
-    color:white;
-  }
-}

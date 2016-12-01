@@ -46,11 +46,14 @@
       <% if @trip.user == current_user %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
-          <div class="icon-pencil"></div>
+          <%= link_to edit_trip_path,format: :pdf do %>
+            <div class="icon-pencil"></div>
+          <% end %>
         </div>
         <div class="content-box-title font-inc">
                 Edit
         </div>
+
       </div>
       <% end %>
   </div>
@@ -102,5 +105,4 @@
       });
     })
   <% end %>
-
 <% end %>
