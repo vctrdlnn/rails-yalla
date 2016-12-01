@@ -31,19 +31,14 @@ main_categories =
     color: "bg-visites"
   },
   {
+    title: "Visits",
+    icon: "categories/visits.png",
+    color: "bg-visites"
+  },
+  {
     title: "Restaurants",
     icon: "categories/restaurants.png",
     color: "bg-food"
-  },
-  {
-    title: "Fun",
-    icon: "categories/fun.png",
-    color: "bg-fun"
-  },
-  {
-    title: "Nature",
-    icon: "categories/nature.png",
-    color: "bg-nature"
   },
   {
     title: "Bar & Nightlife",
@@ -51,24 +46,24 @@ main_categories =
     color: "bg-food"
   },
   {
-    title: "Others",
-    icon: "categories/others.png",
-    color: "bg-others"
+    title: "Shopping",
+    icon: "categories/shopping.png",
+    color: "bg-shopping"
+  },
+  {
+    title: "Nature",
+    icon: "categories/nature.png",
+    color: "bg-nature"
+  },
+  {
+    title: "Outdoor",
+    icon: "categories/outdoor.png",
+    color: "bg-nature"
   },
   {
     title: "Sport",
     icon: "categories/sport.png",
     color: "bg-fun"
-  },
-  {
-    title: "Communication",
-    icon: "categories/communication.png",
-    color: "bg-others"
-  },
-  {
-    title: "Best of City",
-    icon: "categories/Best of City.png",
-    color: "bg-visites"
   },
   {
     title: "Hotels",
@@ -81,25 +76,30 @@ main_categories =
     color: "bg-fun"
   },
   {
-    title: "Outdoor",
-    icon: "categories/outdoor.png",
-    color: "bg-nature"
-  },
-  {
-    title: "Shopping",
-    icon: "categories/shopping.png",
-    color: "bg-shopping"
-  },
-  {
     title: "Transportation",
     icon: "categories/transportation.png",
     color: "bg-others"
   },
   {
-    title: "Visits",
-    icon: "categories/visits.png",
-    color: "bg-visites"
+    title: "Fun",
+    icon: "categories/fun.png",
+    color: "bg-fun"
+  },
+  {
+    title: "Others",
+    icon: "categories/others.png",
+    color: "bg-others"
   }
+  # {
+  #   title: "Communication",
+  #   icon: "categories/communication.png",
+  #   color: "bg-others"
+  # },
+  # {
+  #   title: "Best of City",
+  #   icon: "categories/Best of City.png",
+  #   color: "bg-visites"
+  # },
 ]
 
 main_categories.each do |mn|

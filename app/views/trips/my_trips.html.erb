@@ -29,7 +29,7 @@
   <!-- /HOME -->
 
   <!-- BLOG GRID -->
-  <section class="module p-b-0  p-t-20">
+  <section class="module p-b-0 p-t-20">
 
     <div class="container">
 
@@ -58,6 +58,12 @@
       </ul>
 
       </div>
+    </div>
+  </section>
+  <section class="module-small">
+    <div class="buttons_home text-center">
+      <%= link_to t("CREATE A TRIP"), new_trip_path, :class => "btn btn-success btn-lg" %>
+      <%= link_to t("EXPLORE MORE"), trips_path, :class => "btn btn-primary btn-lg" %>
     </div>
   </section>
 </div>
