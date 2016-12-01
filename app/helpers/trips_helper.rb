@@ -5,11 +5,13 @@ module TripsHelper
   end
 
   def trip_type_class(trip)
+    class_name = trip.category.downcase.gsub(' ', '_')
     if trip.user == current_user
-      "personal_trips"
+      class_name += " personal_trips"
     else
-      "liked_trips"
+      class_name += " liked_trips"
     end
+
   end
 
   def trip_photo_index_path(trip)
