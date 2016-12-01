@@ -18,6 +18,13 @@ class Trip < ApplicationRecord
       message: "%{value} is not a valid category"
       }
 
+  geocoded_by :address, latitude: :lat, longitude: :lon
+  after_validation :geocode
+
+  def address
+    [city, country].compact.join(', ')
+  end
+
   mount_uploader :photo, PhotoUploader
 
   def markers
