@@ -16,7 +16,7 @@
     </div>
     <div class="post-meta font-inc text-center">
       By <%= trip.user.name %>
-       | <%= trip.created_at.strftime('%d %^b %y') %>
+       | <%= trip.created_at.strftime('%^b %y') %>
       <% if policy(trip).edit? %>
        | <%= link_to "Edit ", edit_trip_path(trip)%>
       <% end %>
