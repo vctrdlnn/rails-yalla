@@ -1,5 +1,16 @@
+<div class="wrapper">
+    <section class="module module-header bg-dark bg-dark-50" data-background=<%= image_path('cities/city2.jpg') %> >
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <h1 class="module-title font-alt align-center">Your profil</h1>
+        </div>
+      </div>
+</div>
+
+  </section >
 <div class="container">
-  <h2 class="page-header text-center">Edit Profile</h2>
+  <div class="mini-padded"></div>
   <div class="row">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
       <div class="col-md-4 col-sm-6 col-xs-12">
