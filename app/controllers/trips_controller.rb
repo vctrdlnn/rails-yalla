@@ -8,6 +8,7 @@ class TripsController < ApplicationController
   def index
     # @trips = Trip.all
     @trips = policy_scope(Trip)
+    @trips = @trips.sort { |x, y| y.likes <=> x.likes }
   end
 
   def my_trips
@@ -83,7 +84,7 @@ class TripsController < ApplicationController
 
   def make_my_day
     if @trip.activities.where.not(lat: nil, lon: nil).length < @trip.trip_days.length * 3
-      redirect_to :back, alert: "Only works with at least 6 activities"
+      redirect_to :back, alert: "Only works with at least #{@trip.trip_days.length * 3} activities"
     else
       shortest_trip_days(@trip)
       redirect_to edit_trip_path(@trip), notice: 'Magic has happen, this is the best itinirary!'

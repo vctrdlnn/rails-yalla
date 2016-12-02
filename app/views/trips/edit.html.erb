@@ -53,17 +53,22 @@
         <!-- BOUTONS -->
         <div class="buttons margined" style="width: 100%;">
           <div class="row">
-            <div class="col-xs-4 mini-h-padding">
-              <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success  width100 text-center no-h-padding", method: :put, data: {confirm: "Caution! This will reshuffle completely your activities - this is not reversible. Confirm ? "}  do %>
+            <div class="col-xs-3 mini-h-padding">
+              <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success  width100 text-center no-h-padding", method: :put do %>
                 <span class="icon-genius"></span>Make my day
               <% end %>
             </div>
-            <div class="col-xs-4 mini-h-padding">
+            <div class="col-xs-3 mini-h-padding">
               <%= button_to trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
                 <span class="icon-printer"></span> Print
               <% end %>
             </div>
-            <div class="col-xs-4 mini-h-padding">
+            <div class="col-xs-3 mini-h-padding">
+              <%= button_to properties_trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
+                <span class="icon-pencil"></span> Edit
+              <% end %>
+            </div>
+            <div class="col-xs-3 mini-h-padding">
               <%= button_to trip_path(@trip), class: "btn btn-danger width100 text-center no-h-padding", method: :delete, data: {confirm: "CAUTION !!! THIS IS NOT REVERSIBLE - Are you sure you want to delete the entire trip?"} do %>
                 <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>DELETE
               <% end %>
@@ -78,7 +83,8 @@
 
         <!-- Description of the trip to edit -->
         <div class="other_container brd-lightgry" style="width: 100%; height: 30%;">
-          <%= @trip.description %>
+          <p><span class="font-alt">Description:</span></p>
+          <p><%= @trip.description %></p>
           <span id="city_coordinates" style="display:none;"><%= "#{@trip.lat}|#{@trip.lon}" %></span>
         </div>
       </div>

@@ -2,28 +2,38 @@
 <div class="wrapper">
 
   <!-- HOME -->
-    <section class="module module-header bg-dark bg-dark-50" data-background=<%= image_path('trip_background.jpg') %> >
+    <section class="module bg-dark bg-dark-50" data-background=<%= image_path('trip_background.jpg') %> >
 
 
     <div class="container">
-
       <!-- MODULE TITLE -->
       <div class="row">
-
         <div class="col-sm-6 col-sm-offset-3">
-
-          <h1 class="module-title font-alt align-center">Edit trip</h1>
-
-          <div class="module-subtitle font-inc align-center">
-            <%= @trip.title %>
-          </div>
-
+          <h1 class="module-title font-alt align-center"><%= @trip.title %></h1>
+          <div class="module-subtitle font-inc align-center">Edit Trip properties</div>
         </div>
-
       </div>
       <!-- /MODULE TITLE -->
-
     </div>
-
   </section >
   <!-- /HOME -->
+    <div class="container">
+      <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
+        <ul>
+        <% @trip.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+        <%= f.input :title %>
+        <%= f.input :description, as: :text %>
+        <%= f.input :category,
+          as: :radio_buttons,
+          item_wrapper_class: 'radio-inline',
+          collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
+          %>
+        <%= f.input :start_date %>
+        <%= f.input :photo, label: "Put a nice picture of the city" %>
+        <%= f.input :photo_cache, as: :hidden %>
+        <%= f.button :submit %>
+      <% end %>
+    </div>

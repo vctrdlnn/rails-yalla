@@ -31,4 +31,8 @@ class Trip < ApplicationRecord
 
   end
 
+  def likes
+    self.votes_for.size
+  end
+
 end
