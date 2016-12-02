@@ -1,13 +1,14 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show ]
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
   skip_after_action :verify_authorized, only: [:my_trips]
 
   def index
     # @trips = Trip.all
     @trips = policy_scope(Trip)
+    @trips = @trips.sort { |x, y| y.likes <=> x.likes }
   end
 
   def my_trips
@@ -32,6 +33,10 @@ class TripsController < ApplicationController
   def edit
     @activity = Activity.new
     @main_categories = MainCategory.all
+  end
+
+  def properties
+
   end
 
   def create
@@ -79,7 +84,7 @@ class TripsController < ApplicationController
 
   def make_my_day
     if @trip.activities.where.not(lat: nil, lon: nil).length < @trip.trip_days.length * 3
-      redirect_to :back, alert: "Only works with at least 6 activities"
+      redirect_to :back, alert: "Only works with at least #{@trip.trip_days.length * 3} activities"
     else
       shortest_trip_days(@trip)
       redirect_to edit_trip_path(@trip), notice: 'Magic has happen, this is the best itinirary!'

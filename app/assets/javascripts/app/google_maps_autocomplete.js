@@ -1,14 +1,19 @@
 $(document).ready(function() {
   // Code for 'activity address'
   var options = {};
+  var options_est = { types: ['establishment'] };
   if ($('#city_coordinates').text().length > 6) {
-    var lat = parseFloat($('#city_coordinates').text())
-    var lng = parseFloat($('#city_coordinates').text().split("|").pop())
-    var latLng = new google.maps.LatLng(lat, lng);/*San Diego*/
-    var radius = 100000;/*meters*/
+    var lat = parseFloat($('#city_coordinates').text());
+    var lng = parseFloat($('#city_coordinates').text().split("|").pop());
+    var latLng = new google.maps.LatLng(lat, lng);
+    var radius = 100000;
     var circle = new google.maps.Circle({center: latLng, radius: radius});
     var defaultBounds= circle.getBounds();
     options = {
+          bounds: defaultBounds
+      };
+    options_est = {
+          types: ['establishment'],
           bounds: defaultBounds
       };
   }
@@ -26,9 +31,8 @@ $(document).ready(function() {
 
   // Code for 'activity establishment'
   var activity_establishment = $('#activity_est_establishment').get(0);
-
   if (activity_establishment) {
-    var establishment_autocomplete = new google.maps.places.Autocomplete(activity_establishment, { types: ['establishment'] });
+    var establishment_autocomplete = new google.maps.places.Autocomplete(activity_establishment, options_est );
     google.maps.event.addListener(establishment_autocomplete, 'place_changed', onActivityPlaceChanged);
     google.maps.event.addDomListener(activity_establishment, 'keydown', function(e) {
       if (e.keyCode == 13) {
@@ -73,7 +77,6 @@ function onPlaceChanged() {
 function onActivityPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
-
   $('#activity_est_establishment').trigger('blur').val(components.name);
   $('#activity_est_address').val(components.formatted_address);
   $('#activity_est_city').val(components.city);
