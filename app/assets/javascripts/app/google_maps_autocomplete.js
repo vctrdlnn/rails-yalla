@@ -3,10 +3,10 @@ $(document).ready(function() {
   var options = {};
   var options_est = { types: ['establishment'] };
   if ($('#city_coordinates').text().length > 6) {
-    var lat = parseFloat($('#city_coordinates').text())
-    var lng = parseFloat($('#city_coordinates').text().split("|").pop())
-    var latLng = new google.maps.LatLng(lat, lng);/*San Diego*/
-    var radius = 100000;/*meters*/
+    var lat = parseFloat($('#city_coordinates').text());
+    var lng = parseFloat($('#city_coordinates').text().split("|").pop());
+    var latLng = new google.maps.LatLng(lat, lng);
+    var radius = 100000;
     var circle = new google.maps.Circle({center: latLng, radius: radius});
     var defaultBounds= circle.getBounds();
     options = {
