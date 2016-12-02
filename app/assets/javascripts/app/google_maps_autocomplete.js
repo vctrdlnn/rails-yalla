@@ -12,7 +12,7 @@ $(document).ready(function() {
     options = {
           bounds: defaultBounds
       };
-    var options_est = {
+    options_est = {
           types: ['establishment'],
           bounds: defaultBounds
       };
