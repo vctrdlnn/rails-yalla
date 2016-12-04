@@ -1,9 +1,9 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show ]
+  skip_before_action :authenticate_user!, only: [:index, :show, :search ]
   before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
-  skip_after_action :verify_authorized, only: [:my_trips]
+  skip_after_action :verify_authorized, only: [:my_trips, :search]
 
   def index
     # @trips = Trip.all
@@ -12,7 +12,8 @@ class TripsController < ApplicationController
   end
 
   def search
-    @trips = policy_scope(Trip.near(params["trip"]["city"], 100))
+    @trips = policy_scope(Trip)
+    @trips = @trips.near(params["trip"]["city"], 100)
     @trips = @trips.sort { |x, y| y.likes <=> x.likes }
     render :index
   end
