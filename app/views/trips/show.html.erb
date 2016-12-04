@@ -5,10 +5,10 @@
   </div>
 </div>
     <ul class="nav nav-tabs" role="tablist">
-    <% @trip.trip_days.each_with_index do |tripday, index| %>
-      <li role="presentation"><a href="#<%= tripday.title.downcase.gsub(' ', '_') %>" aria-controls="home" role="tab" data-toggle="tab"><%= tripday.title %></a></li>
-    <% end %>
       <li class="active" role="presentation" data-show-unassigned="true" id="tab_all"><a href="#" aria-controls="home" role="tab" data-toggle="tab">Your week-end</a></li>
+      <% @trip.trip_days.each_with_index do |tripday, index| %>
+        <li role="presentation"><a href="#<%= tripday.title.downcase.gsub(' ', '_') %>" aria-controls="home" role="tab" data-toggle="tab"><%= tripday.title %></a></li>
+      <% end %>
   </ul>
   <div class="imprim">
     <div class="mini-padded"></div>

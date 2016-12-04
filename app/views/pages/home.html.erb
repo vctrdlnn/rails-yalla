@@ -109,8 +109,8 @@
 
 
       <!-- PORTFOLIO LIST -->
-      <ul id="works-grid" class="works-grid works-grid-masonry works-grid-3 works-hover-w">
-          <% Trip.all.first(6).each do |trip| %>
+      <ul id="works-grid" class="works-grid works-grid-masonry works-grid-4 works-hover-w">
+          <% @trips.each do |trip| %>
             <%= render 'trips/card_trip_home', trip: trip %>
           <% end %>
       </ul>
