@@ -1,39 +1,25 @@
 <!-- WRAPPER -->
 <div class="wrapper">
-
   <!-- HOME -->
     <section class="module module-header bg-dark bg-dark-50" data-background=<%= image_path('trip_background.jpg') %> >
-
-
     <div class="container">
-
       <!-- MODULE TITLE -->
       <div class="row">
-
         <div class="col-sm-6 col-sm-offset-3">
-
           <h1 class="module-title font-alt align-center">All trips</h1>
-
           <div class="module-subtitle font-inc align-center">
             Discover the best trips all over the world
           </div>
-
         </div>
-
       </div>
       <!-- /MODULE TITLE -->
-
     </div>
-
   </section >
   <!-- /HOME -->
-
-
 
     <!-- PORTFOLIO -->
     <section class="module-small p-b-0">
       <div class="container">
-
         <!-- PORTFOLIO FILTER -->
         <div class="row">
           <!-- MODULE TITLE -->
@@ -43,8 +29,15 @@
               <div class="mini-padded"></div>
             </div>
           <!-- /MODULE TITLE -->
-          <div class="col-xs-12">
-
+          <div class="col-xs-12 col-md-6 text-center">
+            <h5 class="no-margin font-alt">Filter by location</h5>
+            <div id="locationField" class="p-t-10 p-b-10">
+              <input id="trip_city" placeholder="Update search" type="text" />
+              <button id="btn-index-search-update" type="button" class="btn btn-g btn-sm">Search!</button>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6 text-center">
+            <h5 class="no-margin font-alt">Filter by city</h5>
             <ul id="filters" class="filter font-inc">
               <li><a href="#" data-filter="*" class="current wow fadeInUp">All</a></li>
               <li><a href="#" data-filter=".discovery" class="wow fadeInUp" data-wow-delay="0.2s">Discovery</a></li>
@@ -82,9 +75,18 @@
 <% content_for(:js) do %>
   <script>
     $(document).ready(function() {
+
+
       $( ".heart > .fa" ).click(function() {
         $( this ).toggleClass( "red-heart pink-heart" );
       });
+
+      $('#btn-index-search-update').click(function(){
+        var input = $('#trip_city').val()
+        window.location.href = '/trips/search?trip%5Bcity%5D=' + input;
+      });
+
+
     });
   </script>
 <% end %>

@@ -11,6 +11,12 @@ class TripsController < ApplicationController
     @trips = @trips.sort { |x, y| y.likes <=> x.likes }
   end
 
+  def search
+    @trips = policy_scope(Trip.near(params["trip"]["city"], 100))
+    @trips = @trips.sort { |x, y| y.likes <=> x.likes }
+    render :index
+  end
+
   def my_trips
     @trips = current_user.trips
     @trips += current_user.find_voted_items
