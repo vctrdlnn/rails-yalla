@@ -18,6 +18,9 @@ Rails.application.routes.draw do
         get 'map_markers', format: :json
         get 'properties'
       end
+      collection do
+        get 'search', to: 'trips#search'
+      end
     end
 
     get 'my_trips', to: 'trips#my_trips'

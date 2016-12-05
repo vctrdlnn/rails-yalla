@@ -1,14 +1,21 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show ]
+  skip_before_action :authenticate_user!, only: [:index, :show, :search ]
   before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
-  skip_after_action :verify_authorized, only: [:my_trips]
+  skip_after_action :verify_authorized, only: [:my_trips, :search]
 
   def index
     # @trips = Trip.all
     @trips = policy_scope(Trip)
     @trips = @trips.sort { |x, y| y.likes <=> x.likes }
+  end
+
+  def search
+    @trips = policy_scope(Trip)
+    @trips = @trips.near(params["trip"]["city"], 100)
+    @trips = @trips.sort { |x, y| y.likes <=> x.likes }
+    render :index
   end
 
   def my_trips
@@ -178,13 +185,15 @@ class TripsController < ApplicationController
         # end
 
         # TODO: OPTIMIZE CALCULATION OF PERMUTATION - TOO LONG!
-        combos[i].each_pair do |key, path|
-          if path.length > 9
-            combos[i][key] = path.sort { |x,y| y[:lat] <=> x[:lat] }
-          else
-            combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
-          end
-        end
+        # combos[i].each_pair do |key, path|
+        #   if path.length > 9
+        #     combos[i][key] = path.sort { |x,y| y[:lat] <=> x[:lat] }
+        #   else
+        #     combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
+        #   end
+        # end
+        # PERMUTATIONS
+
         combos[i][:distance] = path_length(combos[i][:day1]) + path_length(combos[i][:day2]) + path_length(combos[i][:day3])
         i += 1
       end

@@ -97,7 +97,7 @@ function onTripPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
 
-  $('#trip_city').trigger('blur').val(components.city);
+  $('#trip_city').trigger('blur').val(components.city + ', ' + components.country);
   $('#trip_country').val(components.country_code);
   if($('#trip_title').val() == "") {
     $('#trip_title').val("Week end in " + components.city);
@@ -138,7 +138,7 @@ function getAddressComponents(place) {
         city = component.long_name;
       } else if (type == 'administrative_area_level_3') {
         city_backup = component.long_name
-      }else if (type == 'country') {
+      } else if (type == 'country') {
         country_code = component.short_name;
         country = component.long_name
       }
