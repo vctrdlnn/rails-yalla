@@ -31,8 +31,8 @@
           item_wrapper_class: 'radio-inline',
           collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
           %>
-        <%= f.input :start_date %>
-        <%= f.input :photo, label: "Put a nice picture of the city" %>
+        <%= f.input :public, required: true, label: "Make your trip public and visible to everyone" %>
+        <%= f.input :photo, label: "Add or change picture of the city" %>
         <%= f.input :photo_cache, as: :hidden %>
         <%= f.button :submit %>
       <% end %>

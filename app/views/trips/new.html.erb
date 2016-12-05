@@ -38,6 +38,7 @@
                 item_wrapper_class: 'radio-inline',
                 collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
                 %>
+              <%= f.input :public, required: true, label: "Make your trip public and visible to everyone" %>
               <h5>Optional: </h5>
               <%= f.input :start_date %>
               <%= f.input :photo, label: "Put a nice picture of the city" %>
