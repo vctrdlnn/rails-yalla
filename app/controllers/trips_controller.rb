@@ -185,13 +185,15 @@ class TripsController < ApplicationController
         # end
 
         # TODO: OPTIMIZE CALCULATION OF PERMUTATION - TOO LONG!
-        combos[i].each_pair do |key, path|
-          if path.length > 9
-            combos[i][key] = path.sort { |x,y| y[:lat] <=> x[:lat] }
-          else
-            combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
-          end
-        end
+        # combos[i].each_pair do |key, path|
+        #   if path.length > 9
+        #     combos[i][key] = path.sort { |x,y| y[:lat] <=> x[:lat] }
+        #   else
+        #     combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
+        #   end
+        # end
+        # PERMUTATIONS
+
         combos[i][:distance] = path_length(combos[i][:day1]) + path_length(combos[i][:day2]) + path_length(combos[i][:day3])
         i += 1
       end
