@@ -8,7 +8,6 @@
   <% if tripday.activities.count > 0 %>
     <div class="text-center">
       <img src="<%= tripday.static_map_url(500, 500) %>"></img>
-    </div>
       <ul class="timeline">
         <% tripday.activities.sort{ |x, y| x.index <=> y.index }.each_with_index do |activity, index| %>
           <li class="<%= 'timeline-inverted' if index % 2 != 0 %>">
@@ -59,8 +58,9 @@
             </div>
           </li>
         <% end %>
+        <li class="clearfix" style="float: none;"></li>
       </ul>
-
+    </div>
   <% else %>
     <div class="text-center">
       <h5>No activities yet</h5>
