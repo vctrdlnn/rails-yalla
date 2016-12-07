@@ -76,27 +76,29 @@
 <div class="mini-padded"></div>
 
 <!-- TRIP DAY BY DAY -->
-<div class="container-fluid tab-content">
+<div class="container tab-content">
   <div class="row">
     <% @trip.trip_days.each_with_index do |tripday, index| %>
       <%= render 'card_trip_day_show', tripday:tripday , index:index %>
     <% end %>
   </div>
+
+  <!-- UNASSIGNED ACTIVITIES -->
+  <div class="row noassigned">
+    <h3 class="text-center">Other activities to do</h3>
+    <div class="mini-padded"></div>
+    <div class="row">
+        <% @trip.activities.each do |activity| %>
+        <% if activity.trip_day_id == nil %>
+          <%= render 'card_noassigned', activity:activity %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="padded"></div>
+  </div>
+  <%= render 'trips/modal_assign_trip', user_trips: @user_trips %>
 </div>
 
-<!-- UNASSIGNED ACTIVITIES -->
-<div class="container noassigned">
-  <h3 class="text-center">Other activities to do</h3>
-  <div class="mini-padded"></div>
-  <div class="row">
-      <% @trip.activities.each do |activity| %>
-      <% if activity.trip_day_id == nil %>
-        <%= render 'card_noassigned', activity:activity %>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="padded"></div>
-</div>
 
 
 <% content_for :js do %>
@@ -119,6 +121,21 @@
         $( ".fa-heart" ).click(function() {
           $( this ).toggleClass( "red-heart icon-grey" );
         });
+
+        $( ".fa-plus-square" ).click(function() {
+          $( this ).toggleClass( "red-heart icon-grey" );
+        });
+
+        $('#modalAssignTrip').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var activityId = button.data('activity') // Extract info from data-* attributes
+          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+          var modal = $(this)
+          modal.find('.modal-title').text('Save activity ' + activityId + ' to a trip')
+          //modal.find('.modal-body input').val(activityId)
+        })
+
     })
   </script>
 <% end %>

@@ -10,9 +10,24 @@
         <h4 class="modal-title">Save activity to a trip</h4>
       </div>
       <div class="modal-body">
+        <div class="row">
+          <% user_trips.each do |trip| %>
 
-<!-- TODO: Show existing trips or suggest user to create new trip -->
-
+            <div class="col-xs-12">
+              <div class="card-content", style="background-image:url(<%= trip_photo_index_path(trip) %>); height: 70px;">
+                <div class="overlay"></div>
+                <div class="post-body">
+                  <h3 class=""><%= trip.title %></h3>
+                  <div class="font-inc text-center">
+                    By <%= trip.user.name %>
+                     | <%= trip.created_at.strftime('%^b %y') %>
+                     | <%= trip.city %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
       </div>
       <div class="modal-footer">
       </div>

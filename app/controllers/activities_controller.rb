@@ -64,6 +64,7 @@ class ActivitiesController < ApplicationController
   end
 
   def pin
+fail
     @pinned_activity = current_user.pinned_activities.build(activity_id: params["id"])
     if @pinned_activity.save
       respond_to do |format|

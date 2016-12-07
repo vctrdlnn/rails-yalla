@@ -3,7 +3,7 @@
 
 .timeline {
   list-style: none;
-  padding: 20px 20px 20px 20px; //CHANGE BADGE POSITION ACCORDINGLY
+  padding: 20px 0px 20px 0px; //CHANGE BADGE POSITION ACCORDINGLY
   position: relative;
 }
 
@@ -195,6 +195,7 @@
             left: -14px;
             right: auto;
         }
+
 .timeline > li:nth-child(2){
   margin-top: 0px;
 }
