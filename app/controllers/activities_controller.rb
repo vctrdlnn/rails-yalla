@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position]
+  before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position, :pin]
   # before_action :set_trip, only: [:new, :create]
   before_filter :sanitize_activity_params, only: [:change_position]
 
@@ -60,6 +60,14 @@ class ActivitiesController < ApplicationController
       redirect_to :back, notice: 'Activity was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  def pin
+    if current_user.voted_for? @activity
+      current_user.unvote_for @activity
+    else
+      current_user.up_votes @activity
     end
   end
 

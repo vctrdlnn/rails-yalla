@@ -1,74 +1,90 @@
-<div class="banner_trip" style="background:url(<%= trip_photo_show_path(@trip) %>); height: 350px; background-repeat:no-repeat; background-size:cover">
+<!-- BANNER -->
+<div class="banner_trip" style="background:url(<%= trip_photo_show_path(@trip) %>); height: 300px; background-repeat:no-repeat; background-size:cover">
   <div class="trip_descri text-center">
     <h1><%= @trip.title %></h1>
     <h4>By: <%= @trip.user.username %></h4>
   </div>
 </div>
-    <ul class="nav nav-tabs" role="tablist">
-      <li class="active" role="presentation" data-show-unassigned="true" id="tab_all"><a href="#" aria-controls="home" role="tab" data-toggle="tab">Your week-end</a></li>
-      <% @trip.trip_days.each_with_index do |tripday, index| %>
-        <li role="presentation"><a href="#<%= tripday.title.downcase.gsub(' ', '_') %>" aria-controls="home" role="tab" data-toggle="tab"><%= tripday.title %></a></li>
-      <% end %>
-  </ul>
-  <div class="imprim">
-    <div class="mini-padded"></div>
-      <div class="content-box padded-icon">
-        <div class="content-box-icon">
-            <%= link_to trip_path(@trip, format: :pdf), target: 'blank' do %>
-            <div class="fa fa-print icon-grey" ></div>
-            <% end %>
-        </div>
-        <div class="content-box-title font-inc">Print</div>
+
+<!-- NAVBAR -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active" role="presentation" data-show-unassigned="true" id="tab_all"><a href="#" aria-controls="home" role="tab" data-toggle="tab">Your week-end</a></li>
+  <% @trip.trip_days.each_with_index do |tripday, index| %>
+    <li role="presentation"><a href="#<%= tripday.title.downcase.gsub(' ', '_') %>" aria-controls="home" role="tab" data-toggle="tab"><%= tripday.title %></a></li>
+    <% end %>
+</ul>
+
+<!-- ICONS -->
+<div class="imprim">
+  <div class="mini-padded"></div>
+    <div class="content-box padded-icon">
+      <div class="content-box-icon">
+          <%= link_to trip_path(@trip, format: :pdf), target: 'blank' do %>
+          <div class="fa fa-print icon-grey" ></div>
+          <% end %>
       </div>
-      <% if policy(@trip).like? %>
-        <div class="content-box padded-icon">
-          <div class="content-box-icon">
-            <%= link_to like_trip_path(@trip), method: :put do %>
-                <% if current_user && current_user.voted_for?(@trip) %>
-                  <div class="fa fa-heart red-heart"></div>
-                <% else%>
-                  <div class="fa fa-heart icon-grey"></div>
-                <% end %>
-            <% end %>
-          </div>
-          <div class="content-box-title font-inc">Like</div>
-        </div>
-      <% end %>
-<!--       <div class="content-box padded-icon">
-        <div class="content-box-icon">
-          <div class="fa fa-share-alt icon-grey"></div>
-        </div>
-        <div class="content-box-title font-inc">Share</div>
-      </div> -->
-      <% if policy(@trip).edit? %>
+      <div class="content-box-title font-inc">Print</div>
+    </div>
+    <% if policy(@trip).like? %>
       <div class="content-box padded-icon">
         <div class="content-box-icon">
-          <%= link_to edit_trip_path,format: :pdf do %>
-            <div class="fa fa-pencil icon-grey"></div>
+          <%= link_to like_trip_path(@trip), method: :put do %>
+              <% if current_user && current_user.voted_for?(@trip) %>
+                <div class="fa fa-heart red-heart"></div>
+              <% else%>
+                <div class="fa fa-heart icon-grey"></div>
+              <% end %>
           <% end %>
         </div>
-        <div class="content-box-title font-inc">
-                Edit
-        </div>
-
+        <div class="content-box-title font-inc">Like</div>
       </div>
-      <% end %>
-  </div>
-  <div class="mini-padded"></div>
-  <div class="col-xs-12 text-center border-bottom">
-    <blockquote class="font-serif col-xs-10 col-xs-offset-1">
-      <p>"<%= @trip.description %>"</p>
-    </blockquote>
-  </div>
-  <div class="mini-padded"></div>
+    <% end %>
+<!--       <div class="content-box padded-icon">
+      <div class="content-box-icon">
+        <div class="fa fa-share-alt icon-grey"></div>
+      </div>
+      <div class="content-box-title font-inc">Share</div>
+    </div> -->
+    <% if policy(@trip).edit? %>
+    <div class="content-box padded-icon">
+      <div class="content-box-icon">
+        <%= link_to edit_trip_path,format: :pdf do %>
+          <div class="fa fa-pencil icon-grey"></div>
+        <% end %>
+      </div>
+      <div class="content-box-title font-inc">
+              Edit
+      </div>
 
-  <div class="container_day tab-content">
+    </div>
+    <% end %>
+</div>
+<!-- /ICONS -->
+
+
+<!-- DESCRIPTION OF TRIP -->
+<div class="mini-padded"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 text-center border-bottom">
+      <blockquote class="font-serif col-xs-10 col-xs-offset-1">
+        <p>"<%= @trip.description %>"</p>
+      </blockquote>
+    </div>
+  </div>
+</div>
+<div class="mini-padded"></div>
+
+<!-- TRIP DAY BY DAY -->
+<div class="container-fluid tab-content">
+  <div class="row">
     <% @trip.trip_days.each_with_index do |tripday, index| %>
-    <%= render 'card_trip_show', tripday:tripday , index:index %>
+      <%= render 'card_trip_day_show', tripday:tripday , index:index %>
     <% end %>
   </div>
+</div>
 
-
+<!-- UNASSIGNED ACTIVITIES -->
 <div class="container noassigned">
   <h3 class="text-center">Other activities to do</h3>
   <div class="mini-padded"></div>

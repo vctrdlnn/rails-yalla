@@ -25,6 +25,10 @@ class ActivityPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
+  def pin?
+    true
+  end
+
   def change_position?
     user_is_owner_or_admin?
   end

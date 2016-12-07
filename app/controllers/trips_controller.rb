@@ -43,7 +43,6 @@ class TripsController < ApplicationController
   end
 
   def properties
-
   end
 
   def create
