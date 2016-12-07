@@ -64,10 +64,12 @@ class ActivitiesController < ApplicationController
   end
 
   def pin
-    if current_user.voted_for? @activity
-      current_user.unvote_for @activity
-    else
-      current_user.up_votes @activity
+    @pinned_activity = current_user.pinned_activities.build(activity_id: params["id"])
+    if @pinned_activity.save
+      respond_to do |format|
+        format.html { redirect_to :back, notice: 'Activity saved.' }
+        format.js  # <-- TODO: will render `app/views/reviews/pin.js.erb`
+      end
     end
   end
 

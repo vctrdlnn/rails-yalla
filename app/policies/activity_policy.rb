@@ -26,7 +26,7 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   def pin?
-    true
+    user_is_logged?
   end
 
   def change_position?
@@ -34,6 +34,10 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   private
+
+  def user_is_logged?
+    user
+  end
 
   def user_is_owner_or_admin?
     # TODO: seul le user peut modifier le resto
