@@ -25,8 +25,12 @@
       <div class="post-meta font-inc text-center">
         By <%= trip.user.name %>
         |  <%= trip.created_at.strftime('%^b %y') %>
+        |  <%= trip.cached_votes_total %> <i class="fa fa-heart-o" aria-hidden="true"></i>
+        <br/><%= trip.activities.count %> activities
         <% if policy(trip).edit? %>
-          |  <%= link_to "Edit ", edit_trip_path(trip)%>
+          <br/>
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          <%= link_to "Edit ", edit_trip_path(trip)%>
         <% end %>
       </div>
     </div>
