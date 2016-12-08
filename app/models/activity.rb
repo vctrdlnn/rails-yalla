@@ -16,8 +16,8 @@ class Activity < ApplicationRecord
   validates :address, presence: true
   # validates :main_category_id, presence: true
   # TODO: Control that parent_id unique in scope trip_id
-  validates :parent, uniqueness: { scope: :trip,
-    message: "You have already saved this activity" }
+  # validates :parent, uniqueness: { scope: :trip,
+  #   message: "You have already saved this activity" }
 
   geocoded_by :address, latitude: :lat, longitude: :lon
   after_validation :geocode, if: :address_changed?
