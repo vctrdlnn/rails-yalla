@@ -85,15 +85,11 @@
 
   <!-- UNASSIGNED ACTIVITIES -->
   <div class="row noassigned">
-    <h3 class="text-center">Other activities to do</h3>
+    <h3 class="text-center">Other activities unassigned</h3>
     <div class="mini-padded"></div>
-    <div class="row">
-        <% @trip.activities.each do |activity| %>
-        <% if activity.trip_day_id == nil %>
+        <% @trip.activities.where(trip_day_id: nil).sort{ |x, y| x.index <=> y.index }.each do |activity| %>
           <%= render 'card_noassigned', activity:activity %>
-        <% end %>
       <% end %>
-    </div>
     <div class="padded"></div>
   </div>
   <%= render 'trips/modal_assign_trip', user_trips: @user_trips %>
