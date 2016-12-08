@@ -7,12 +7,20 @@
 </div>
 
 <!-- NAVBAR -->
-<ul class="nav nav-tabs" role="tablist">
-  <li class="active" role="presentation" data-show-unassigned="true" id="tab_all"><a href="#" aria-controls="home" role="tab" data-toggle="tab">Your week-end</a></li>
-  <% @trip.trip_days.each_with_index do |tripday, index| %>
-    <li role="presentation"><a href="#<%= tripday.title.downcase.gsub(' ', '_') %>" aria-controls="home" role="tab" data-toggle="tab"><%= tripday.title %></a></li>
-    <% end %>
-</ul>
+
+
+<!-- DESCRIPTION OF TRIP -->
+<div class="mini-padded"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 text-center border-bottom">
+      <blockquote class="font-serif col-xs-10 col-xs-offset-1">
+        <p>"<%= @trip.description %>"</p>
+      </blockquote>
+    </div>
+  </div>
+</div>
+<!-- /DESCRIPTION -->
 
 <!-- ICONS -->
 <div class="imprim">
@@ -60,20 +68,6 @@
     <% end %>
 </div>
 <!-- /ICONS -->
-
-
-<!-- DESCRIPTION OF TRIP -->
-<div class="mini-padded"></div>
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 text-center border-bottom">
-      <blockquote class="font-serif col-xs-10 col-xs-offset-1">
-        <p>"<%= @trip.description %>"</p>
-      </blockquote>
-    </div>
-  </div>
-</div>
-<div class="mini-padded"></div>
 
 <!-- TRIP DAY BY DAY -->
 <div class="container tab-content">
