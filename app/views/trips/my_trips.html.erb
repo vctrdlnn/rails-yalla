@@ -51,9 +51,9 @@
 
 
         <!-- LOOP ON ITEMS -->
-        <ul id="works-grid" class="works-grid works-grid-masonry works-grid-3 works-hover-w">
+        <ul id="works-grid" class="works-grid works-grid-gut works-grid-3 works-hover-w">
         <% @trips.each do |trip| %>
-          <%= render 'card_mytrip', trip: trip %>
+          <%= render 'trips/card_trip_index', trip: trip %>
         <% end %>
       </ul>
 

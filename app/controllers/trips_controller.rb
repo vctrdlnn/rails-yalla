@@ -8,12 +8,14 @@ class TripsController < ApplicationController
   def index
     # @trips = Trip.all
     @trips = policy_scope(Trip)
+    @trips = @trips.sort { |x, y| y.activities.count <=> x.activities.count }
     @trips = @trips.sort { |x, y| y.cached_votes_total <=> x.cached_votes_total }
   end
 
   def search
     @trips = policy_scope(Trip)
     @trips = @trips.near(params["trip"]["city"], 100)
+    @trips = @trips.sort { |x, y| y.activities.count <=> x.activities.count }
     @trips = @trips.sort { |x, y| y.cached_votes_total <=> x.cached_votes_total }
     render :index
   end
