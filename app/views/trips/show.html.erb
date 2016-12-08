@@ -133,7 +133,7 @@
           // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
           var modal = $(this)
           modal.find('.modal-title').text('Save activity ' + activityId + ' to a trip')
-          modal.find('.card-trip-link').each(function( index ) {
+          modal.find('.copy-link').each(function( index ) {
             tripId =  $( this )[0].dataset.trip
             $( this )[0].href = '/trips/' + tripId + '/activities/' + activityId + '/copy' ;
           });

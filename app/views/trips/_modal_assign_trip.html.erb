@@ -15,8 +15,8 @@
             <% user_trips.each do |trip| %>
 
               <div class="col-xs-12">
-                <div class="card-content", style="background-image:url(<%= trip_photo_index_path(trip) %>); height: 70px;">
-                  <div class="overlay"></div>
+                <div class="card-content text-white", style="background-image:url(<%= trip_photo_index_path(trip) %>); height: 70px;">
+                  <!-- <div class="overlay"></div> -->
                   <div class="post-body font-inc">
                     <h3 class=""><%= trip.title %></h3>
                     <div class="font-inc text-left">
@@ -25,11 +25,26 @@
                        | <%= trip.city %>
                     </div>
                   </div>
-                  <a href="/trips/<%= trip.id %>/activities/ID/copy" class="card-trip-link" data-trip="<%= trip.id %>" data-method="put"></a>
+                  <a href="/trips/<%= trip.id %>/activities/ID/copy" class="card-trip-link copy-link" data-trip="<%= trip.id %>" data-method="put"></a>
                 </div>
               </div>
             <% end %>
           <% end %>
+          <!-- CARD FOR NEW TRIP -->
+          <div class="col-xs-12">
+            <div class="card-content text-white", style="background-image:url(<%= image_path('trip_background.jpg') %>); height: 70px;">
+              <!-- <div class="overlay"></div> -->
+              <div class="post-body font-inc">
+                <h3 class="">CREATE NEW TRIP NOW</h3>
+                <div class="font-inc text-left">
+
+                </div>
+              </div>
+              <%= link_to " ", new_trip_path, class: "card-trip-link" %>
+              <!-- TODO: Implement redirection to this trip after link -->
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="modal-footer">
