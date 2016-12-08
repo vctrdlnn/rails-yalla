@@ -73,6 +73,9 @@
 .left-aligh {
   text-align: left;
 }
+.text-white {
+  color: white;
+}
 
 .sm-txt {
   font-size: 0.8em;
@@ -119,6 +122,7 @@
 // Bordered
 .brd-lightgry {
   border: 1px solid lightgrey;
+  border-radius: 5%;
 }
 .brd-grey {
   border: 1px solid grey;

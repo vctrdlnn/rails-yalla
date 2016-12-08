@@ -1,30 +1,48 @@
-<div class="col-xs-12 col-md-3 col-lg-4">
-  <div class="timeline-panel_noassigned">
-    <div class="timeline-heading">
-      <div class="row">
-        <div class="col-xs-12 col-lg-6">
-          <h4 class="timeline-title"> <b><%= activity.title %></b>
-          </h4>
-          <p> <i><%= activity.address %></i></p>
-        </div>
-        <% if activity.photo != nil %>
-          <div class="col-xs-12 col-lg-6 align-right">
-            <%= cl_image_tag activity.photo , width: 100, height: 60, crop: :fill %>
-          </div>
-        <% end %>
-      </div>
-      <p>
-        <small class="text-muted">
-          <%= activity.main_category.title %>
-      </small>
-      </p>
+
+<div class="col-xs-12 col-md-3 brd-lightgry">
+  <div class="avatar">
+    <%= image_tag(activity.main_category.icon, class: 'icones') %>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 text-left">
+      <small class="text-muted"><%= activity.main_category.title %></small>
     </div>
-    <div class="timeline-body">
+    <div class="col-xs-6 text-right">
+      <% if policy(activity).pin? %>
+        <div class="post-pin">
+          <%= link_to pin_activity_path(activity), method: :put, remote: true, class: "" do %>
+            <% if current_user && current_user.voted_for?(activity) %>
+              <i class="fa fa-plus-square pink-heart fa-2x" aria-hidden="true" data-toggle="modal" data-target="#modalAssignTrip" data-activity="<%= activity.id %>"></i>
+            <% else %>
+              <i class="fa fa-plus-square pink-heart fa-2x" aria-hidden="true" data-toggle="modal" data-target="#modalAssignTrip" data-activity="<%= activity.id %>"></i>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <% if activity.photo_url != nil %>
+      <div class="col-xs-12 text-center p-t-10 p-b-10">
+        <%= activity_photo_index_tag(activity) %>
+      </div>
+    <% end %>
+    <div class="col-xs-12 text-left">
+      <h5 class="timeline-title font-alt">
+        <%= "#{activity.index}. #{activity.title}" %>
+      </h5>
       <p>
-        <%= activity.description %>
+        <strong><%= activity.establishment %></strong>
+        <br/>
+        <i><%= activity.address %></i>
       </p>
     </div>
   </div>
+
+  <div class="timeline-body text-justify">
+    <p><%= activity.description %></p>
+  </div>
+
 </div>
-
-

@@ -24,6 +24,9 @@ class TripsController < ApplicationController
   end
 
   def show
+    unless current_user.nil?
+      @user_trips = current_user.trips
+    end
     respond_to do |format|
       format.html
       format.pdf do
@@ -43,7 +46,6 @@ class TripsController < ApplicationController
   end
 
   def properties
-
   end
 
   def create

@@ -1,0 +1,55 @@
+<!-- Modal -->
+<div id="modalAssignTrip" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Save activity to a trip</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <% if user_trips %>
+            <% user_trips.each do |trip| %>
+
+              <div class="col-xs-12">
+                <div class="card-content text-white", style="background-image:url(<%= trip_photo_index_path(trip) %>); height: 70px;">
+                  <!-- <div class="overlay"></div> -->
+                  <div class="post-body font-inc">
+                    <h3 class=""><%= trip.title %></h3>
+                    <div class="font-inc text-left">
+                      By <%= trip.user.name %>
+                       | <%= trip.created_at.strftime('%^b %y') %>
+                       | <%= trip.city %>
+                    </div>
+                  </div>
+                  <a href="/trips/<%= trip.id %>/activities/ID/copy" class="card-trip-link copy-link" data-trip="<%= trip.id %>" data-method="put"></a>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+          <!-- CARD FOR NEW TRIP -->
+          <div class="col-xs-12">
+            <div class="card-content text-white", style="background-image:url(<%= image_path('trip_background.jpg') %>); height: 70px;">
+              <!-- <div class="overlay"></div> -->
+              <div class="post-body font-inc">
+                <h3 class="">CREATE NEW TRIP NOW</h3>
+                <div class="font-inc text-left">
+
+                </div>
+              </div>
+              <%= link_to " ", new_trip_path, class: "card-trip-link" %>
+              <!-- TODO: Implement redirection to this trip after link -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->

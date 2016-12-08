@@ -8,7 +8,7 @@
   <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-        <div class="navbar-header"><%= link_to "YALA!", root_path, class: "navbar-brand navbar-link" %>
+        <div class="navbar-header"><%= link_to "YALA!", root_path, class: "navbar-brand" %>
           <button data-toggle="collapse" data-target="#custom-collapse" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
         </div>
       </div>
@@ -17,7 +17,7 @@
         <!-- Right nav bar user sign in -->
         <div class="collapse navbar-collapse" id="custom-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" role="presentation"><%= link_to("My trips", my_trips_path)%></li>
+            <li class="" role="presentation"><%= link_to("My trips", my_trips_path)%></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %></a>
               <ul class="dropdown-menu" role="menu">
@@ -38,20 +38,13 @@
         <!-- Right nav bar visitor -->
         <div class="collapse navbar-collapse" id="custom-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <ul class="dropdown-menu" role="menu">
-                <li class="dropdown">
-                  <%= link_to("sign in", new_user_session_path, class: "navbar-link login") %>
-                </li>
-                <li class="dropdown">
-                  <%= link_to("sign up", new_user_registration_path, class: "btn btn-g btn-round action-button", role: "button") %>
-                </li>
-              </ul>
+            <li class="">
+              <%= link_to "Log in", new_user_session_path, class: "navbar-link login" %>
             </li>
-            <p class="navbar-text navbar-right actions ">
-              <%= link_to "sign in", new_user_session_path, class: "navbar-link login" %>
-              <%= link_to "sign up", new_user_registration_path, class: "btn btn-g btn-round action-button", role: "button" %>
-            </p>
+            <li class="">
+              <%= link_to "Sign Up", new_user_registration_path, class: "navbar-link" %>
+            </li>
+
         </div>
       <% end %>
     </div>

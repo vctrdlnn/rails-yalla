@@ -9,10 +9,6 @@ class ActivityPolicy < ApplicationPolicy
     true # tous les users peuvent creer un trip
   end
 
-  def new_act?
-    create?
-  end
-
   def show?
     true # tous les users peuvent creer un trip
   end
@@ -25,11 +21,23 @@ class ActivityPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
+  def pin?
+    user_is_logged?
+  end
+
+  def copy?
+    user_is_logged?
+  end
+
   def change_position?
     user_is_owner_or_admin?
   end
 
   private
+
+  def user_is_logged?
+    user
+  end
 
   def user_is_owner_or_admin?
     # TODO: seul le user peut modifier le resto
