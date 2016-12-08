@@ -2,21 +2,6 @@
   text-transform: none;
 }
 
-.navbar-transparent{
-  padding-bottom: 10px;
-  padding-top: 10px;
-  background: rgba(0, 0, 0, 0.52);
-  .navbar-link{
-    color: white;
-  }
-
-  .btn.btn-g {
-    background: transparent;
-    border: 1px solid #b2b2b2;
-    color: white;
-  }
-}
-
 /* line 722, /home/victor/code/vctrdlnn/rails-yalla/vendor/assets/stylesheets/style.css */
 .module-small {
   padding: 40px 0;
@@ -24,6 +9,22 @@
 
 .btn.btn-round{
   border-radius: 7px;
+}
+
+@media (min-width: 768px) {
+  .navbar-transparent{
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background: rgba(0, 0, 0, 0.52);
+    .navbar-link{
+      color: white;
+    }
+    .btn.btn-g {
+      background: transparent;
+      border: 1px solid #b2b2b2;
+      color: white;
+    }
+  }
 }
 
 .navbar-custom.navbar-custom-black {
@@ -42,13 +43,12 @@
 .navbar{
   margin-bottom: -22px;
   font-size: 18px;
+  padding: 0px;
 }
 
 button.navbar-toggle {
   background-color: white;
 }
-
-
 
 .up_photo{
   margin: 0 auto;
@@ -67,10 +67,6 @@ a.dropdown-toggle{
   margin-left: 20px;
 }
 
-.navbar{
-  padding: 0px;
-}
-
 .col-bg {
   background: rgba(255, 255, 255,0.97);
   font-size: 13px;
@@ -84,5 +80,3 @@ a.dropdown-toggle{
 .padded-icon{
   margin-right: 30px;
 }
-
-
