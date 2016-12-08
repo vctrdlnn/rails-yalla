@@ -21,12 +21,6 @@ class ActivitiesController < ApplicationController
     authorize @activity
   end
 
-  # def new_act
-  #   @main_categories = MainCategory.all
-  #   @activity = Activity.new
-  #   authorize @activity
-  # end
-
   def edit
     @main_categories = MainCategory.all
   end
@@ -63,15 +57,36 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def pin
-fail
-    @pinned_activity = current_user.pinned_activities.build(activity_id: params["id"])
-    if @pinned_activity.save
+  def copy
+    @activity = Activity.find(params["activity_id"]).dup
+    authorize @activity
+    @activity.parent_id = params["activity_id"]
+    @activity.trip_id = params["trip_id"]
+    @activity.trip_day_id = nil
+    if current_user
+      @activity.user = current_user
+    end
+    if @activity.save
       respond_to do |format|
-        format.html { redirect_to :back, notice: 'Activity saved.' }
-        format.js  # <-- TODO: will render `app/views/reviews/pin.js.erb`
+        format.html { redirect_to :back, notice: 'Activity was successfully added to the trip.' }
+        format.js  # <-- will render `app/views/reviews/create.js.erb`
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to :back, alert: @activity.errors.messages }
+        format.js  # <-- idem
       end
     end
+  end
+
+  def pin
+    # @pinned_activity = current_user.pinned_activities.build(activity_id: params["id"])
+    # if @pinned_activity.save
+    #   respond_to do |format|
+    #     format.html { redirect_to :back, notice: 'Activity saved.' }
+    #     format.js  # <-- TODO: will render `app/views/reviews/pin.js.erb`
+    #   end
+    # end
   end
 
   def destroy

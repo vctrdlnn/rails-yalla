@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     end
     resources :trips do
       resources :trip_days, only: [:create, :destroy, :update, :show]
-      resources :activities, only: [:create]
+      resources :activities, only: [:create] do
+        put 'copy'
+      end
       member do
         put 'like'
         get 'print'

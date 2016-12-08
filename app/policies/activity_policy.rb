@@ -9,10 +9,6 @@ class ActivityPolicy < ApplicationPolicy
     true # tous les users peuvent creer un trip
   end
 
-  def new_act?
-    create?
-  end
-
   def show?
     true # tous les users peuvent creer un trip
   end
@@ -26,6 +22,10 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   def pin?
+    user_is_logged?
+  end
+
+  def copy?
     user_is_logged?
   end
 

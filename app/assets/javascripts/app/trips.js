@@ -1,15 +1,15 @@
-$(function () {
-  var panes = $('[data-map-affix="true"]');
+// $(function () {
+  // var panes = $('[data-map-affix="true"]');
 
-  $(window).scroll(function() {
+  // $(window).scroll(function() {
 
-  });
+  // });
 
-  panes.each(function () {
-    pane = $(this);
-    var panePosition = panes.offset().top;
-    var position = panePosition - $(window).scrollTop();
-  });
+  // panes.each(function () {
+  //   pane = $(this);
+  //   var panePosition = panes.offset().top;
+  //   var position = panePosition - $(window).scrollTop();
+  // });
 
   // var panePosition = panes.offset().top; //get the offset top of the element
 
@@ -23,4 +23,4 @@ $(function () {
   //     mapPreview.css({position: 'relative', top: '0'});
   //   }
   // });
-})
+// })
