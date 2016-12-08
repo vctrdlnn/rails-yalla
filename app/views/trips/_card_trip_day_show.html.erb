@@ -22,7 +22,6 @@
                   <div class="col-xs-6 text-right">
                     <% if policy(activity).pin? %>
                       <div class="post-pin">
-                        <%= link_to pin_activity_path(activity), method: :put, remote: true, class: "" do %>
                           <% if current_user && current_user.voted_for?(activity) %>
                             <i class="fa fa-plus-square pink-heart fa-2x" aria-hidden="true" data-toggle="modal" data-target="#modalAssignTrip" data-activity="<%= activity.id %>"></i>
                           <% else %>
