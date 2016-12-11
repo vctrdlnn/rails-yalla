@@ -1,7 +1,7 @@
 <%= simple_form_for [trip, activity], remote: true, html: { class: '' }, defaults: { input_html: { class: 'input-group-lg', style: 'width:100%;' } }  do |f| %>
 <!--   <div class="row">
     <div class="col-xs-8"> -->
-      <%= f.input :establishment, label: false, input_html: { id: 'activity_est_establishment' } %>
+      <%= f.input :establishment, label: false, input_html: { id: 'activity_est_establishment' }, placeholder: 'Input any street/place/restaurant/activity' %>
 <!--     </div> -->
     <%= f.input :title, input_html: { id: 'activity_est_title' } , label: false, placeholder: 'Add a nice title' %>
     <%= f.input :description, as: :text, input_html: { id: 'activity_est_description' }, label: false, placeholder: 'Add some comments/description' %>
