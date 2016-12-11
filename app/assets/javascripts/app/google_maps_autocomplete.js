@@ -83,6 +83,8 @@ function onActivityPlaceChanged() {
   $('#activity_est_google_category').val(components.type);
   $('#activity_est_google_place_identifier').val(components.place_id);
   $('#activity_est_url').val(components.website);
+  $('#activity_est_lat').val(components.lat);
+  $('#activity_est_lon').val(components.lon);
   if (def_title) {
     if($('#activity_est_title').val() == "") {
       var categ = components.type.replace("_", " ");
@@ -122,6 +124,9 @@ function getAddressComponents(place) {
   var formatted_address = null;
   var place_id = null;
   var website = null;
+  var lat = null;
+  var lon = null;
+
   console.log(place);
   // debugger
   for (var i in place.address_components) {
@@ -151,6 +156,8 @@ function getAddressComponents(place) {
   website = place.website;
   type = place.types[0];
   place_id = place.place_id;
+  lat = place.geometry.location.lat();
+  lon = place.geometry.location.lng();
   if (city == null) {
     city = city_backup;
   };
@@ -168,6 +175,8 @@ function getAddressComponents(place) {
     name: name,
     formatted_address: formatted_address,
     place_id: place_id,
-    website: place.website
+    website: place.website,
+    lat: lat,
+    lon: lon
   };
 }

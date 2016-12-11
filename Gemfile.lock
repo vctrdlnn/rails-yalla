@@ -73,6 +73,10 @@ GEM
       json (>= 1.7)
       mime-types (>= 1.16)
       mimemagic (>= 0.3.0)
+    chosen-rails (1.5.2)
+      coffee-rails (>= 3.2)
+      railties (>= 3.0)
+      sass-rails (>= 3.2)
     cloudinary (1.1.0)
       aws_cf_signer
       rest-client
@@ -345,6 +349,7 @@ DEPENDENCIES
   bootstrap-sass
   bootstrap3-datetimepicker-rails (~> 4.14.30)
   carrierwave
+  chosen-rails
   cloudinary (= 1.1.0)
   coffee-rails
   devise
