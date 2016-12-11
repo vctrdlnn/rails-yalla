@@ -1,12 +1,16 @@
 <%= simple_form_for [trip, activity], remote: true, html: { class: '' }, defaults: { input_html: { class: 'input-group-lg', style: 'width:100%;' } }  do |f| %>
 <!--   <div class="row">
     <div class="col-xs-8"> -->
-      <%= f.input :establishment, label: false, input_html: { id: 'activity_est_establishment' } %>
+      <%= f.input :establishment, label: false, input_html: { id: 'activity_est_establishment' }, placeholder: 'Input any street/place/restaurant/activity' %>
 <!--     </div> -->
     <%= f.input :title, input_html: { id: 'activity_est_title' } , label: false, placeholder: 'Add a nice title' %>
+    <%= f.input :description, as: :text, input_html: { id: 'activity_est_description' }, label: false, placeholder: 'Add some comments/description' %>
     <%= f.input :address, as: :hidden, input_html: { id: 'activity_est_address' } %>
     <%= f.input :city, as: :hidden, input_html: { id: 'activity_est_city' } %>
     <%= f.input :google_category, as: :hidden, input_html: { id: 'activity_est_google_category' } %>
+    <%= f.input :url, as: :hidden, input_html: { id: 'activity_est_url' } %>
+    <%= f.input :lat, as: :hidden, input_html: { id: 'activity_est_lat' } %>
+    <%= f.input :lon, as: :hidden, input_html: { id: 'activity_est_lon' } %>
     <%= f.input :google_place_identifier, as: :hidden, input_html: { id: 'activity_est_google_place_identifier' } %>
     <%= f.input :trip_id, as: :hidden, input_html: { id: 'activity_est_trip_id'} %>
 <!--     <div class="col-xs-4"> -->

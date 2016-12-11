@@ -9,6 +9,7 @@
 //= require jquery.mb.YTPlayer.min
 //= require jquery.simple-text-rotator.min
 //= require jqBootstrapValidation
+//= require chosen-jquery
 
 //= require isotope.pkgd.min
 //= require imagesloaded.pkgd

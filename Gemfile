@@ -76,3 +76,6 @@ gem 'wkhtmltopdf-binary'
 
 #likes
 gem 'acts_as_votable', '~> 0.10.0'
+
+#selection and input
+gem 'chosen-rails'

@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
         <% if defined?(trip) %>
-          <%= render 'activities/form_new_establishment_from_trip', activity: activity, trip: trip %>
+          <%= render 'activities/form_new_establishment_from_trip', activity: activity, trip: trip, main_categories: main_categories %>
         <% else %>
           <%= render 'activities/form_new_establishment', activity: activity %>
         <% end %>

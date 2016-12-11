@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= yield(:title).blank? ? "Yala - Your personal travel guide" : yield(:title) %></title>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <%= stylesheet_link_tag    'application', media: 'all' %>
 
+    <!-- Meta tags-->
+    <title><%= yield(:title).blank? ? "Yala - Your personal travel guide" : yield(:title) %></title>
     <meta name="description" content="Yala is a unique personal travel planner and visit organizer, acting as a local guide. Explore hundreds of city guides and build your own ideal weekend plans!">
-    <meta property="og:title" content="Yala! Your personal travel guide">
-    <meta property="og:image" content="facebook-card.jpg">
-    <meta property="og:description" content="Yala is a unique personal travel planner and visit organizer, acting as a local guide.">
-    <meta property="og:site_name" content="yalaapp"/>
+
+    <!-- Navicons -->
+    <%= favicon_link_tag 'favicon3.png' %>
+    <%= favicon_link_tag 'apple-touch-icon2.png', rel: 'apple-touch-icon', type: 'image/png' %>
+
+
+    <!-- Facebook Open Graph data -->
+    <!-- http://railscasts.com/episodes/30-pretty-page-title to improve -->
+    <meta property="og:title" content="Yala! Your personal travel guide" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.yala-app.com" />
+    <meta property="og:image" content="<%= image_path('facebook-card.jpg') %>" />
+    <meta property="og:description" content="Yala is a unique personal travel planner and visit organizer, acting as a local guide." />
+    <meta property="og:site_name" content="Yala!" />
+    <meta property="fb:app_id" content="1169498196449277"/>
 
   </head>
   <body>

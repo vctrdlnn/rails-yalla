@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Code for 'activity address'
   var options = {};
-  var options_est = { types: ['establishment'] };
+  var options_est = {}; // previously: types: ['establishment']
   if ($('#city_coordinates').text().length > 6) {
     var lat = parseFloat($('#city_coordinates').text());
     var lng = parseFloat($('#city_coordinates').text().split("|").pop());
@@ -13,7 +13,7 @@ $(document).ready(function() {
           bounds: defaultBounds
       };
     options_est = {
-          types: ['establishment'],
+          // types: ['establishment'],
           bounds: defaultBounds
       };
   }
@@ -59,7 +59,7 @@ $(document).ready(function() {
 function onPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
-  $('#activity_address').trigger('blur').val(components.address);
+  $('#activity_address').trigger('blur').val(components.formatted_address);
   if (components.city == null) {
     $('#activity_establishment').val(components.name);
   }
@@ -82,6 +82,9 @@ function onActivityPlaceChanged() {
   $('#activity_est_city').val(components.city);
   $('#activity_est_google_category').val(components.type);
   $('#activity_est_google_place_identifier').val(components.place_id);
+  $('#activity_est_url').val(components.website);
+  $('#activity_est_lat').val(components.lat);
+  $('#activity_est_lon').val(components.lon);
   if (def_title) {
     if($('#activity_est_title').val() == "") {
       var categ = components.type.replace("_", " ");
@@ -97,8 +100,8 @@ function onTripPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
 
-  $('#trip_city').trigger('blur').val(components.city + ', ' + components.country);
-  $('#trip_country').val(components.country_code);
+  $('#trip_city').trigger('blur').val(components.city + ', ' + components.country_code);
+  $('#trip_country').val(components.country);
   if($('#trip_title').val() == "") {
     $('#trip_title').val("Week end in " + components.city);
   }
@@ -120,6 +123,10 @@ function getAddressComponents(place) {
   var name = null;
   var formatted_address = null;
   var place_id = null;
+  var website = null;
+  var lat = null;
+  var lon = null;
+
   console.log(place);
   // debugger
   for (var i in place.address_components) {
@@ -146,8 +153,11 @@ function getAddressComponents(place) {
   }
   formatted_address = place.formatted_address;
   name = place.name;
+  website = place.website;
   type = place.types[0];
   place_id = place.place_id;
+  lat = place.geometry.location.lat();
+  lon = place.geometry.location.lng();
   if (city == null) {
     city = city_backup;
   };
@@ -164,6 +174,9 @@ function getAddressComponents(place) {
     type: type,
     name: name,
     formatted_address: formatted_address,
-    place_id: place_id
+    place_id: place_id,
+    website: place.website,
+    lat: lat,
+    lon: lon
   };
 }
