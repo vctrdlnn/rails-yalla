@@ -9,25 +9,22 @@
 
     <!-- Meta tags-->
     <title><%= yield(:title).blank? ? "Yala - Your personal travel guide" : yield(:title) %></title>
+    <meta name="description" content="Yala is a unique personal travel planner and visit organizer, acting as a local guide. Explore hundreds of city guides and build your own ideal weekend plans!">
 
+    <!-- Navicons -->
     <%= favicon_link_tag 'favicon3.png' %>
     <%= favicon_link_tag 'apple-touch-icon2.png', rel: 'apple-touch-icon', type: 'image/png' %>
 
-    <meta name="description" content="Yala is a unique personal travel planner and visit organizer, acting as a local guide. Explore hundreds of city guides and build your own ideal weekend plans!">
 
     <!-- Facebook Open Graph data -->
-    <meta property="og:title" content="Yala! Your personal travel guide">
-    <meta property="og:image" content="facebook-card.jpg">
-    <meta property="og:description" content="Yala is a unique personal travel planner and visit organizer, acting as a local guide.">
-    <meta property="og:site_name" content="yalaapp"/>
-
-    <meta property="og:title" content="Don&#39;t paddle, ZA:DL !" />
+    <!-- http://railscasts.com/episodes/30-pretty-page-title to improve -->
+    <meta property="og:title" content="Yala! Your personal travel guide" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://beta.zadl.fr/en" />
-    <meta property="og:image" content="http://beta.zadl.fr/assets/banner_meta-b93c619b8c71cce843ee90a83d5097b21b749180f6258ebf31b7cb508601be33.jpg" />
-    <meta property="og:description" content="Ne ramez plus pour organiser des activités avec vos amis !" />
-    <meta property="og:site_name" content="Don&#39;t paddle, ZA:DL !" />
-    <meta property="fb:app_id" content="1329301247112385"/>
+    <meta property="og:url" content="http://www.yala-app.com" />
+    <meta property="og:image" content="<%= image_path('facebook-card.jpg') %>" />
+    <meta property="og:description" content="Yala is a unique personal travel planner and visit organizer, acting as a local guide." />
+    <meta property="og:site_name" content="Yala!" />
+    <meta property="fb:app_id" content="1169498196449277"/>
 
   </head>
   <body>
