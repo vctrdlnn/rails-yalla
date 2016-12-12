@@ -1,3 +1,53 @@
+
+/* Stack the two content containers */
+.main-trip,
+.side-map { display:block; width:100%; }
+
+/* First breakpoint at 576px */
+/* Inherits mobile styles, but floats containers to make columns */
+@media all and (min-width: 36em){
+  .main-trip { float: left; width:60%; }
+  .side-map { float: left; width:40%; }
+}
+
+/* Second breakpoint at 800px */
+/* Adjusts column proportions, tweaks base H1 */
+@media all and (min-width: 50em){
+  .main-trip { width:70%; }
+  .side-map { width:30%; }
+
+  /* You can also tweak any other styles in a breakpoint */
+  // H1 { color: blue; font-size:1.2em }
+}
+
+#main {
+  flex-grow: 1;
+  background-color: red;
+}
+
+.trip-edit-wrapper {
+  position: absolute;
+  top: 55px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.trip-edit-header {
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.edit-header-buttons {
+  display: flex;
+}
+.edit-buttons {
+  min-width: 50px;
+}
+
 #floating-panel {
   left: 25%;
   z-index: 5;
@@ -10,13 +60,6 @@
   width: 100%;
 }
 
-.trip-edit-wrapper {
-  position: absolute;
-  top: 72px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-}
 
 .sortable ul {
   list-style-type: none;

@@ -7,42 +7,9 @@
 <!-- Get icons for google maps display -->
 <% trip_icons = set_day_icon(@trip.trip_days) %>
 
-<div id="main">
+<div id="surface">
+  <div id="content">
     <div class="trip-edit-wrapper">
-
-      <div class="trip-edit-header">
-        <div class="edit-header-city pull-left">
-            <p class="font-inc"><%= @trip.city %></p>
-        </div>
-        <div class="edit-header-title">
-            <h6 class="font-alt"><%= @trip.title %></h6>
-        </div>
-        <div class="edit-header-buttons">
-          <!-- BOUTONS -->
-          <div class="edit-buttons mini-h-padding">
-            <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success  width100 text-center no-h-padding", method: :put do %>
-              <span class="icon-genius"></span>Make my day
-            <% end %>
-          </div>
-          <div class="edit-buttons mini-h-padding">
-            <%= button_to trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
-              <span class="icon-printer"></span> Print
-            <% end %>
-          </div>
-          <div class="edit-buttons mini-h-padding">
-            <%= button_to properties_trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
-              <span class="icon-pencil"></span> Edit
-            <% end %>
-          </div>
-          <div class="edit-buttons mini-h-padding">
-            <%= button_to trip_path(@trip), class: "btn btn-danger width100 text-center no-h-padding", method: :delete, data: {confirm: "CAUTION !!! THIS IS NOT REVERSIBLE - Are you sure you want to delete the entire trip?"} do %>
-              <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>DELETE
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-
       <div class="container-fuid heigth100">
         <div class="row-fluid text-center heigth100">
 
@@ -69,6 +36,7 @@
           <!-- LE VOYAGE JOUR PAR JOUR -->
           <div class="col-xs-12 col-sm-6 heigth100">
             <!-- Trip Days and Itiniraries -->
+            <p class="font-alt"><%= @trip.title %></p>
             <div class="row width100 inblock side-brd-grey heigth90">
               <% @trip.trip_days.each do |td| %>
                 <div class="col-xs-4 inblock trip-day heigth100">
@@ -87,7 +55,31 @@
           <!-- AUTRES -->
           <div class="col-xs-12 col-sm-4 heigth100">
 
-
+            <!-- BOUTONS -->
+            <div class="buttons margined" style="width: 100%;">
+              <div class="row">
+                <div class="col-xs-3 mini-h-padding">
+                  <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success  width100 text-center no-h-padding", method: :put do %>
+                    <span class="icon-genius"></span>Make my day
+                  <% end %>
+                </div>
+                <div class="col-xs-3 mini-h-padding">
+                  <%= button_to trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
+                    <span class="icon-printer"></span> Print
+                  <% end %>
+                </div>
+                <div class="col-xs-3 mini-h-padding">
+                  <%= button_to properties_trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
+                    <span class="icon-pencil"></span> Edit
+                  <% end %>
+                </div>
+                <div class="col-xs-3 mini-h-padding">
+                  <%= button_to trip_path(@trip), class: "btn btn-danger width100 text-center no-h-padding", method: :delete, data: {confirm: "CAUTION !!! THIS IS NOT REVERSIBLE - Are you sure you want to delete the entire trip?"} do %>
+                    <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>DELETE
+                  <% end %>
+                </div>
+              </div>
+            </div>
 
             <!-- Map, to do, references, etc... -->
             <div class="map_container" style="width: 100%; height: 50%;">
@@ -104,7 +96,7 @@
         </div>
       </div>
     </div>
-
+  </div>
 </div>
 
 
