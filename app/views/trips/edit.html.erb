@@ -1,8 +1,12 @@
 <% content_for(:title) do %>
-  Yala! Edit your <%= @trip.title %>
+  <%= @trip.title %> | Edit | Yala!
 <% end %>
+
 <% @disable_footer = true %>
+
+<!-- Get icons for google maps display -->
 <% trip_icons = set_day_icon(@trip.trip_days) %>
+
 <div class="trip-edit-wrapper">
   <div class="container-fuid heigth100">
     <div class="row-fluid text-center heigth100">
