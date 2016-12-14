@@ -32,7 +32,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Send emails through Letter Opener gem
-  config.action_mailer.delivery_method = :letter_opener
+  # IF NOT REALLY SEND config.action_mailer.delivery_method = :letter_opener
+
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: "http://localhost:3000" }
 
   # Print deprecation notices to the Rails logger.

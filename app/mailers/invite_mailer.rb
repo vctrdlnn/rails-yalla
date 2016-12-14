@@ -1,4 +1,6 @@
 class InviteMailer < ApplicationMailer
+  # https://coderwall.com/p/rqjjca/creating-a-scoped-invitation-system-for-rails
+
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
