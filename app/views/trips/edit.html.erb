@@ -19,24 +19,24 @@
         </div>
         <div class="edit-header-buttons">
           <!-- BOUTONS -->
-          <div class="edit-buttons mini-h-padding">
-            <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success  width100 text-center no-h-padding", method: :put do %>
-              <span class="icon-genius"></span>Make my day
+          <div class="mini-h-padding">
+            <%= button_to make_my_day_trip_path(@trip), class: "btn btn-success edit-buttons text-center no-h-padding", method: :put do %>
+              <span class="icon-genius"></span> Make my day
             <% end %>
           </div>
           <div class="edit-buttons mini-h-padding">
-            <%= button_to trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
+            <%= button_to trip_path(@trip), class: "btn btn-info edit-buttons  text-center no-h-padding", method: :get do %>
               <span class="icon-printer"></span> Print
             <% end %>
           </div>
           <div class="edit-buttons mini-h-padding">
-            <%= button_to properties_trip_path(@trip), class: "btn btn-info width100  text-center no-h-padding", method: :get do %>
+            <%= button_to properties_trip_path(@trip), class: "btn btn-info edit-buttons  text-center no-h-padding", method: :get do %>
               <span class="icon-pencil"></span> Edit
             <% end %>
           </div>
           <div class="edit-buttons mini-h-padding">
-            <%= button_to trip_path(@trip), class: "btn btn-danger width100 text-center no-h-padding", method: :delete, data: {confirm: "CAUTION !!! THIS IS NOT REVERSIBLE - Are you sure you want to delete the entire trip?"} do %>
-              <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>DELETE
+            <%= button_to trip_path(@trip), class: "btn btn-danger edit-buttons text-center no-h-padding", method: :delete, data: {confirm: "CAUTION !!! THIS IS NOT REVERSIBLE - Are you sure you want to delete the entire trip?"} do %>
+              <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete
             <% end %>
           </div>
         </div>
