@@ -14,7 +14,9 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
-  # validates :username, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: true
+
+  after_create :send_welcome_email
 
   def name
     if first_name
@@ -42,5 +44,11 @@ class User < ApplicationRecord
       user.save
     end
     user
+  end
+
+  private
+
+  def send_welcome_email
+    UserMailer.welcome(self).deliver_now
   end
 end
