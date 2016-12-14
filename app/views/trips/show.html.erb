@@ -86,7 +86,9 @@
       <% end %>
     <div class="padded"></div>
   </div>
-  <%= render 'trips/modal_assign_trip', user_trips: @user_trips %>
+  <% unless current_user.nil? %>
+    <%= render 'trips/modal_assign_trip', user_trips: current_user.trips %>
+  <% end %>
 </div>
 
 

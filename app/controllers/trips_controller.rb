@@ -1,7 +1,7 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show, :search ]
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
+  skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search ]
+  before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
   skip_after_action :verify_authorized, only: [:my_trips, :search]
 
@@ -20,20 +20,26 @@ class TripsController < ApplicationController
     render :index
   end
 
-  def my_trips
+  def my_trip
     @trips = current_user.trips
     @trips += current_user.find_voted_items
   end
 
   def show
-    unless current_user.nil?
-      @user_trips = current_user.trips
-    end
     respond_to do |format|
       format.html
       format.pdf do
         render pdf: "show"   # Excluding ".pdf" extension.
       end
+    end
+  end
+
+  def send_trip
+    if current_user.nil? #TODO: Render something if no user
+      redirect_to @trip, alert: "Please login or signup to receive emails"
+    else
+      TripMailer.send_trip(@trip, current_user).deliver_now
+      redirect_to @trip, notice: "Email successfully sent"
     end
   end
 

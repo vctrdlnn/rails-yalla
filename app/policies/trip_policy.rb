@@ -14,6 +14,10 @@ class TripPolicy < ApplicationPolicy
     true # tous les users peuvent creer un trip
   end
 
+  def send_trip?
+    show?
+  end
+
   def update?
     user_is_owner_or_admin?
   end

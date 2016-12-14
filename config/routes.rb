@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       member do
         put 'like'
         get 'print'
+        get 'send_trip'
         put 'make_my_day'
         get 'map_markers', format: :json
         get 'properties'

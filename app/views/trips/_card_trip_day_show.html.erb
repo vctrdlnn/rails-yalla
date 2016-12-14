@@ -1,5 +1,5 @@
 <!-- http://bootsnipp.com/tags/timeline -->
-<div role="tabpanel"  class="col-xs-12 col-md-6  tab-pane active" id="<%= panel_id(tripday) %>" data-map-affix="true" data-map-affix-target="<%= panel_id(tripday) + '_map' %>">
+<div role="tabpanel"  class="col-xs-12 col-md-6  tab-pane active" id="<%= tripday.panel_id %>" data-map-affix="true" data-map-affix-target="<%= tripday.panel_id + '_map' %>">
   <div class="text-center">
     <h3><%= tripday.title %></h3>
     <p>Date: <%= tripday.date %></p>
@@ -20,7 +20,7 @@
                     <small class="text-muted"><%= activity.main_category.title %></small>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <% if policy(activity).pin? %>
+                    <% if controller_path != "trip_mailer" && policy(activity).pin? %>
                       <div class="post-pin">
                           <% if current_user && current_user.voted_for?(activity) %>
                             <i class="fa fa-plus-square pink-heart fa-2x" aria-hidden="true" data-toggle="modal" data-target="#modalAssignTrip" data-activity="<%= activity.id %>"></i>
