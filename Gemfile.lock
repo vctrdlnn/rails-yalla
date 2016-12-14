@@ -97,6 +97,9 @@ GEM
       responders
       warden (~> 1.2.3)
     devise-i18n (1.1.1)
+    devise_invitable (1.7.0)
+      actionmailer (>= 4.0.0)
+      devise (>= 4.0.0)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
     easy_translate (0.5.0)
@@ -354,6 +357,7 @@ DEPENDENCIES
   coffee-rails
   devise
   devise-i18n
+  devise_invitable
   figaro
   flickraw
   font-awesome-sass

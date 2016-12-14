@@ -37,6 +37,9 @@ Rails.application.routes.draw do
         put 'change_position'
       end
     end
+
+    resources :invites
+
   end
 
   namespace :api, defaults: { format: :json } do

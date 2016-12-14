@@ -59,6 +59,9 @@ gem 'pundit'
 # authentification
 gem 'simple_token_authentication'
 
+# invitations to devise users
+gem 'devise_invitable'
+
 # internationalization
 gem 'rails-i18n', '~> 5.0.0'
 gem 'devise-i18n'

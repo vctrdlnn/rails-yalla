@@ -17,7 +17,10 @@
     </div>
   </section >
   <!-- /HOME -->
+
+  <!-- PARAMETERS -->
     <div class="container">
+      <h3>Edit trip caracteristics</h3>
       <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
         <ul>
         <% @trip.errors.full_messages.each do |message| %>
@@ -37,3 +40,18 @@
         <%= f.button :submit %>
       <% end %>
     </div>
+  <!-- /PARAMETERS -->
+
+  <!-- USERS AND INVITATIONS -->
+    <div class="container">
+      <h3>Invite participants</h3>
+
+      <%= form_for @invite , :url => invites_path do |f| %>
+        <%= f.hidden_field :trip_id, :value => @invite.trip_id %>
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+        <%= f.submit 'Send' %>
+      <% end %>
+    </div>
+  <!-- /USERS AND INVITATIONS -->
+</div>

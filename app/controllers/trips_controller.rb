@@ -54,6 +54,7 @@ class TripsController < ApplicationController
   end
 
   def properties
+    @invite = Invite.new
   end
 
   def create
