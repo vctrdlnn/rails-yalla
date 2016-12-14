@@ -46,12 +46,14 @@
     <div class="container">
       <h3>Invite participants</h3>
 
-      <%= form_for @invite , :url => invites_path do |f| %>
-        <%= f.hidden_field :trip_id, :value => @invite.trip_id %>
-        <%= f.label :email %>
-        <%= f.email_field :email %>
-        <%= f.submit 'Send' %>
+      <%= simple_form_for @invite do |f| %>
+        <%= f.input :email %>
+        <%= f.input :trip_id, as: :hidden, input_html: {value: @trip.id} %>
+        <%= f.button :submit %>
       <% end %>
+
+
+
     </div>
   <!-- /USERS AND INVITATIONS -->
 </div>
