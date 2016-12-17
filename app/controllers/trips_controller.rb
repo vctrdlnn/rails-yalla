@@ -20,8 +20,11 @@ class TripsController < ApplicationController
     render :index
   end
 
-  def my_trip
+  def my_trips
     @trips = current_user.trips
+    current_user.participants.each do |participation|
+      @trips << participation.trip
+    end
     @trips += current_user.find_voted_items
   end
 

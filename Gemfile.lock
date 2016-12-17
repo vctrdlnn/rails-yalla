@@ -199,6 +199,12 @@ GEM
     parser (2.3.3.0)
       ast (~> 2.2)
     pg (0.19.0)
+    postmark (1.10.0)
+      json
+      rake
+    postmark-rails (0.15.0)
+      actionmailer (>= 3.0.0)
+      postmark (~> 1.10.0)
     powerpack (0.1.1)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -372,6 +378,7 @@ DEPENDENCIES
   momentjs-rails (>= 2.9.0)
   omniauth-facebook
   pg
+  postmark-rails
   pry-byebug
   pry-rails
   puma

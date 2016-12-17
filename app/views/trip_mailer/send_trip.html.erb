@@ -5,33 +5,13 @@
 
 
 <!-- DESCRIPTION OF TRIP -->
-<div class="mini-padded"></div>
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 text-center border-bottom">
-      <blockquote class="font-serif col-xs-10 col-xs-offset-1">
         <p>"<%= @trip.description %>"</p>
-      </blockquote>
-    </div>
-  </div>
-</div>
 <!-- /DESCRIPTION -->
 
 <!-- TRIP DAY BY DAY -->
-<div class="container tab-content">
-  <div class="row">
-    <% @trip.trip_days.each_with_index do |tripday, index| %>
-      <%= render 'trips/card_trip_day_show', tripday:tripday , index:index %>
-    <% end %>
-  </div>
 
-  <!-- UNASSIGNED ACTIVITIES -->
-  <div class="row noassigned">
-    <h3 class="text-center">Other activities unassigned</h3>
-    <div class="mini-padded"></div>
-        <% @trip.activities.where(trip_day_id: nil).sort{ |x, y| x.index <=> y.index }.each do |activity| %>
-          <%= render 'trips/card_noassigned', activity:activity %>
-      <% end %>
-    <div class="padded"></div>
-  </div>
-</div>
+
+
+    <!-- TRIP DAY SHOW -->
+      <!-- render 'trips/card_trip_day_show', tripday:tripday , index:index -->
+      <!-- http://bootsnipp.com/tags/timeline -->

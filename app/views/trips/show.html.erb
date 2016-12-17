@@ -53,19 +53,32 @@
       </div>
       <div class="content-box-title font-inc">Share</div>
     </div> -->
-    <% if policy(@trip).edit? %>
-    <div class="content-box padded-icon">
-      <div class="content-box-icon">
-        <%= link_to edit_trip_path,format: :pdf do %>
-          <div class="fa fa-pencil icon-grey"></div>
-        <% end %>
+    <% if policy(@trip).send_trip? %>
+      <div class="content-box padded-icon">
+        <div class="content-box-icon">
+          <%= link_to send_trip_trip_path do %>
+            <div class="fa fa-envelope icon-grey"></div>
+          <% end %>
+        </div>
+        <div class="content-box-title font-inc">
+                Mail me
+        </div>
       </div>
-      <div class="content-box-title font-inc">
-              Edit
-      </div>
-
-    </div>
     <% end %>
+
+    <% if policy(@trip).edit? %>
+      <div class="content-box padded-icon">
+        <div class="content-box-icon">
+          <%= link_to edit_trip_path do %>
+            <div class="fa fa-pencil icon-grey"></div>
+          <% end %>
+        </div>
+        <div class="content-box-title font-inc">
+                Edit
+        </div>
+      </div>
+    <% end %>
+
 </div>
 <!-- /ICONS -->
 
