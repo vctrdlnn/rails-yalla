@@ -21,9 +21,10 @@ class TripsController < ApplicationController
   end
 
   def my_trips
-    @trips = current_user.trips
+    @trips = []
+    @trips += current_user.trips
     current_user.participants.each do |participation|
-      @trips << participation.trip
+      @trips << participation.trip unless @trips.include?(participation.trip)
     end
     @trips += current_user.find_voted_items
   end

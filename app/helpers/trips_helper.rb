@@ -7,7 +7,6 @@ module TripsHelper
     else
       class_name += " liked_trips"
     end
-
   end
 
   # Photo cover pour card background url

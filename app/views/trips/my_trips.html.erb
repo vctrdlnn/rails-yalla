@@ -2,41 +2,28 @@
 <div class="wrapper">
 
   <!-- HOME -->
-    <section class="module module-header bg-dark bg-dark-50" data-background=<%= image_path('cities/city2.jpg') %> >
-
-
+  <section class="module module-header bg-dark bg-dark-50" data-background=<%= image_path('cities/city2.jpg') %> >
     <div class="container">
-
       <!-- MODULE TITLE -->
       <div class="row">
-
         <div class="col-sm-6 col-sm-offset-3">
-
           <h1 class="module-title font-alt align-center">My travels</h1>
-
           <div class="module-subtitle font-inc align-center">
             All your past and future travels, your likes, ready for you!
           </div>
-
         </div>
-
       </div>
       <!-- /MODULE TITLE -->
-
     </div>
-
   </section >
   <!-- /HOME -->
 
   <!-- BLOG GRID -->
   <section class="module p-b-0 p-t-20">
-
     <div class="container">
-
       <!-- PORTFOLIO FILTER -->
       <div class="row">
         <div class="col-sm-12">
-
           <ul id="filters" class="filter font-inc hidden-xs">
             <li><a href="#" data-filter="*" class="current wow fadeInUp">All</a></li>
             <li><a href="#" data-filter=".personal_trips" class="wow fadeInUp" data-wow-delay="0.2s">Personal Trips</a></li>
@@ -48,8 +35,6 @@
 
       <!-- PORTFOLIO LIST -->
       <div class="row multi-columns-row post-columns">
-
-
         <% if @trips.nil? %>
             <p class="text-center">Nothing yet - Start now!</p>
         <% else %>
@@ -60,7 +45,6 @@
             <% end %>
           </ul>
         <% end %>
-
       </div>
     </div>
   </section>

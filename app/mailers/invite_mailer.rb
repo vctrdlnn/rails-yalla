@@ -17,6 +17,6 @@ class InviteMailer < ApplicationMailer
   def existing_user_invite(invite)
     @invite = invite
     mail to: @invite.email,
-          subject: "#{@invite.sender.name} has invited you to participate to #{@invite.trip.title}"
+          subject: "#{@invite.sender.name} has added you to #{@invite.trip.title}"
   end
 end

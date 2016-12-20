@@ -55,7 +55,7 @@ class TripPolicy < ApplicationPolicy
     # TODO: seul le user peut modifier le resto
     # record => @trip
     # user => current_user
-    user.admin || record.user == user if user || record.partipants.find_by(user: user)
+    user.admin || (record.user == user if user) || (record.participants.find_by(user: user) if user)
   end
 
   def user_is_logged?
