@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       member do
         put 'like'
         get 'print'
+        get 'send_trip'
         put 'make_my_day'
         get 'map_markers', format: :json
         get 'properties'
@@ -36,6 +37,10 @@ Rails.application.routes.draw do
         put 'change_position'
       end
     end
+
+    resources :participants, only: [:destroy]
+    resources :invites, only: [:create, :destroy]
+
   end
 
   namespace :api, defaults: { format: :json } do

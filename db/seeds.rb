@@ -1,12 +1,12 @@
 
-Category.destroy_all
-User.destroy_all
-Trip.destroy_all
-TripDay.destroy_all
-Activity.destroy_all
-MainCategory.destroy_all
+# Category.destroy_all
+# User.destroy_all
+# Trip.destroy_all
+# TripDay.destroy_all
+# Activity.destroy_all
+# MainCategory.destroy_all
 
-Cloudinary::Api.delete_resources_by_tag('posted_picture_'+ENV['CLOUDINARY_USER'])
+# Cloudinary::Api.delete_resources_by_tag('posted_picture_'+ENV['CLOUDINARY_USER'])
 
 
 user_params = {username: "admin", email: "admin@admin.com", password: "000000", phone: "0604590059"}

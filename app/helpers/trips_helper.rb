@@ -1,9 +1,5 @@
 module TripsHelper
 
-  def panel_id(tripday)
-    tripday.title.downcase.gsub(' ', '_')
-  end
-
   def trip_type_class(trip)
     class_name = trip.category.downcase.gsub(' ', '_')
     if trip.user == current_user
@@ -11,7 +7,6 @@ module TripsHelper
     else
       class_name += " liked_trips"
     end
-
   end
 
   # Photo cover pour card background url

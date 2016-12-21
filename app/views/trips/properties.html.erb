@@ -2,9 +2,7 @@
 <div class="wrapper">
 
   <!-- HOME -->
-    <section class="module bg-dark bg-dark-50" data-background=<%= image_path('trip_background.jpg') %> >
-
-
+  <section class="module bg-dark bg-dark-50" data-background=<%= image_path('trip_background.jpg') %> >
     <div class="container">
       <!-- MODULE TITLE -->
       <div class="row">
@@ -17,23 +15,85 @@
     </div>
   </section >
   <!-- /HOME -->
+
     <div class="container">
-      <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
-        <ul>
-        <% @trip.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-        <%= f.input :title %>
-        <%= f.input :description, as: :text %>
-        <%= f.input :category,
-          as: :radio_buttons,
-          item_wrapper_class: 'radio-inline',
-          collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
-          %>
-        <%= f.input :public, required: true, label: "Make your trip public and visible to everyone" %>
-        <%= f.input :photo, label: "Add or change picture of the city" %>
-        <%= f.input :photo_cache, as: :hidden %>
-        <%= f.button :submit %>
-      <% end %>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <!-- PARAMETERS -->
+          <h3>Edit trip caracteristics</h3>
+          <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
+            <ul>
+            <% @trip.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+            <%= f.input :title %>
+            <%= f.input :description, as: :text %>
+            <%= f.input :category,
+              as: :radio_buttons,
+              item_wrapper_class: 'radio-inline',
+              collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
+              %>
+            <%= f.input :public, required: true, label: "Make your trip public and visible to everyone" %>
+            <%= f.input :photo, label: "Add or change picture of the city" %>
+            <%= f.input :photo_cache, as: :hidden %>
+            <%= f.button :submit %>
+          <% end %>
+          <!-- /PARAMETERS -->
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
+          <!-- USERS AND INVITATIONS -->
+          <h3>Manage and invite participants</h3>
+          <table class="table table-hover">
+              <colgroup>
+                <col>
+                <col class="align-right">
+              </colgroup>
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Remove?</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <%= simple_form_for @invite do |f| %>
+                <tr class="warning">
+                  <td>
+                    <%= f.input :email, label:false, placeholder: "Participant's email" %>
+                    <%= f.input :trip_id, as: :hidden, input_html: {value: @trip.id} %>
+                  </td>
+                  <td>
+                  </td>
+                  <td>
+                    <%= f.button :submit, "Invite", class: "btn btn-primary" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tfoot>
+            <tbody>
+             <% @trip.all_members.each do |member| %>
+                <tr>
+                  <td class="text-left"><%= member[:email] %></td>
+                  <td class="text-right"><%= member[:status] %></td>
+                  <td class="text-right">
+                    <% if member[:participant_id] %>
+                      <%= link_to participant_path(member[:participant_id]) , method: :delete, data: {confirm: "are you sure ?"} do %>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      <% end %>
+                    <% elsif member[:invitation_id] %>
+                      <%= link_to invite_path(member[:invitation_id]) , method: :delete, data: {confirm: "are you sure ?"} do %>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <!-- /USERS AND INVITATIONS -->
+        </div>
+      </div>
     </div>
+</div>

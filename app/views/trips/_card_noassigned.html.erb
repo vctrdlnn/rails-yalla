@@ -9,7 +9,7 @@
       <small class="text-muted"><%= activity.main_category.title %></small>
     </div>
     <div class="col-xs-6 text-right">
-      <% if policy(activity).pin? %>
+      <% if controller_path != "trip_mailer" && policy(activity).pin? %>
         <div class="post-pin">
           <%= link_to pin_activity_path(activity), method: :put, remote: true, class: "" do %>
             <% if current_user && current_user.voted_for?(activity) %>

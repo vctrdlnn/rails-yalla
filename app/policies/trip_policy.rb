@@ -14,12 +14,16 @@ class TripPolicy < ApplicationPolicy
     true # tous les users peuvent creer un trip
   end
 
+  def send_trip?
+    user_is_logged?
+  end
+
   def update?
-    user_is_owner_or_admin?
+    user_is_owner_or_admin_or_participant?
   end
 
   def properties?
-    update?
+    user_is_owner_or_admin?
   end
 
   def destroy?
@@ -44,7 +48,18 @@ class TripPolicy < ApplicationPolicy
     # TODO: seul le user peut modifier le resto
     # record => @trip
     # user => current_user
-    user.admin || record.user == user if user
+    if user
+      user.admin || record.user == user
+    end
+  end
+
+  def user_is_owner_or_admin_or_participant?
+    # TODO: seul le user peut modifier le resto
+    # record => @trip
+    # user => current_user
+    if user
+      user.admin || (record.user == user) || (record.participants.find_by(user: user))
+    end
   end
 
   def user_is_logged?

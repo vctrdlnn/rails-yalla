@@ -97,6 +97,9 @@ GEM
       responders
       warden (~> 1.2.3)
     devise-i18n (1.1.1)
+    devise_invitable (1.7.0)
+      actionmailer (>= 4.0.0)
+      devise (>= 4.0.0)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
     easy_translate (0.5.0)
@@ -196,6 +199,12 @@ GEM
     parser (2.3.3.0)
       ast (~> 2.2)
     pg (0.19.0)
+    postmark (1.10.0)
+      json
+      rake
+    postmark-rails (0.15.0)
+      actionmailer (>= 3.0.0)
+      postmark (~> 1.10.0)
     powerpack (0.1.1)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -354,6 +363,7 @@ DEPENDENCIES
   coffee-rails
   devise
   devise-i18n
+  devise_invitable
   figaro
   flickraw
   font-awesome-sass
@@ -368,6 +378,7 @@ DEPENDENCIES
   momentjs-rails (>= 2.9.0)
   omniauth-facebook
   pg
+  postmark-rails
   pry-byebug
   pry-rails
   puma

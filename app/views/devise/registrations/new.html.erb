@@ -34,6 +34,11 @@
                   <div class="col-xs-6 col-sm-6 col-md-6">
                     <%= f.input :password_confirmation, required: true %>
                   </div>
+
+                  <% if @token != nil %>
+                    <%= f.input :invite_token, input_html: {value: @token}, as: :hidden %>
+                  <% end %>
+
                 </div>
                 <div class="mini-padded"></div>
                 <div class="form-actions">

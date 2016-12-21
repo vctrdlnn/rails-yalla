@@ -3,6 +3,10 @@ class TripDay < ApplicationRecord
   belongs_to :trip
   has_many :activities, dependent: :destroy
 
+  def panel_id
+    self.title.downcase.gsub(' ', '_')
+  end
+
   def static_map_url(width = 600, height = 600)
     base = "https://maps.googleapis.com/maps/api/staticmap?"
     params = "?center=#{self.trip.lat},#{self.trip.lon}&size=" + width.to_s + "x" + height.to_s + "&maptype=roadmap&visible="
