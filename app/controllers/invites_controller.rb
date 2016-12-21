@@ -15,7 +15,7 @@ class InvitesController < ApplicationController
       else
         InviteMailer.existing_user_invite(@invite).deliver
         #Add the user to the user group
-        participant = @invite.recipient.participants.build({trip: @invite.trip})
+        participant = @invite.recipient.participants.build({trip: @invite.trip, role: "Editor"})
         if participant.save
           flash[:notice] = "Participant successfully added to the trip"
         else
