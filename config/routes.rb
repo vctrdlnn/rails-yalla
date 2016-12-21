@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :participants, only: [:destroy]
     resources :invites
 
   end

@@ -43,17 +43,54 @@
   <!-- /PARAMETERS -->
 
   <!-- USERS AND INVITATIONS -->
-    <div class="container">
-      <h3>Invite participants</h3>
 
-      <%= simple_form_for @invite do |f| %>
-        <%= f.input :email %>
-        <%= f.input :trip_id, as: :hidden, input_html: {value: @trip.id} %>
-        <%= f.button :submit %>
-      <% end %>
-
-
-
-    </div>
-  <!-- /USERS AND INVITATIONS -->
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <h3>Manage and invite participants</h3>
+            <table class="table table-hover">
+                <colgroup>
+                  <col>
+                  <col class="align-right">
+                </colgroup>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Remove?</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <%= simple_form_for @invite do |f| %>
+                  <tr class="warning">
+                    <td>
+                      <%= f.input :email, label:false, placeholder: "Participant's email" %>
+                      <%= f.input :trip_id, as: :hidden, input_html: {value: @trip.id} %>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                      <%= f.button :submit, "Invite", class: "btn btn-primary" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tfoot>
+              <tbody>
+               <% @trip.participants.each do |participant| %>
+                  <tr>
+                    <td class="text-left"><%= participant.user.email %></td>
+                    <td class="text-right"><%= participant.role %></td>
+                    <td class="text-right">
+                      <%= link_to participant_path(participant.id) , method: :delete, data: {confirm: "are you sure ?"} do %>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /USERS AND INVITATIONS -->
 </div>
