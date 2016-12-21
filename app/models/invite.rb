@@ -6,6 +6,13 @@ class Invite < ApplicationRecord
   before_create :generate_token
   before_save :check_user_existence
 
+  validates :email,
+    presence: true,
+    uniqueness: {
+      scope: :trip,
+      message: "User can only be invited once per trip"
+    }
+
   private
 
   def check_user_existence

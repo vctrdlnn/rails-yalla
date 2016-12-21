@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     end
 
     resources :participants, only: [:destroy]
-    resources :invites
+    resources :invites, only: [:create, :destroy]
 
   end
 

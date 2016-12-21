@@ -1,4 +1,5 @@
 class InvitesController < ApplicationController
+  before_action :set_invite, only: [:destroy]
 
   def create
     @invite = Invite.new(invite_params) # Make a new Invite
@@ -23,9 +24,14 @@ class InvitesController < ApplicationController
         redirect_back(fallback_location: properties_trip_path(@invite.trip_id))
      end
     else
-      # oh no, creating an new invitation failed
+      flash[:alert] = "Error sending invitation - you can only send invitation once"
+      redirect_back(fallback_location: properties_trip_path(@invite.trip_id))
     end
+  end
 
+  def destroy
+    @invite.destroy
+    redirect_to :back, notice: 'Invitation cancelled for this user.'
   end
 
   private
@@ -36,4 +42,10 @@ class InvitesController < ApplicationController
       :trip_id
     )
   end
+
+  def set_invite
+    @invite = Invite.find(params[:id])
+    authorize @invite
+  end
+
 end

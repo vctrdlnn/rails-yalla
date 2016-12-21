@@ -14,9 +14,7 @@ class Trip < ApplicationRecord
   validates :city, presence: true
   validates :category,
     inclusion: {
-
       in: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"],
-
       message: "%{value} is not a valid category"
       }
 
@@ -27,10 +25,38 @@ class Trip < ApplicationRecord
     "#{city}, #{country}"
   end
 
+  def all_members
+    members = []
+    emails = []
+    # add participants
+    self.participants.each do |participant|
+      members <<
+      {
+        email: participant.user.email,
+        user_id: participant.user.id,
+        participant_id: participant.id,
+        status: "member"
+      }
+      emails << participant.user.email
+    end
+
+    # add invites
+    self.invites.each do |invite|
+      unless emails.include?(invite.email)
+        members <<
+        {
+          email: invite.email,
+          invitation_id: invite.id,
+          status: "invited"
+        }
+      end
+    end
+    members
+  end
+
   mount_uploader :photo, PhotoUploader
 
   def markers
-
   end
 
   def likes

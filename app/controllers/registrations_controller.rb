@@ -10,7 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
       @token = params["user"]["invite_token"]
       if @token != nil
         trip_joined =  Invite.find_by_token(@token).trip #find the user group attached to the invite
-        participant = resource.participants.build({trip: trip_joined}) #add this user to the new user group as a member
+        participant = resource.participants.build({trip: trip_joined, role: "Editor"}) #add this user to the new user group as a member
         if participant.save
           flash[:notice] = "You have been successfully added to the trip"
         else
