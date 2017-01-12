@@ -61,15 +61,6 @@ ActiveRecord::Schema.define(version: 20161214204527) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "liked_trips", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "trip_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["trip_id"], name: "index_liked_trips_on_trip_id", using: :btree
-    t.index ["user_id"], name: "index_liked_trips_on_user_id", using: :btree
-  end
-
   create_table "main_categories", force: :cascade do |t|
     t.string   "title"
     t.string   "icon"
@@ -184,8 +175,6 @@ ActiveRecord::Schema.define(version: 20161214204527) do
   add_foreign_key "activities", "trips"
   add_foreign_key "activities", "users"
   add_foreign_key "categories", "main_categories"
-  add_foreign_key "liked_trips", "trips"
-  add_foreign_key "liked_trips", "users"
   add_foreign_key "participants", "trips"
   add_foreign_key "participants", "users"
   add_foreign_key "pinned_activities", "activities"
