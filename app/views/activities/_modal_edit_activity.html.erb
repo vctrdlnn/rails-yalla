@@ -10,7 +10,7 @@
         <h4 class="modal-title">Edit this activity</h4>
       </div>
       <div class="modal-body">
-        <%= simple_form_for (activity) do |f| %>
+        <%= simple_form_for activity, remote: true do |f| %>
           <% if activity.errors.any? %>
            <div id="error_explanation">
              <ul>
@@ -27,10 +27,10 @@
           <%= f.input :address, disabled: true, input_html: { id: 'activity_edit_address' } %>
           <%= f.association :main_category, input_html: { id: 'activity_edit_category' } %>
           <%= f.input :photo, input_html: { id: 'activity_edit_photo' } %>
-          <%= f.button :submit %>
-        <% end %>
       </div>
       <div class="modal-footer">
+          <%= f.button :submit, "Update and close" %>
+        <% end %>
         <button type="button" class="btn btn-g" data-dismiss="modal">Close</button>
       </div>
     </div>

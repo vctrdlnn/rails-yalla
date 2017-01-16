@@ -1,5 +1,10 @@
-// Here you will write *javascript* that would be executed by the browser
-console.log('this is create.js')
+console.log('#act-<%= @activity.id %>')
+
+$('myEditModal-<%= @activity.id%>').modal('hide');
+$('#act-<%= @activity.id %>').slideDown();
+$('#autoRefresh').click();
+
+console.log('this is update.js')
 <% if @activity.errors.any? %>
   // Render new review form with errors
 console.log('error')
@@ -18,16 +23,6 @@ console.log('error')
   })
   // Show the new review with an animation!
   new_activity.slideDown();
-  // Reset the form
-  <% @activity = Activity.new %>
-  $('#activity_est_establishment').val('');
-  $('#activity_est_title').val('');
-  $('#activity_address').val('');
-  $('#activity_cat_title').val('');
-  $('#activity_est_description').val('');
-  $('#activity_est_url').val('');
-  $('#activity_est_lat').val('');
-  $('#activity_est_lon').val('');
 
   $('#autoRefresh').click();
 <% end %>
