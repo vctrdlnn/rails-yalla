@@ -1,5 +1,6 @@
 <div class="map_box">
-  <p><%= activity.title %></p>
-  <p><%= activity.address %></p>
-  <span class="icon-pencil" data-toggle="modal" data-target="#myEditModal-<%= activity.id%>"></span>
+  <h4><%= activity.index.to_s + ' - ' + activity.title %></h4>
+  <p style="font-size: 0.8em"><i><%= activity.establishment %> @ <%= activity.address %></i></p>
+  <p><strong>Description:</strong> <%= activity.short_description(200) %></p>
+  <p><span class="icon-pencil" data-toggle="modal" data-target="#myEditModal-<%= activity.id%>"> Edit</span></p>
 </div>
