@@ -2,7 +2,7 @@
 <div id="floating-panel" style="width: 100%; height: 10%;">
   <input id="autoRefresh" type=button style="display:none;" value="Hide Markers" class="btn btn-xs btn-g">
 <!--   <input id="showAll" type=button value="Show All Markers" class="btn btn-xs btn-g"> -->
-  <input id="refreshAll" type=button value="Refresh Markers" class="btn btn-xs btn-g">
+  <input id="refreshAll" type=button value="Center Map" class="btn btn-xs btn-g">
 </div>
 
 
@@ -45,7 +45,7 @@
       }
 
 
-      function drop() {
+      function drop(center_map) {
         clearMarkers();
         bounds  = new google.maps.LatLngBounds();
         if (typeof(activities) !== 'undefined') {
@@ -53,8 +53,10 @@
             addMarkerWithTimeoutandLabel(activities[i], i, i * 0);
             loc = new google.maps.LatLng(activities[i].lat, activities[i].lng);
             bounds.extend(loc);
-            map.fitBounds(bounds);
-            map.panToBounds(bounds);
+            if (center_map) {
+              map.fitBounds(bounds);
+              map.panToBounds(bounds);
+            }
           }
         }
       }
@@ -118,7 +120,7 @@
       }
 
       $("#autoRefresh").on("click", function() {
-        updateActivities();
+        updateActivities(false);
       });
 
       $("#hideAll").on("click", function() {
@@ -126,7 +128,7 @@
       });
 
       $("#refreshAll").on("click", function() {
-        updateActivities();
+        updateActivities(true);
       });
 
       // Adds a marker to the map and push to the array.
@@ -139,14 +141,15 @@
         markers.push(marker);
       }
 
-      function updateActivities() {
+      function updateActivities(center_map) {
         console.log('updating markers');
+        center_map = (typeof center_map !== 'undefined') ?  center_map : true;
         $.ajax({
           type: "GET",
           url: "map_markers.json",
           success: function(data) {
             activities = data;
-            drop();
+            drop(center_map);
             console.log("success");
           },
           error: function(jqXHR) {
