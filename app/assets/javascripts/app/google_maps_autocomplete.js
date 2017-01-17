@@ -177,6 +177,7 @@ function getAddressComponents(place) {
     place_id: place_id,
     website: place.website,
     lat: lat,
-    lon: lon
+    lon: lon,
+    object: place
   };
 }

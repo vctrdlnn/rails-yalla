@@ -1,5 +1,5 @@
 <% content_for(:title) do %>
-  Yala! Edit your <%= @trip.title %>
+  <%= @trip.title %> - Edit
 <% end %>
 <% @disable_footer = true %>
 <% trip_icons = set_day_icon(@trip.trip_days) %>
