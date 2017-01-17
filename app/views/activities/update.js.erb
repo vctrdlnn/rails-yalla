@@ -1,28 +1,53 @@
-console.log('#act-<%= @activity.id %>')
+console.log('updating...')
 
-$('myEditModal-<%= @activity.id%>').modal('hide');
-$('#act-<%= @activity.id %>').slideDown();
-$('#autoRefresh').click();
+//close the modal
+$('#myEditModal-<%= @activity.id %>').toggle('modal-open')
+$('.modal-backdrop').hide();
+
+//collapse all cards in accordion
+$('.accordion').accordion("option", "active", true );
+
+//find grid and id of activity
+old_act = $('#act-<%= @activity.id %>')
+act_index = $( ".activity-item" ).index( old_act )
+parent_grid = $('.activity-item')[act_index].parentElement
+grid_index = $('.activity-grid').index(parent_grid)
+console.log(grid_index)
+act_index_in_grid = $('.activity-grid:eq(' + grid_index + ') .activity-item').index($('#act-<%= @activity.id %>'))
+console.log($('.activity-grid:eq(' + grid_index + ') .activity-item').index($('#act-<%= @activity.id %>')))
+
+//delete old element to replace it with the new one
+$('#act-<%= @activity.id %>').slideUp();
+$('#act-<%= @activity.id %>').remove();
+
+
+//create the new activity
 
 console.log('this is update.js')
 <% if @activity.errors.any? %>
   // Render new review form with errors
 console.log('error')
-  $('#new_activity').html("<%= j render 'activities/form_new_establishment_from_trip', activity: @activity, trip: @trip %>");
+  $('#edited_activity').html("<%= j render 'activities/form_new_establishment_from_trip', activity: @activity, trip: @trip %>");
 <% else %>
   // Create a paragraph for the new review. But hide it.
-  var new_activity = $("<%= j render 'activities/card_activity_index', activity: @activity %>").hide();
-  console.log(new_activity)
-  // Add it to the DOM, at the end of the existing reviews. It's still hidden.
-  $('#grid-0').prepend(new_activity);
-  new_activity.accordion({
+  var edited_activity = $("<%= j render 'activities/card_activity_index', activity: @activity %>").hide();
+  console.log(edited_activity)
+
+  // Add to the dom in the proper grid and at the proper position
+  if (act_index_in_grid == 0) {
+    $('.activity-grid:eq(' + grid_index +')').prepend(edited_activity)
+  } else {
+    $('.activity-grid:eq(' + grid_index + ') .activity-item:eq(' + (act_index_in_grid - 1) + ')').after(edited_activity)
+  }
+
+  edited_activity.accordion({
     header: "> div.activity-item-header",
     collapsible: true,
     heightStyle: "content",
     active: false
   })
   // Show the new review with an animation!
-  new_activity.slideDown();
+  console.log('before slide down')
+  edited_activity.slideDown();
 
-  $('#autoRefresh').click();
 <% end %>
