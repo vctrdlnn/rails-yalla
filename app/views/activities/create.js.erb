@@ -6,9 +6,7 @@ console.log('error')
   $('#new_activity').html("<%= j render 'activities/form_new_establishment_from_trip', activity: @activity, trip: @trip %>");
 <% else %>
   // Create a paragraph for the new review. But hide it.
-console.log('cool')
   var new_activity = $("<%= j render 'activities/card_activity_index', activity: @activity %>").hide();
-console.log('super cool')
   console.log(new_activity)
   // Add it to the DOM, at the end of the existing reviews. It's still hidden.
   $('#grid-0').prepend(new_activity);

@@ -18,7 +18,7 @@
       <p><span class="font-alt">Photo:</span><%= cl_image_tag(activity.photo, width: 30, heigh: 20, crop: :fill) unless activity.photo == "" %></p>
       <h4 class="text-center">
         <!-- Trigger the modal with a button -->
-        <span class="icon-pencil" data-toggle="modal" data-target="#myEditModal-<%= activity.id%>"></span>
+        <a href="javascript:;"><span class="icon-pencil" data-toggle="modal" data-target="#myEditModal-<%= activity.id%>"></span></a>
         <%= "  -  " %>
         <%= link_to activity, method: :delete, remote: true, data: {confirm: "Are you sure?"} do %>
           <span class="icon-scissors"></span>

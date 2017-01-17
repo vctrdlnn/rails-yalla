@@ -51,9 +51,15 @@ class ActivitiesController < ApplicationController
 
   def update
     if @activity.update(activity_params)
-      redirect_to :back, notice: 'Activity was successfully updated.'
+      respond_to do |format|
+        format.html { redirect_to :back, notice: 'Activity was successfully updated.' }
+        format.js # <-- will render 'app/views/reviews/update.js.erb'
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.html { render :edit }
+        format.js  # <-- idem
+      end
     end
   end
 
