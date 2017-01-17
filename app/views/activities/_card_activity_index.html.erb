@@ -12,7 +12,7 @@
     <div class="left-aligh sm-txt">
       <p><span class="font-alt">Establishment:</span><%= activity.establishment %></p>
       <p><span class="font-alt">Description:</span><%= activity.short_description(80) %></p>
-      <p><span class="font-alt">URL:</span><%= activity.url %></p>
+      <p><span class="font-alt">URL:</span> <a href="<%= activity.url %>" target="_blank"><%= activity.url %></a></p>
       <p><span class="font-alt">Address:</span><%= activity.address %></p>
       <p><span class="font-alt">Category:</span><%= activity.main_category.title %></p>
       <p><span class="font-alt">Photo:</span><%= cl_image_tag(activity.photo, width: 30, heigh: 20, crop: :fill) unless activity.photo == "" %></p>
