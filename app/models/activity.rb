@@ -19,8 +19,9 @@ class Activity < ApplicationRecord
   # validates :parent, uniqueness: { scope: :trip,
   #   message: "You have already saved this activity" }
 
-  geocoded_by :address, latitude: :lat, longitude: :lon
-  after_validation :geocode, if: :address_changed?
+  # REMOVE GEOCODING - COMES FROM GMAPS DIRECTLY
+  # geocoded_by :address, latitude: :lat, longitude: :lon
+  # after_validation :geocode, if: :address_changed?
 
   mount_uploader :photo, PhotoUploader
 end
