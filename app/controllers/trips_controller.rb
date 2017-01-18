@@ -1,6 +1,6 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show, :new, :create, :edit, :send_trip, :search ]
+  skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search ]
   before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
   skip_after_action :verify_authorized, only: [:my_trips, :search]
