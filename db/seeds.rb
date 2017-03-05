@@ -1,15 +1,15 @@
 
-Category.destroy_all
-User.destroy_all
-Trip.destroy_all
-TripDay.destroy_all
-Activity.destroy_all
-MainCategory.destroy_all
+# Category.destroy_all
+# User.destroy_all
+# Trip.destroy_all
+# TripDay.destroy_all
+# Activity.destroy_all
+# MainCategory.destroy_all
 
 # Cloudinary::Api.delete_resources_by_tag('posted_picture_'+ENV['CLOUDINARY_USER'])
 
 
-user_params = {username: "admin", email: "admin@admin.com", password: "000000", phone: "0604590059"}
+user_params = {username: "admin", email: "contact@yala-app.com", password: "000000", phone: "0604590059"}
 user1 = User.create!(user_params)
 user1.admin = true
 user1.save
@@ -17,10 +17,10 @@ user1.save
 user_params = {username: "victor01", email: "victor010101@gmail.com", password: "000000", phone: "0055314810"}
 user2 = User.create!(user_params)
 
-user_params = {username: "guilaine", email: "guilaine.ghossoub4@gmail.com", password: "000000", phone: "0056714810"}
+user_params = {username: "guilaine", email: "gugu@gmail.com", password: "000000", phone: "0056714810"}
 user3 = User.create!(user_params)
 
-user_params = {username: "del", email: "del.martinache@gmail.com", password: "000000", phone: "0056714810"}
+user_params = {username: "del", email: "del.del@gmail.com", password: "000000", phone: "0056714810"}
 user4 = User.create!(user_params)
 
 main_categories =
