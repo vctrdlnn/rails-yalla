@@ -85,7 +85,7 @@ class TripsController < ApplicationController
 
   def update
     if @trip.update(trip_params)
-      redirect_to @trip, notice: 'Trip was successfully updated.'
+      redirect_to edit_trip_path(@trip), notice: 'Trip was successfully updated.'
     else
       render :edit
     end

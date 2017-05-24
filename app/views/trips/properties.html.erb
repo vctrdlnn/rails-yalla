@@ -43,6 +43,38 @@
         </div>
 
         <div class="col-xs-12 col-sm-6">
+          <!-- PARAMETERS -->
+          <h3>Edit column titles</h3>
+
+          <table class="table table-hover">
+              <colgroup>
+                <col>
+                <col class="align-right">
+              </colgroup>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+             <% @trip.trip_days.each do |day| %>
+                <tr>
+                  <td class="text-left">
+                    <input id="trip_day" placeholder="<%= day[:title] %>" type="text" />
+                  </td>
+                  <td class="text-right">
+                    <button id="btn-trip-day-update-<%= day[:id] %>" type="button" class="btn btn-g btn-sm">update</button>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <!-- /PARAMETERS -->
+        </div>
+
+        <div class="col-xs-12 col-sm-6">
           <!-- USERS AND INVITATIONS -->
           <h3>Manage and invite participants</h3>
           <table class="table table-hover">
