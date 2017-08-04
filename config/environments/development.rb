@@ -32,10 +32,14 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Send emails through Letter Opener gem
-  # IF NOT REALLY SEND config.action_mailer.delivery_method = :letter_opener
+  # IF NOT REALLY SEND
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # TO REALLY SEND:
   # config.action_mailer.delivery_method = :smtp
   config.action_mailer.delivery_method = :postmark
-  config.action_mailer.postmark_settings = { :api_token => "1146e21d-ae98-4375-844b-e4a553183f5d" }
+  config.action_mailer.postmark_settings = { api_key: ENV['POSTMARK_API_KEY'] }
   config.action_mailer.default_url_options = { host: "localhost:3000" }
 
   # Print deprecation notices to the Rails logger.

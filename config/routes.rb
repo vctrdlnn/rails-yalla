@@ -38,6 +38,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :trip_days do
+      member do
+        put 'update_title'
+      end
+    end
+
     resources :participants, only: [:destroy]
     resources :invites, only: [:create, :destroy]
 

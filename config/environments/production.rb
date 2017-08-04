@@ -87,6 +87,6 @@ Rails.application.configure do
   # Action mailer configuration
   # config.action_mailer.delivery_method = :smtp
   config.action_mailer.delivery_method = :postmark
-  config.action_mailer.postmark_settings = { :api_token => "1146e21d-ae98-4375-844b-e4a553183f5d" }
+  config.action_mailer.postmark_settings = { api_key: ENV['POSTMARK_API_KEY' }
   config.action_mailer.default_url_options = { host: "www.yala-app.com" }
 end

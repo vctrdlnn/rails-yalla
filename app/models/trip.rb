@@ -3,7 +3,7 @@ class Trip < ApplicationRecord
   acts_as_votable
 
   belongs_to :user
-  has_many :trip_days, dependent: :destroy
+  has_many :trip_days, -> { order "created_at ASC" }, dependent: :destroy
   has_many :activities, dependent: :destroy
   has_many :participants
   has_many :invites

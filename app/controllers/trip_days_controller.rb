@@ -1,7 +1,8 @@
 # Controller trip days
 class TripDaysController < ApplicationController
-  before_action :set_tripday, only: [:show, :edit, :update, :destroy]
+  before_action :set_tripday, only: [:show, :edit, :update, :destroy, :update_title]
   before_action :set_trip, only: [:new, :create, :edit, :update]
+  skip_after_action :verify_authorized
 
   def index
     @trip_days = TripDay.all
@@ -28,10 +29,21 @@ class TripDaysController < ApplicationController
 
   def update
     if @trip_day.update(tripday_params)
-      redirect_to :back, notice: 'Trip day was successfully updated.'
+      respond_to do |format|
+        format.html { redirect_to :back, notice: 'Title was successfully updated.' }
+        format.js # <-- will render 'app/views/reviews/update.js.erb'
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.html { render :edit }
+        format.js  # <-- idem
+      end
     end
+  end
+
+  def update_title
+    @trip_day.update(tripday_params)
+    # flash[:notice] =  "Title was successfully updated."
   end
 
   def destroy
