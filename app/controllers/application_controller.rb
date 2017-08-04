@@ -53,6 +53,13 @@ class ApplicationController < ActionController::Base
     store_location_for(:user, request.url)
   end
 
+  def after_sign_in_path_for(resource)
+    # binding.pry
+    # current_user_path
+    my_trips_path
+  end
+
+
   private
 
   def skip_pundit?

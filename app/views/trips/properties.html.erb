@@ -61,10 +61,10 @@
              <% @trip.trip_days.each do |day| %>
                 <tr>
                   <td class="text-left">
-                    <input id="trip_day" placeholder="<%= day[:title] %>" type="text" />
+                    <input id="trip-day-title-<%= day[:id] %>" placeholder="<%= day[:title] %>" type="text" />
                   </td>
                   <td class="text-right">
-                    <button id="btn-trip-day-update-<%= day[:id] %>" type="button" class="btn btn-g btn-sm">update</button>
+                    <button id="btn-trip-day-update-<%= day[:id] %>" type="button" class="btn btn-g btn-sm btn-trip-day-update">update</button>
                   </td>
                 </tr>
               <% end %>
@@ -129,3 +129,48 @@
       </div>
     </div>
 </div>
+
+
+
+<% content_for(:js) do %>
+  <script>
+    $(document).ready(function() {
+      // TODO Check safety!!!
+      var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+
+      $('.btn-trip-day-update').click(function(){
+
+        var element_button = $(this);
+        var trip_day_id = element_button[0].id.split("-").pop();
+        var element_content = $('#trip-day-title-'+trip_day_id)
+        var trip_day_new_title = element_content[0].value
+
+        var data = {
+          trip_day: {
+            trip_day_id: trip_day_id,
+            title: trip_day_new_title
+          },
+          authenticity_token: AUTH_TOKEN
+        };
+
+        $.ajax({
+          type: 'PUT',
+          url: '/trip_days/' + trip_day_id + '/update_title',
+          data: data,
+          success: function(data) {
+            //console.log(data);
+            console.log('trip updated');
+            element_content[0].placeholder = trip_day_new_title
+            element_content[0].value = ''
+            // $('#autoRefresh').click();
+            // callback(data); // return data in callback
+          },
+          error: function(jqXHR) {
+            console.error(jqXHR.responseText);
+          }
+        });
+      });
+    });
+  </script>
+<% end %>
+
