@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214204527) do
+ActiveRecord::Schema.define(version: 20170811180302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,16 @@ ActiveRecord::Schema.define(version: 20161214204527) do
     t.string   "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "trip_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_messages_on_trip_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "participants", force: :cascade do |t|
@@ -175,6 +185,8 @@ ActiveRecord::Schema.define(version: 20161214204527) do
   add_foreign_key "activities", "trips"
   add_foreign_key "activities", "users"
   add_foreign_key "categories", "main_categories"
+  add_foreign_key "messages", "trips"
+  add_foreign_key "messages", "users"
   add_foreign_key "participants", "trips"
   add_foreign_key "participants", "users"
   add_foreign_key "pinned_activities", "activities"

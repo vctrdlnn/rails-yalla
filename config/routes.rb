@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  get 'messages/new'
+
+  get 'messages/create'
+
+  get 'messages/destroy'
+
+  get 'messages/edit'
+
+  get 'messages/update'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   scope '(:locale)', locale: /en|fr|de/ do
     root to: 'pages#home'
@@ -20,6 +30,7 @@ Rails.application.routes.draw do
         put 'make_my_day'
         get 'map_markers', format: :json
         get 'properties'
+        get 'chatroom'
       end
       collection do
         get 'search', to: 'trips#search'

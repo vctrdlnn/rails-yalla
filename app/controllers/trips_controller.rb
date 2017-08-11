@@ -1,7 +1,7 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search ]
-  before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
+  before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties, :chatroom]
 
   skip_after_action :verify_authorized, only: [:my_trips, :search]
 
@@ -59,6 +59,9 @@ class TripsController < ApplicationController
 
   def properties
     @invite = Invite.new
+  end
+
+  def chatroom
   end
 
   def create
@@ -133,7 +136,6 @@ class TripsController < ApplicationController
       :photo, :photo_cache, :public
     )
   end
-
 
   # MAKE MY DAY ALGORITHM
 

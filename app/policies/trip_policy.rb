@@ -26,6 +26,10 @@ class TripPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
+  def chatroom?
+    user_is_owner_or_admin_or_participant?
+  end
+
   def destroy?
     user_is_owner_or_admin?
   end

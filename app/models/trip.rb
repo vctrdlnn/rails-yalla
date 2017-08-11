@@ -7,6 +7,7 @@ class Trip < ApplicationRecord
   has_many :activities, dependent: :destroy
   has_many :participants
   has_many :invites
+  has_many :messages
 
   attr_accessor :nb_days, :start_date
 
