@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214204527) do
+ActiveRecord::Schema.define(version: 20170829080407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20161214204527) do
     t.string   "url"
     t.string   "photo"
     t.integer  "parent_id"
+    t.float    "price"
     t.index ["main_category_id"], name: "index_activities_on_main_category_id", using: :btree
     t.index ["parent_id"], name: "index_activities_on_parent_id", using: :btree
     t.index ["trip_day_id"], name: "index_activities_on_trip_day_id", using: :btree

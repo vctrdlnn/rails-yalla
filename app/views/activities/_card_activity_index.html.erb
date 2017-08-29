@@ -15,6 +15,7 @@
       <p><span class="font-alt">URL:</span> <a href="<%= activity.url %>" target="_blank"><%= activity.url %></a></p>
       <p><span class="font-alt">Address:</span><%= activity.address %></p>
       <p><span class="font-alt">Category:</span><%= activity.main_category.title %></p>
+      <p><span class="font-alt">Budget:</span><%= number_to_currency(activity.price, locale: :fr, precision: 0)%></p>
       <p><span class="font-alt">Photo:</span><%= cl_image_tag(activity.photo, width: 30, heigh: 20, crop: :fill) unless activity.photo == "" %></p>
       <h4 class="text-center">
         <!-- Trigger the modal with a button -->

@@ -159,7 +159,7 @@ class ActivitiesController < ApplicationController
       :establishment, :city, :address,
       :lon, :lat, :index, :trip_id, :trip_day_id,
       :google_category, :google_place_identifier,
-      :photo, :photo_cache, :url
+      :photo, :photo_cache, :url, :price
     )
   end
 

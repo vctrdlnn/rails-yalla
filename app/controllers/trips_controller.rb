@@ -1,4 +1,4 @@
-# Trip controller - classic CRUD so far
+  # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search ]
   before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
@@ -36,6 +36,7 @@ class TripsController < ApplicationController
         render pdf: "show"   # Excluding ".pdf" extension.
       end
     end
+
   end
 
   def send_trip

@@ -32,6 +32,7 @@
         <!-- Trip Days and Itiniraries -->
         <p class="font-alt"><%= @trip.title %></p>
         <div class="row width100 inblock side-brd-grey heigth90">
+
           <% @trip.trip_days.each do |td| %>
             <div class="col-xs-4 inblock trip-day heigth100">
               <p><%= td.title %>(<%= image_tag trip_icons[td.id], class: "avatar-mini" %>)</p>
@@ -85,6 +86,13 @@
           <p><span class="font-alt">Description:</span></p>
           <p><%= @trip.description %></p>
           <span id="city_coordinates" style="display:none;"><%= "#{@trip.lat}|#{@trip.lon}" %></span>
+        </div>
+        <div class="other_container budget-trip">
+        <% total_trip_price = 0 %>
+        <% @trip.activities.each do |activity| %>
+        <% total_trip_price = total_trip_price + activity.price %>
+        <% end %>  
+        <p><span class="font-alt">Budget: <%= number_to_currency(total_trip_price, locale: :fr, precision: 0)%></span></p>
         </div>
       </div>
     </div>
