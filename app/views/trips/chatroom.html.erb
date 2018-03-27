@@ -1,1 +1,135 @@
-hello
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div id="chatroom">
+        <h1>CHAT-ROOM</h1>
+
+        <div>
+
+        </div>
+
+        <div action="#" id="comment-form">
+
+          <div class="form-group">
+            <label for="your-message">Your comment</label>
+            <textarea type="text" name="content" id="your-message" class="form-control" placeholder="Here is my message.."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="your-name">From</label>
+            <input type="text" name="content" id="your-name" class="form-control" placeholder="Bob">
+          </div>
+          <input type="submit" value="Send" class="btn btn-primary" data-remote="true" >
+        </div>
+
+        <div id="messages">
+          <ul class="list unstyle">
+            <% @messages.each do |mess| %>
+               <li><%= "#{mess.content} (posted #{mess.posted_ago})" %></li>
+            <% end %>
+          </ul>
+
+          <button class="btn btn-danger" id="refresh">Refresh Chat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<% content_for(:js) do %>
+  <script>
+    $(document).ready(function() {
+      // TODO Check safety!!!
+      var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+
+      var trip_id = 17; // change to your own trip_id id TODO CHANGE TRIP_ID
+      var baseUrl = "/trips/" + trip_id ;
+
+      // Your turn to code!
+      var post_attr = {};
+      var post_url = baseUrl + "/messages"
+
+
+      // CODE DE LA FONCTION MESSAGES
+
+      console.log("start messaging");
+
+      $("#comment-form .btn").on('click', function(event) {
+        console.log("submitted");
+        event.preventDefault();
+        post_attr = {
+          message: {
+            content: $("#your-message").val(),
+            author: $("#your-name").val(),
+            trip_id: trip_id
+          },
+        };
+        postComment(post_attr);
+        return false;
+      });
+
+      $("#refresh").on('click', function(event) {
+        event.preventDefault();
+        getComments(function(output) {displayPosts(output)})
+        return false;
+      });
+
+
+      // FONCTIONS ANNEXES
+
+      function displayPosts(data) {
+        $("#messages ul").clear;
+        data.forEach(function(post) {
+          prependMessage(formatMessage(post));
+        });
+        return true;
+      }
+
+      function getComments(callback) {
+        $.ajax({
+          type: "GET",
+          url: post_url,
+          success: function(data) {
+            console.log("success")
+            console.log(data);
+            callback(data); // return data in callback
+          },
+          error: function(jqXHR) {
+            console.error(jqXHR.responseText);
+          }
+        });
+      }
+
+      function postComment(attr, callback) {
+        $.ajax({
+          type: "POST",
+          url: post_url,
+          data: attr,
+          success: function(data) {
+            console.log(data);
+            callback(data); // return data in callback
+          },
+          error: function(jqXHR) {
+            console.error(jqXHR.responseText);
+          }
+        });
+      }
+
+      function prependMessage(message) {
+        $("#messages ul").prepend(message);
+        return true;
+      }
+
+      function formatMessage(attr) {
+        attr.content.replace("script", "xxx");
+        var HTMLmessage = "<li>" + attr.content +
+          " (posted <span class='date'>" +
+          "</span>) by " + attr.author;
+        return HTMLmessage;
+      }
+    });
+  </script>
+<% end %>
+

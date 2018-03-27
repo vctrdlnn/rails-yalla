@@ -9,6 +9,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'devise'
 gem 'redis'
 
+gem 'faker'
+
 gem 'sass-rails'
 gem 'jquery-rails'
 gem 'uglifier'
@@ -35,13 +37,13 @@ end
 # add ones:
 gem 'rails-controller-testing'
 gem 'rails_12factor', group: :production
-gem 'cloudinary', '1.1.0'
+gem 'cloudinary'
 gem 'carrierwave'
 gem 'omniauth-facebook'
 
 gem 'simple-form-datepicker'
 gem 'momentjs-rails', '>= 2.9.0'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
+gem 'bootstrap3-datetimepicker-rails'
 
 gem 'geocoder'
 gem 'coffee-rails'
@@ -63,7 +65,7 @@ gem 'simple_token_authentication'
 gem 'devise_invitable'
 
 # internationalization
-gem 'rails-i18n', '~> 5.0.0'
+gem 'rails-i18n'
 gem 'devise-i18n'
 
 # admins
@@ -78,7 +80,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 #likes
-gem 'acts_as_votable', '~> 0.10.0'
+gem 'acts_as_votable'
 
 #selection and input
 gem 'chosen-rails'

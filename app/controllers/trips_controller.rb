@@ -62,6 +62,7 @@ class TripsController < ApplicationController
   end
 
   def chatroom
+    @messages = @trip.messages
   end
 
   def create
