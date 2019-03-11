@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
-ruby '2.4.4'
+ruby '2.5.3'
 
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.2'
 gem 'puma'
-gem 'pg', '~> 0.21'
+gem "pg", "~> 0.18"
 gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'devise'
@@ -30,6 +30,7 @@ group :development, :test do
 
   gem 'rubocop', require: false
   gem 'i18n-tasks'
+  gem 'rb-readline'
 end
 
 # add ones:
