@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 ruby '2.5.3'
 
-gem 'rails', '5.0.2'
+gem 'rails', '5.1.0'
 gem 'puma'
-gem "pg", "~> 0.18"
+gem "pg", "~> 0.20"
 gem 'figaro'
 gem 'jbuilder', '~> 2.0'
-gem 'devise'
+gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
 gem 'redis'
 
 gem 'sass-rails'
@@ -36,7 +36,7 @@ end
 # add ones:
 gem 'rails-controller-testing'
 gem 'rails_12factor', group: :production
-gem 'cloudinary', '1.1.0'
+gem 'cloudinary'
 gem 'carrierwave'
 gem 'omniauth-facebook'
 
@@ -75,7 +75,7 @@ gem 'rails_admin', '>= 1.0.0.rc'
 gem 'flickraw'
 
 #pdf
-gem 'wicked_pdf'
+gem 'wicked_pdf', '~>1.1'
 gem 'wkhtmltopdf-binary'
 
 #likes
