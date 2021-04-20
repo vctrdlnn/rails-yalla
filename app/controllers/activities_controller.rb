@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position, :pin]
   # before_action :set_trip, only: [:new, :create]
-  before_filter :sanitize_activity_params, only: [:change_position]
+  before_action :sanitize_activity_params, only: [:change_position]
 
 
   def index
