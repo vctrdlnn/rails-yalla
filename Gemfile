@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.5.3'
 
-gem 'rails', '5.1.0'
+gem 'rails', '5.2.5'
 gem 'puma'
 gem "pg", "~> 0.20"
 gem 'figaro'
@@ -9,7 +9,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
 gem 'redis'
 
-gem 'sass-rails'
+gem 'sass-rails', '~> 5.0.4'
 gem 'jquery-rails'
 gem 'uglifier'
 gem 'bootstrap-sass'
@@ -24,8 +24,8 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'spring'
-  gem 'listen', '~> 3.0.5'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'listen'
+  gem 'spring-watcher-listen'
   gem 'letter_opener' # mails
 
   gem 'rubocop', require: false
@@ -64,7 +64,7 @@ gem 'simple_token_authentication'
 gem 'devise_invitable'
 
 # internationalization
-gem 'rails-i18n', '~> 5.0.0'
+gem 'rails-i18n'
 gem 'devise-i18n'
 
 # admins
