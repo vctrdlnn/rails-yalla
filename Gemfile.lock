@@ -237,7 +237,7 @@ GEM
     parallel (1.20.1)
     parser (3.0.1.0)
       ast (~> 2.4.1)
-    pg (0.21.0)
+    pg (1.5.4)
     postmark (1.21.3)
       json
     postmark-rails (0.21.0)
@@ -439,7 +439,7 @@ DEPENDENCIES
   listen
   momentjs-rails (>= 2.9.0)
   omniauth-facebook
-  pg (~> 0.20)
+  pg
   postmark-rails
   pry-byebug
   pry-rails
