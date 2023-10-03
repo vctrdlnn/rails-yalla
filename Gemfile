@@ -3,7 +3,7 @@ ruby '2.5.3'
 
 gem 'rails', '5.2.5'
 gem 'puma'
-gem "pg", "~> 0.20"
+gem "pg"
 gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
