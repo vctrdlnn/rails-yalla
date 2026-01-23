@@ -3,7 +3,7 @@
 class PhotoUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
 
-  process :tags => ['posted_picture_' + ENV['CLOUDINARY_USER'] ]
+  process :tags => ['posted_picture_' + ENV.fetch('CLOUDINARY_USER', 'default') ]
 
   process eager: true  # Force version generation at upload time.
 
