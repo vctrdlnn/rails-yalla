@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.5.3'
+ruby '3.2.6'
 
 gem 'rails', '5.2.5'
 gem 'puma'
@@ -48,9 +48,7 @@ gem 'geocoder'
 gem 'coffee-rails'
 gem 'gmaps4rails'
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-underscore'
-end
+gem 'underscore-rails'
 
 gem 'jquery-ui-rails'
 
