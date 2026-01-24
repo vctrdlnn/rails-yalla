@@ -79,5 +79,3 @@ gem 'acts_as_votable'
 # selection and input
 gem 'chosen-rails'
 
-# Postmark
-gem 'postmark-rails'
