@@ -84,15 +84,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Action mailer configuration (Brevo SMTP)
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: 'smtp-relay.brevo.com',
-    port: 587,
-    user_name: ENV['BREVO_SMTP_USER'],
-    password: ENV['BREVO_SMTP_PASSWORD'],
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  # Action mailer configuration (Brevo API)
+  config.action_mailer.delivery_method = :brevo_api
   config.action_mailer.default_url_options = { host: "www.yala-app.fr" }
 end

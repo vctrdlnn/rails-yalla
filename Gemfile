@@ -79,3 +79,6 @@ gem 'acts_as_votable'
 # selection and input
 gem 'chosen-rails'
 
+# email via Brevo API
+gem 'sib-api-v3-sdk'
+
