@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'contact@yala-app.com'
+  default from: 'contact@yala-app.fr'
 
   layout 'mailer'
 end

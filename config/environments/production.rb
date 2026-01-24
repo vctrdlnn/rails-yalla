@@ -19,7 +19,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = :terser
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
@@ -84,9 +84,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Action mailer configuration
-  # config.action_mailer.delivery_method = :smtp
-  config.action_mailer.delivery_method = :postmark
-  config.action_mailer.postmark_settings = { api_key: ENV['POSTMARK_API_KEY'] }
-  config.action_mailer.default_url_options = { host: "www.yala-app.com" }
+  # Action mailer configuration (Brevo API)
+  config.action_mailer.delivery_method = :brevo_api
+  config.action_mailer.default_url_options = { host: "www.yala-app.fr" }
 end
