@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '3.2.2'
 
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.5'
 gem 'puma'
 gem 'pg'
 gem 'bootsnap', require: false
