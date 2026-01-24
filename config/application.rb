@@ -18,6 +18,9 @@ Bundler.require(*Rails.groups)
 
 module RailsYalla
   class Application < Rails::Application
+    # Load defaults for Rails 7.1
+    config.load_defaults 7.1
+
     config.generators do |generate|
       generate.assets false
     end
