@@ -36,8 +36,72 @@
   margin: 20px;
 }
 
+// Horizontal scroll wrapper for multi-day trips
+.trip-days-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  // Gradient fade on right to indicate more content
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &.has-scroll::after {
+    opacity: 1;
+  }
+}
+
+.trip-days-scroll-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  height: 100%;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+
+    &:hover {
+      background: #a1a1a1;
+    }
+  }
+}
+
 .trip-day {
-  width: 33%;
+  flex: 0 0 280px; // Fixed width, don't grow or shrink
+  min-width: 280px;
+  max-width: 280px;
+  padding: 0 10px;
+  border-right: 1px solid #eee;
+  overflow-y: auto; // Allow vertical scroll within each day
+
+  &:last-child {
+    border-right: none;
+  }
 }
 
 .trip_descri{
@@ -82,4 +146,89 @@
 .border-bottom{
   border-bottom: 1px solid lightgray;
   padding-bottom: 30px;
+}
+
+// Mobile Tab Navigation
+.mobile-tabs {
+  display: none; // Hidden on desktop
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+}
+
+.mobile-tab {
+  flex: 1;
+  padding: 12px 8px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+
+  i {
+    margin-right: 4px;
+  }
+
+  &:hover {
+    background: #e9ecef;
+  }
+
+  &.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+    background: #fff;
+  }
+}
+
+// Mobile panel visibility
+@media (max-width: 767px) {
+  .mobile-panel {
+    display: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px !important;
+
+    &.active {
+      display: block !important;
+    }
+  }
+
+  .trip-edit-wrapper {
+    top: 56px; // Account for navbar
+  }
+
+  .trip-days-scroll-wrapper {
+    height: calc(100vh - 180px) !important;
+  }
+
+  .trip-day {
+    flex: 0 0 85vw;
+    min-width: 85vw;
+    max-width: 85vw;
+  }
+
+  .map_container {
+    height: 300px !important;
+  }
+
+  .other_container {
+    height: auto !important;
+    min-height: 100px;
+  }
+
+  .buttons .row .col-xs-3 {
+    width: 50%;
+    margin-bottom: 8px;
+  }
 }
