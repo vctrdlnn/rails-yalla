@@ -201,7 +201,7 @@
         $('.mobile-tab[data-tab="days-panel"]').addClass('active');
       }
 
-      // SORTING !!!
+      // SORTING with enhanced visual feedback
       // Define all lists you can connect together
       var connectable_lists = "#grid-0";
       var days = $('.trip-day .sortable');
@@ -209,13 +209,41 @@
          connectable_lists = connectable_lists.concat(", #" + days[i].id);
       }
 
+      // Action history for undo functionality
+      var actionHistory = [];
+      var currentToast = null;
+
       $( connectable_lists ).sortable({
           connectWith: ".sortable",
           placeholder: "placeholder-highlight ui-corner-all",
           handle: ".activity-item-header",
           cancel: ".activity-item-toggle",
-          stop: function( event, ui ) {
-            savePosition(event, ui)
+          cursor: "grabbing",
+          opacity: 0.9,
+          revert: 100,
+          // Store original position when starting drag
+          start: function(event, ui) {
+            ui.item.data('originalParent', ui.item.parent().attr('id'));
+            ui.item.data('originalIndex', ui.item.index());
+            ui.item.addClass('dragging');
+          },
+          // Highlight target column when dragging over
+          over: function(event, ui) {
+            $(this).addClass('drag-over');
+            $(this).closest('.trip-day').addClass('drag-over-day');
+          },
+          // Remove highlight when leaving column
+          out: function(event, ui) {
+            $(this).removeClass('drag-over');
+            $(this).closest('.trip-day').removeClass('drag-over-day');
+          },
+          stop: function(event, ui) {
+            // Clean up all drag classes
+            $('.drag-over').removeClass('drag-over');
+            $('.drag-over-day').removeClass('drag-over-day');
+            ui.item.removeClass('dragging');
+            // Save position with optimistic UI
+            savePosition(event, ui);
           }
       });
 
@@ -227,36 +255,126 @@
         icons: false
       });
 
-      // document.getElementById( 'ui' ).style.display = 'none';
+      // Toast notification helper
+      function showToast(message, type, showUndo, undoCallback) {
+        // Remove existing toast
+        if (currentToast) {
+          currentToast.remove();
+        }
+
+        var toast = $('<div class="save-toast ' + type + '">' +
+          '<span>' + message + '</span>' +
+          (showUndo ? '<button class="undo-btn">Undo</button>' : '') +
+          '</div>');
+
+        if (showUndo && undoCallback) {
+          toast.find('.undo-btn').on('click', function() {
+            undoCallback();
+            toast.remove();
+          });
+        }
+
+        $('body').append(toast);
+        currentToast = toast;
+
+        // Auto-hide after 4 seconds
+        setTimeout(function() {
+          toast.fadeOut(300, function() { $(this).remove(); });
+        }, 4000);
+      }
 
       function savePosition(event, ui) {
-        // check why this ?
-        var element = $(this);
-        // define update parameters to save
-        var activity_id = ui.item[0].id.split("-").pop(); // get the id of the element
-        var day = ui.item[0].parentElement.id.split("-").pop();
-        //var day = $(".activity-grid").index(ui.item[0].parentElement); // get the column parent
-        var index = $("#grid-" + day + " .activity-item").index(ui.item) + 1; // get the index inside the column
+        var activity_id = ui.item[0].id.split("-").pop();
+        var newDay = ui.item[0].parentElement.id.split("-").pop();
+        var newIndex = $("#grid-" + newDay + " .activity-item").index(ui.item) + 1;
+        var originalParent = ui.item.data('originalParent');
+        var originalIndex = ui.item.data('originalIndex');
+
         var data = {
           activity: {
-            trip_day_id: day,
-            index: index
+            trip_day_id: newDay,
+            index: newIndex
           },
           authenticity_token: AUTH_TOKEN
         };
+
+        // Show saving indicator
+        showToast('Saving...', 'saving', false);
 
         $.ajax({
           type: 'PUT',
           url: '/activities/' + activity_id + '/change_position/',
           data: data,
           success: function(data) {
-            //console.log(data);
             console.log('index updated');
+
+            // Store action for undo
+            var undoAction = {
+              activityId: activity_id,
+              fromGrid: 'grid-' + newDay,
+              fromIndex: newIndex - 1,
+              toGrid: originalParent,
+              toIndex: originalIndex
+            };
+            actionHistory.push(undoAction);
+
+            // Show success with undo option
+            showToast('Activity moved', 'success', true, function() {
+              undoLastAction(undoAction);
+            });
+
             $('#autoRefresh').click();
-            // callback(data); // return data in callback
           },
           error: function(jqXHR) {
             console.error(jqXHR.responseText);
+            showToast('Failed to save. Please try again.', 'error', false);
+
+            // Rollback: move item back to original position
+            var item = ui.item;
+            var originalGrid = $('#' + originalParent);
+            var items = originalGrid.children('.activity-item');
+
+            if (originalIndex >= items.length) {
+              originalGrid.append(item);
+            } else {
+              items.eq(originalIndex).before(item);
+            }
+          }
+        });
+      }
+
+      function undoLastAction(action) {
+        var item = $('#activity-' + action.activityId);
+        var targetGrid = $('#' + action.toGrid);
+        var items = targetGrid.children('.activity-item');
+
+        // Move item back visually
+        if (action.toIndex >= items.length) {
+          targetGrid.append(item);
+        } else {
+          items.eq(action.toIndex).before(item);
+        }
+
+        // Save the undo to server
+        var newDay = action.toGrid.split("-").pop();
+        var data = {
+          activity: {
+            trip_day_id: newDay,
+            index: action.toIndex + 1
+          },
+          authenticity_token: AUTH_TOKEN
+        };
+
+        $.ajax({
+          type: 'PUT',
+          url: '/activities/' + action.activityId + '/change_position/',
+          data: data,
+          success: function() {
+            showToast('Undo successful', 'success', false);
+            $('#autoRefresh').click();
+          },
+          error: function() {
+            showToast('Undo failed', 'error', false);
           }
         });
       }

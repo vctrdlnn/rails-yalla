@@ -25,11 +25,113 @@
   padding: 0;
 }
 
+// Drag and drop visual feedback
 .placeholder-highlight {
-  line-height: 2em;
-  background-color: lightgrey;
-  border: 1px dotted black;
-  height: 50px;
+  background: linear-gradient(135deg, #e3f2fd 25%, #bbdefb 25%, #bbdefb 50%, #e3f2fd 50%, #e3f2fd 75%, #bbdefb 75%);
+  background-size: 20px 20px;
+  border: 2px dashed #2196f3;
+  border-radius: 8px;
+  min-height: 60px;
+  margin: 8px 0;
+  animation: placeholder-pulse 1s ease-in-out infinite;
+}
+
+@keyframes placeholder-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+// Activity card being dragged
+.activity-item.ui-sortable-helper {
+  transform: rotate(2deg) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  opacity: 0.95;
+  z-index: 1000;
+  cursor: grabbing !important;
+}
+
+// Day column when dragging over it
+.activity-grid.drag-over {
+  background-color: rgba(33, 150, 243, 0.08);
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+// Highlight the entire day column header when dragging over
+.trip-day.drag-over-day {
+  background-color: rgba(33, 150, 243, 0.05);
+
+  > p {
+    color: #1976d2;
+    font-weight: bold;
+  }
+}
+
+// Smooth transitions for cards shifting
+.activity-item {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Toast notification for saving status
+.save-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toast-slide-in 0.3s ease;
+
+  &.saving {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffc107;
+  }
+
+  &.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #28a745;
+  }
+
+  &.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #dc3545;
+  }
+
+  .undo-btn {
+    background: transparent;
+    border: 1px solid currentColor;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .trip-days-container{
