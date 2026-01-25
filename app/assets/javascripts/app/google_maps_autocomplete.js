@@ -86,11 +86,10 @@ function onActivityPlaceChanged() {
   $('#activity_est_lat').val(components.lat);
   $('#activity_est_lon').val(components.lon);
   if (def_title) {
-    if($('#activity_est_title').val() == "") {
-      var categ = components.type.replace("_", " ");
-      categ = categ.charAt(0).toUpperCase() + categ.slice(1)+ " at ";
-      $('#activity_est_title').val(categ + components.name);
-    }
+    // Always update title when a new place is selected
+    var categ = components.type.replace("_", " ");
+    categ = categ.charAt(0).toUpperCase() + categ.slice(1)+ " at ";
+    $('#activity_est_title').val(categ + components.name);
     console.log("by activity")
   }
 }
@@ -154,7 +153,7 @@ function getAddressComponents(place) {
   formatted_address = place.formatted_address;
   name = place.name;
   website = place.website;
-  type = place.types[0];
+  type = getBestPlaceType(place.types);
   place_id = place.place_id;
   lat = place.geometry.location.lat();
   lon = place.geometry.location.lng();
@@ -180,4 +179,37 @@ function getAddressComponents(place) {
     lon: lon,
     object: place
   };
+}
+
+// Find the most specific place type from Google Places API
+// Generic types like "establishment" and "point_of_interest" are deprioritized
+function getBestPlaceType(types) {
+  if (!types || types.length === 0) return 'establishment';
+
+  // Generic types to skip if better ones exist
+  var genericTypes = [
+    'establishment',
+    'point_of_interest',
+    'premise',
+    'street_address',
+    'route',
+    'political',
+    'locality',
+    'sublocality',
+    'administrative_area_level_1',
+    'administrative_area_level_2',
+    'administrative_area_level_3',
+    'country',
+    'postal_code'
+  ];
+
+  // Find first non-generic type
+  for (var i = 0; i < types.length; i++) {
+    if (genericTypes.indexOf(types[i]) === -1) {
+      return types[i];
+    }
+  }
+
+  // Fallback to first type if all are generic
+  return types[0];
 }

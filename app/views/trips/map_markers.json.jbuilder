@@ -4,5 +4,5 @@ json.array! @trip.activities.where.not(lat: nil, lon: nil).order(:trip_day_id, :
   json.lng act.lon
   json.label act.index.to_s
   json.picture act.trip_day.nil? ? trip_hash[0] : trip_hash[act.trip_day.id]
-  json.infowindow raw render '/activities/map_box.html', activity: act
+  json.infowindow raw render(partial: 'activities/map_box', formats: [:html], locals: { activity: act })
 end

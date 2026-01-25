@@ -10,7 +10,7 @@
   </div>
   <div class="activity-item-content content-box-text no-padding">
     <div class="left-aligh sm-txt">
-      <p><span class="font-alt">Establishment:</span><%= activity.establishment %></p>
+      <p><span class="font-alt"><%= humanize_place_type(activity.google_category) %>:</span> <%= activity.establishment %></p>
       <p><span class="font-alt">Description:</span><%= activity.short_description(80) %></p>
       <p><span class="font-alt">URL:</span> <a href="<%= activity.url %>" target="_blank"><%= activity.url %></a></p>
       <p><span class="font-alt">Address:</span><%= activity.address %></p>

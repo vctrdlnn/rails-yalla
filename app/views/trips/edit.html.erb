@@ -4,11 +4,24 @@
 <% @disable_footer = true %>
 <% trip_icons = set_day_icon(@trip.trip_days) %>
 <div class="trip-edit-wrapper">
+  <!-- Mobile Tab Navigation -->
+  <div class="mobile-tabs">
+    <button class="mobile-tab active" data-tab="plan-panel">
+      <i class="fa fa-list"></i> Plan
+    </button>
+    <button class="mobile-tab" data-tab="days-panel">
+      <i class="fa fa-calendar"></i> Days
+    </button>
+    <button class="mobile-tab" data-tab="map-panel">
+      <i class="fa fa-map"></i> Map
+    </button>
+  </div>
+
   <div class="container-fuid heigth100">
     <div class="row-fluid text-center heigth100">
 
       <!-- AUTRES -->
-      <div class="col-xs-8 col-sm-2 heigth100">
+      <div id="plan-panel" class="col-xs-8 col-sm-2 heigth100 mobile-panel active">
       <!-- Activities not assigned + Add new activity module -->
         <p>Unassigned(<%= image_tag trip_icons[0], class: "avatar-mini" %>)</p>
         <div class="row">
@@ -28,26 +41,28 @@
       </div>
 
       <!-- LE VOYAGE JOUR PAR JOUR -->
-      <div class="col-xs-12 col-sm-6 heigth100">
+      <div id="days-panel" class="col-xs-12 col-sm-6 heigth100 mobile-panel">
         <!-- Trip Days and Itiniraries -->
         <p class="font-alt"><%= @trip.title %></p>
-        <div class="row width100 inblock side-brd-grey heigth90">
-          <% @trip.trip_days.each do |td| %>
-            <div class="col-xs-4 inblock trip-day heigth100">
-              <p><%= td.title %>(<%= image_tag trip_icons[td.id], class: "avatar-mini" %>)</p>
-              <div id="grid-<%= td.id %>" class="activity-grid works-hover-w sortable accordion heigth90">
-                <% @trip.activities.where(trip_day: td).order(index: :asc).each do |act| %>
-                  <%= render 'activities/card_activity_index', activity: act %>
-                <% end %>
+        <div class="trip-days-scroll-wrapper heigth90">
+          <div class="trip-days-scroll-container side-brd-grey">
+            <% @trip.trip_days.each do |td| %>
+              <div class="trip-day heigth100">
+                <p><%= td.title %>(<%= image_tag trip_icons[td.id], class: "avatar-mini" %>)</p>
+                <div id="grid-<%= td.id %>" class="activity-grid works-hover-w sortable accordion heigth90">
+                  <% @trip.activities.where(trip_day: td).order(index: :asc).each do |act| %>
+                    <%= render 'activities/card_activity_index', activity: act %>
+                  <% end %>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
       <!-- /LE VOYAGE JOUR PAR JOUR -->
 
       <!-- AUTRES -->
-      <div class="col-xs-12 col-sm-4 heigth100">
+      <div id="map-panel" class="col-xs-12 col-sm-4 heigth100 mobile-panel">
 
         <!-- BOUTONS -->
         <div class="buttons margined" style="width: 100%;">
@@ -96,6 +111,95 @@
     $(document).ready(function() {
       // TODO Check safety!!!
       var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+
+      // Horizontal drag-to-scroll for trip days
+      var scrollContainer = document.querySelector('.trip-days-scroll-container');
+      var scrollWrapper = document.querySelector('.trip-days-scroll-wrapper');
+
+      // Check if content overflows and add indicator class (defined outside if block for scope)
+      function checkOverflow() {
+        if (scrollContainer && scrollWrapper) {
+          if (scrollContainer.scrollWidth > scrollContainer.clientWidth) {
+            scrollWrapper.classList.add('has-scroll');
+          } else {
+            scrollWrapper.classList.remove('has-scroll');
+          }
+        }
+      }
+
+      if (scrollContainer) {
+        var isDown = false;
+        var startX;
+        var scrollLeft;
+
+        checkOverflow();
+        window.addEventListener('resize', checkOverflow);
+
+        // Mouse drag scrolling
+        scrollContainer.addEventListener('mousedown', function(e) {
+          // Don't interfere with activity card dragging
+          if ($(e.target).closest('.activity-item').length) return;
+
+          isDown = true;
+          scrollContainer.style.cursor = 'grabbing';
+          startX = e.pageX - scrollContainer.offsetLeft;
+          scrollLeft = scrollContainer.scrollLeft;
+        });
+
+        scrollContainer.addEventListener('mouseleave', function() {
+          isDown = false;
+          scrollContainer.style.cursor = 'grab';
+        });
+
+        scrollContainer.addEventListener('mouseup', function() {
+          isDown = false;
+          scrollContainer.style.cursor = 'grab';
+        });
+
+        scrollContainer.addEventListener('mousemove', function(e) {
+          if (!isDown) return;
+          e.preventDefault();
+          var x = e.pageX - scrollContainer.offsetLeft;
+          var walk = (x - startX) * 1.5; // Scroll speed multiplier
+          scrollContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // Set initial cursor style
+        scrollContainer.style.cursor = 'grab';
+      }
+
+      // Mobile Tab Navigation
+      $('.mobile-tab').on('click', function() {
+        var targetPanel = $(this).data('tab');
+
+        // Update active tab
+        $('.mobile-tab').removeClass('active');
+        $(this).addClass('active');
+
+        // Update active panel
+        $('.mobile-panel').removeClass('active');
+        $('#' + targetPanel).addClass('active');
+
+        // Re-check scroll overflow when switching to days panel
+        if (targetPanel === 'days-panel') {
+          setTimeout(checkOverflow, 100);
+        }
+
+        // Trigger map resize when switching to map panel
+        if (targetPanel === 'map-panel' && typeof google !== 'undefined' && window.map) {
+          setTimeout(function() {
+            google.maps.event.trigger(window.map, 'resize');
+          }, 100);
+        }
+      });
+
+      // Set initial active panel on mobile
+      if ($(window).width() < 768) {
+        $('.mobile-panel').removeClass('active');
+        $('#days-panel').addClass('active');
+        $('.mobile-tab').removeClass('active');
+        $('.mobile-tab[data-tab="days-panel"]').addClass('active');
+      }
 
       // SORTING !!!
       // Define all lists you can connect together
