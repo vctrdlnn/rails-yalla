@@ -344,13 +344,27 @@
       }
 
       function undoLastAction(action) {
-        var item = $('#activity-' + action.activityId);
+        var item = $('#act-' + action.activityId);
         var targetGrid = $('#' + action.toGrid);
-        var items = targetGrid.children('.activity-item');
+
+        if (item.length === 0) {
+          console.error('Undo failed: activity not found', action.activityId);
+          showToast('Undo failed: activity not found', 'error', false);
+          return;
+        }
+
+        if (targetGrid.length === 0) {
+          console.error('Undo failed: target grid not found', action.toGrid);
+          showToast('Undo failed: target not found', 'error', false);
+          return;
+        }
 
         // Move item back visually
+        var items = targetGrid.children('.activity-item');
         if (action.toIndex >= items.length) {
           targetGrid.append(item);
+        } else if (action.toIndex <= 0) {
+          targetGrid.prepend(item);
         } else {
           items.eq(action.toIndex).before(item);
         }
@@ -365,6 +379,8 @@
           authenticity_token: AUTH_TOKEN
         };
 
+        showToast('Undoing...', 'saving', false);
+
         $.ajax({
           type: 'PUT',
           url: '/activities/' + action.activityId + '/change_position/',
@@ -375,6 +391,7 @@
           },
           error: function() {
             showToast('Undo failed', 'error', false);
+            // TODO: could rollback the visual change here
           }
         });
       }
@@ -581,6 +598,178 @@
           e.preventDefault();
           var $field = $(this).closest('.editable-field');
           stopEditing($field, false);
+        }
+      });
+
+      // =====================
+      // KEYBOARD SHORTCUTS
+      // =====================
+
+      var selectedCard = null;
+
+      // Global keyboard shortcuts (when not editing)
+      $(document).on('keydown', function(e) {
+        // Ignore if typing in an input/textarea
+        if ($(e.target).is('input, textarea, select, [contenteditable]')) {
+          return;
+        }
+
+        switch(e.key) {
+          case 'n':
+          case 'N':
+            // Focus the establishment search field to add new activity
+            e.preventDefault();
+            $('#activity_est_establishment').focus();
+            showToast('Add new activity...', 'saving', false);
+            break;
+
+          case 'Escape':
+            // Deselect current card
+            if (selectedCard) {
+              $(selectedCard).removeClass('card-selected');
+              selectedCard = null;
+            }
+            break;
+
+          case 'ArrowDown':
+          case 'j':
+            e.preventDefault();
+            navigateCards('down');
+            break;
+
+          case 'ArrowUp':
+          case 'k':
+            e.preventDefault();
+            navigateCards('up');
+            break;
+
+          case 'ArrowLeft':
+          case 'h':
+            e.preventDefault();
+            navigateCards('left');
+            break;
+
+          case 'ArrowRight':
+          case 'l':
+            e.preventDefault();
+            navigateCards('right');
+            break;
+
+          case 'Enter':
+            // Expand/collapse selected card
+            if (selectedCard) {
+              e.preventDefault();
+              $(selectedCard).find('.activity-item-header').click();
+            }
+            break;
+
+          case 'Delete':
+          case 'Backspace':
+            // Delete selected card (with confirmation)
+            if (selectedCard && e.key === 'Delete') {
+              e.preventDefault();
+              var $deleteLink = $(selectedCard).find('a[data-method="delete"]');
+              if ($deleteLink.length && confirm('Are you sure you want to delete this activity?')) {
+                $deleteLink[0].click();
+                selectedCard = null;
+              }
+            }
+            break;
+
+          case '?':
+            // Show keyboard shortcuts help
+            e.preventDefault();
+            showKeyboardHelp();
+            break;
+        }
+      });
+
+      function navigateCards(direction) {
+        var $cards = $('.activity-item:visible');
+        if ($cards.length === 0) return;
+
+        var currentIndex = selectedCard ? $cards.index($(selectedCard)) : -1;
+        var newIndex = currentIndex;
+
+        if (direction === 'down' || direction === 'up') {
+          // Navigate within same column
+          var $currentGrid = selectedCard ? $(selectedCard).closest('.activity-grid') : $('.activity-grid').first();
+          var $gridCards = $currentGrid.find('.activity-item:visible');
+          var gridIndex = selectedCard ? $gridCards.index($(selectedCard)) : -1;
+
+          if (direction === 'down') {
+            newIndex = gridIndex + 1;
+            if (newIndex >= $gridCards.length) newIndex = 0;
+          } else {
+            newIndex = gridIndex - 1;
+            if (newIndex < 0) newIndex = $gridCards.length - 1;
+          }
+          selectCard($gridCards.eq(newIndex));
+
+        } else if (direction === 'left' || direction === 'right') {
+          // Navigate between columns
+          var $grids = $('.activity-grid:visible');
+          var $currentGrid = selectedCard ? $(selectedCard).closest('.activity-grid') : null;
+          var gridIndex = $currentGrid ? $grids.index($currentGrid) : -1;
+
+          if (direction === 'right') {
+            gridIndex = gridIndex + 1;
+            if (gridIndex >= $grids.length) gridIndex = 0;
+          } else {
+            gridIndex = gridIndex - 1;
+            if (gridIndex < 0) gridIndex = $grids.length - 1;
+          }
+
+          var $newGrid = $grids.eq(gridIndex);
+          var $newCards = $newGrid.find('.activity-item:visible');
+          if ($newCards.length > 0) {
+            selectCard($newCards.first());
+          }
+        }
+      }
+
+      function selectCard($card) {
+        // Deselect previous
+        if (selectedCard) {
+          $(selectedCard).removeClass('card-selected');
+        }
+
+        // Select new
+        selectedCard = $card[0];
+        $card.addClass('card-selected');
+
+        // Scroll into view
+        $card[0].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function showKeyboardHelp() {
+        var helpHtml = '<div class="keyboard-help-overlay">' +
+          '<div class="keyboard-help">' +
+          '<h3>Keyboard Shortcuts</h3>' +
+          '<ul>' +
+          '<li><kbd>N</kbd> - Add new activity</li>' +
+          '<li><kbd>↑</kbd><kbd>↓</kbd> or <kbd>J</kbd><kbd>K</kbd> - Navigate up/down</li>' +
+          '<li><kbd>←</kbd><kbd>→</kbd> or <kbd>H</kbd><kbd>L</kbd> - Navigate between days</li>' +
+          '<li><kbd>Enter</kbd> - Expand/collapse card</li>' +
+          '<li><kbd>Delete</kbd> - Delete selected card</li>' +
+          '<li><kbd>Esc</kbd> - Deselect card</li>' +
+          '<li><kbd>?</kbd> - Show this help</li>' +
+          '</ul>' +
+          '<p>Click anywhere to close</p>' +
+          '</div></div>';
+
+        var $help = $(helpHtml);
+        $('body').append($help);
+
+        $help.on('click', function() {
+          $(this).fadeOut(200, function() { $(this).remove(); });
+        });
+      }
+
+      // Click to select card
+      $(document).on('click', '.activity-item', function(e) {
+        if (!$(e.target).closest('.editable-field, a, button, input, select').length) {
+          selectCard($(this));
         }
       });
     });

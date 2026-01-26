@@ -44,22 +44,28 @@
 - Photo upload with file picker
 - Enter to save, Escape to cancel
 
+### 8. Fix Undo Feature (F5)
+- **Status**: Done
+- Fixed selector bug: `#act-` instead of `#activity-`
+- Added error handling and validation
+- Shows "Undoing..." toast during operation
+
+### 9. Keyboard Shortcuts (F3)
+- **Status**: Done
+- `N` - Focus new activity input
+- `↑↓` or `JK` - Navigate up/down in column
+- `←→` or `HL` - Navigate between day columns
+- `Enter` - Expand/collapse selected card
+- `Delete` - Delete selected card (with confirmation)
+- `Esc` - Deselect card
+- `?` - Show keyboard shortcuts help
+- Click card to select, blue outline shows selection
+
 ---
 
 ## Backlog - Frontend (Trello-like Experience)
 
-### F3. Keyboard Shortcuts
-- `N` - Add new activity
-- `Esc` - Cancel current action
-- Arrow keys - Navigate between cards
-- `Enter` - Open activity details
-- **Priority**: Low
-
-### F5. Fix Undo Feature
-- **Issue**: Current undo implementation doesn't work correctly
-- Undo button appears but action fails
-- Need to debug and fix the undo logic
-- **Priority**: Medium
+*All major frontend improvements completed!*
 
 ---
 
