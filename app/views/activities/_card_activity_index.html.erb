@@ -4,24 +4,61 @@
     <div class="activity-logo-cat">
       <%= image_tag(activity.main_category.icon, class: 'avatar-small') %>
     </div>
-    <div class="content-box-title">
-      <%= activity.title %>
+    <div class="content-box-title editable-field" data-field="title" data-activity-id="<%= activity.id %>" title="Double-click to edit">
+      <span class="editable-text"><%= activity.title %></span>
+      <input type="text" class="editable-input" value="<%= activity.title %>" style="display: none;">
     </div>
   </div>
   <div class="activity-item-content content-box-text no-padding">
     <div class="left-aligh sm-txt">
       <p><span class="font-alt"><%= humanize_place_type(activity.google_category) %>:</span> <%= activity.establishment %></p>
-      <p><span class="font-alt">Description:</span><%= activity.short_description(80) %></p>
-      <p><span class="font-alt">URL:</span> <a href="<%= activity.url %>" target="_blank"><%= activity.url %></a></p>
+
+      <p>
+        <span class="font-alt">Description:</span>
+        <span class="editable-field editable-textarea" data-field="description" data-activity-id="<%= activity.id %>" title="Double-click to edit">
+          <span class="editable-text"><%= activity.short_description(80) %></span>
+          <textarea class="editable-input" style="display: none;"><%= activity.description %></textarea>
+        </span>
+      </p>
+
+      <p>
+        <span class="font-alt">URL:</span>
+        <span class="editable-field" data-field="url" data-activity-id="<%= activity.id %>" title="Double-click to edit">
+          <span class="editable-text editable-url"><%= activity.url.present? ? activity.url : 'Add URL...' %></span>
+          <input type="url" class="editable-input" value="<%= activity.url %>" placeholder="https://..." style="display: none;">
+        </span>
+      </p>
+
       <p><span class="font-alt">Address:</span><%= activity.address %></p>
-      <p><span class="font-alt">Category:</span><%= activity.main_category.title %></p>
-      <p><span class="font-alt">Photo:</span><%= cl_image_tag(activity.photo, width: 30, heigh: 20, crop: :fill) unless activity.photo == "" %></p>
+
+      <p>
+        <span class="font-alt">Category:</span>
+        <span class="editable-field editable-select" data-field="main_category_id" data-activity-id="<%= activity.id %>" title="Click to change">
+          <span class="editable-text"><%= activity.main_category.title %></span>
+          <select class="editable-input" style="display: none;">
+            <% MainCategory.all.each do |cat| %>
+              <option value="<%= cat.id %>" <%= 'selected' if cat.id == activity.main_category_id %>><%= cat.title %></option>
+            <% end %>
+          </select>
+        </span>
+      </p>
+
+      <p>
+        <span class="font-alt">Photo:</span>
+        <span class="photo-field" data-activity-id="<%= activity.id %>">
+          <% if activity.photo.present? && activity.photo != "" %>
+            <%= cl_image_tag(activity.photo, width: 30, height: 20, crop: :fill, class: 'photo-preview') %>
+          <% end %>
+          <label class="photo-upload-link">
+            <span class="icon-camera"></span> <%= activity.photo.present? && activity.photo != "" ? 'Change' : 'Upload' %>
+            <input type="file" class="photo-input" accept="image/*" style="display: none;">
+          </label>
+        </span>
+      </p>
+
       <h4 class="text-center">
-        <!-- Trigger the modal with a button -->
-        <a href="javascript:;"><span class="icon-pencil" data-toggle="modal" data-target="#myEditModal-<%= activity.id%>"></span></a>
-        <%= "  -  " %>
         <%= link_to activity, method: :delete, remote: true, data: {confirm: "Are you sure?"} do %>
-          <span class="icon-scissors"></span>
+          <span class="icon-scissors"></span> Delete
         <% end %>
       </h4>
     </div>

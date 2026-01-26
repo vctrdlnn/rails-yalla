@@ -134,6 +134,147 @@
   }
 }
 
+// Inline editing styles
+.editable-field {
+  cursor: text;
+  position: relative;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+
+    &::after {
+      content: '\f040'; // pencil icon (FontAwesome)
+      font-family: 'FontAwesome';
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: #999;
+      opacity: 0.7;
+    }
+  }
+
+  &.editing {
+    background-color: #fff;
+    box-shadow: 0 0 0 2px #007bff;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  .editable-text {
+    display: block;
+    padding: 2px 4px;
+    min-height: 1.2em;
+  }
+
+  .editable-input {
+    width: 100%;
+    padding: 2px 4px;
+    border: none;
+    background: transparent;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+    outline: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+// Specific styling for title editing in header
+.content-box-title.editable-field {
+  flex: 1;
+  margin-left: 5px;
+
+  .editable-input {
+    font-weight: bold;
+  }
+}
+
+// Textarea for description
+.editable-textarea {
+  display: block;
+
+  .editable-input {
+    min-height: 60px;
+    resize: vertical;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+  }
+}
+
+// Select dropdown for category
+.editable-select {
+  .editable-input {
+    padding: 2px 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  // Single click to open select
+  cursor: pointer;
+}
+
+// URL field styling
+.editable-url {
+  color: #007bff;
+  text-decoration: underline;
+  word-break: break-all;
+
+  &:hover {
+    color: #0056b3;
+  }
+}
+
+// Photo upload styling
+.photo-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  .photo-preview {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+
+  .photo-upload-link {
+    cursor: pointer;
+    color: #007bff;
+    font-size: 12px;
+
+    &:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    .icon-camera {
+      margin-right: 2px;
+    }
+  }
+}
+
+// Inline field in paragraph context
+p .editable-field {
+  display: inline;
+
+  &.editable-textarea {
+    display: block;
+    margin-top: 4px;
+  }
+}
+
 .trip-days-container{
   margin: 20px;
 }

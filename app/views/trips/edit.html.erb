@@ -378,6 +378,211 @@
           }
         });
       }
+
+      // =====================
+      // INLINE EDITING
+      // =====================
+
+      // Double-click to start editing
+      $(document).on('dblclick', '.editable-field', function(e) {
+        e.stopPropagation();
+        startEditing($(this));
+      });
+
+      function startEditing($field) {
+        if ($field.hasClass('editing')) return;
+
+        var $text = $field.find('.editable-text');
+        var $input = $field.find('.editable-input');
+        var originalValue = $text.text().trim();
+
+        $field.addClass('editing');
+        $text.hide();
+        $input.val(originalValue).show().focus().select();
+
+        // Store original value for cancel
+        $input.data('original-value', originalValue);
+      }
+
+      function stopEditing($field, save) {
+        var $text = $field.find('.editable-text');
+        var $input = $field.find('.editable-input');
+        var newValue = $input.val().trim();
+        var originalValue = $input.data('original-value');
+        var isTextarea = $field.hasClass('editable-textarea');
+
+        $field.removeClass('editing');
+        $input.hide();
+        $text.show();
+
+        if (save && newValue !== originalValue) {
+          // For description, truncate display but save full value
+          var displayValue = newValue;
+          if (isTextarea && newValue.length > 80) {
+            displayValue = newValue.substring(0, 80) + '...';
+          }
+
+          // Update text immediately (optimistic)
+          $text.text(displayValue || (isTextarea ? '' : originalValue));
+
+          // Save to server
+          var activityId = $field.data('activity-id');
+          var fieldName = $field.data('field');
+          var data = { authenticity_token: AUTH_TOKEN, activity: {} };
+          data.activity[fieldName] = newValue;
+
+          showToast('Saving...', 'saving', false);
+
+          $.ajax({
+            type: 'PATCH',
+            url: '/activities/' + activityId,
+            data: data,
+            success: function() {
+              showToast('Saved', 'success', false);
+            },
+            error: function() {
+              // Rollback on error
+              $text.text(originalValue);
+              showToast('Failed to save', 'error', false);
+            }
+          });
+        } else {
+          // Restore original value on cancel
+          $text.text(originalValue);
+        }
+      }
+
+      // Save on Enter, cancel on Escape
+      $(document).on('keydown', '.editable-input', function(e) {
+        var $field = $(this).closest('.editable-field');
+
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          stopEditing($field, true);
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          stopEditing($field, false);
+        }
+      });
+
+      // Save on blur (click outside)
+      $(document).on('blur', '.editable-input', function() {
+        var $field = $(this).closest('.editable-field');
+        // Small delay to allow click events to fire first
+        setTimeout(function() {
+          if ($field.hasClass('editing')) {
+            stopEditing($field, true);
+          }
+        }, 100);
+      });
+
+      // Prevent accordion toggle when clicking editable field
+      $(document).on('click', '.editable-field', function(e) {
+        e.stopPropagation();
+      });
+
+      // Single click for select fields (category dropdown)
+      $(document).on('click', '.editable-select', function(e) {
+        e.stopPropagation();
+        if (!$(this).hasClass('editing')) {
+          startEditing($(this));
+        }
+      });
+
+      // Handle select change - save immediately
+      $(document).on('change', '.editable-select .editable-input', function() {
+        var $field = $(this).closest('.editable-field');
+        var $text = $field.find('.editable-text');
+        var $input = $(this);
+        var newValue = $input.val();
+        var newText = $input.find('option:selected').text();
+        var activityId = $field.data('activity-id');
+        var fieldName = $field.data('field');
+
+        // Update text immediately
+        $text.text(newText);
+        $field.removeClass('editing');
+        $input.hide();
+        $text.show();
+
+        // Save to server
+        var data = { authenticity_token: AUTH_TOKEN, activity: {} };
+        data.activity[fieldName] = newValue;
+
+        showToast('Saving...', 'saving', false);
+
+        $.ajax({
+          type: 'PATCH',
+          url: '/activities/' + activityId,
+          data: data,
+          success: function() {
+            showToast('Saved', 'success', false);
+            // Refresh to update category icon
+            setTimeout(function() { location.reload(); }, 500);
+          },
+          error: function() {
+            showToast('Failed to save', 'error', false);
+          }
+        });
+      });
+
+      // Photo upload handling
+      $(document).on('change', '.photo-input', function() {
+        var $input = $(this);
+        var $field = $input.closest('.photo-field');
+        var activityId = $field.data('activity-id');
+        var file = this.files[0];
+
+        if (!file) return;
+
+        // Validate file type
+        if (!file.type.match(/image.*/)) {
+          showToast('Please select an image file', 'error', false);
+          return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          showToast('Image must be less than 5MB', 'error', false);
+          return;
+        }
+
+        showToast('Uploading photo...', 'saving', false);
+
+        // Create FormData for file upload
+        var formData = new FormData();
+        formData.append('activity[photo]', file);
+        formData.append('authenticity_token', AUTH_TOKEN);
+
+        $.ajax({
+          type: 'PATCH',
+          url: '/activities/' + activityId,
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function() {
+            showToast('Photo uploaded', 'success', false);
+            // Refresh to show new photo
+            setTimeout(function() { location.reload(); }, 500);
+          },
+          error: function() {
+            showToast('Failed to upload photo', 'error', false);
+          }
+        });
+      });
+
+      // Handle textarea Enter (Shift+Enter for new line, Enter to save)
+      $(document).on('keydown', '.editable-textarea .editable-input', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          var $field = $(this).closest('.editable-field');
+          stopEditing($field, true);
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          var $field = $(this).closest('.editable-field');
+          stopEditing($field, false);
+        }
+      });
     });
   </script>
 <% end %>

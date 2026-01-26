@@ -23,22 +23,30 @@
 - Fixed map markers not updating (partial format issue)
 - Fixed activity title not updating on subsequent searches
 - Fixed JS scope issue with checkOverflow function
+- Fixed modal edit (update.js.erb) - proper modal close, accordion init
+
+### 5. Better Drag Visual Feedback (F4)
+- **Status**: Done
+- Animated striped placeholder showing drop target
+- Dragged card has rotation, scale, shadow
+- Target column highlights blue when dragging over
+
+### 6. Optimistic UI Updates (F1)
+- **Status**: Done
+- UI updates immediately when dragging/editing
+- Toast notifications: "Saving...", "Saved", error states
+- Automatic rollback on server error
+
+### 7. Inline Editing (F2)
+- **Status**: Done
+- Double-click to edit: title, description, URL
+- Single-click dropdown for category
+- Photo upload with file picker
+- Enter to save, Escape to cancel
 
 ---
 
 ## Backlog - Frontend (Trello-like Experience)
-
-### F1. Optimistic UI Updates
-- Update UI immediately when dragging activities
-- Show subtle "saving..." indicator
-- Rollback only if server fails
-- **Priority**: High
-
-### F2. Inline Editing
-- Click on activity title/description to edit directly in card
-- Use contenteditable or inline input fields
-- Save on blur or Enter key
-- **Priority**: Medium
 
 ### F3. Keyboard Shortcuts
 - `N` - Add new activity
@@ -47,15 +55,10 @@
 - `Enter` - Open activity details
 - **Priority**: Low
 
-### F4. Better Drag Visual Feedback
-- Ghost/placeholder showing where card will land
-- Highlight target day column on hover
-- Animate cards shifting to make room
-- **Priority**: High
-
-### F5. Undo/Redo
-- History stack of actions
-- Toast notification: "Activity moved" with Undo button (5s timeout)
+### F5. Fix Undo Feature
+- **Issue**: Current undo implementation doesn't work correctly
+- Undo button appears but action fails
+- Need to debug and fix the undo logic
 - **Priority**: Medium
 
 ---
@@ -87,6 +90,14 @@
 - Debounce save requests when rapidly dragging cards
 - Save only after 300ms of no movement
 - **Priority**: Low
+
+### B6. Activity Change History / Audit Log
+- Track meaningful changes made by participants
+- Store: who, what, when for each change
+- Display history in UI (timeline or log view)
+- Useful for collaboration and accountability
+- Consider: Activity created, moved, edited, deleted
+- **Priority**: Medium
 
 ---
 
