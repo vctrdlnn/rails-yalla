@@ -12,8 +12,4 @@ test:
   database: rails-yalla_test
 
 production:
-  <<: *default
-  database: rails-yalla_production
-  username: rails-yalla
-  password: <%= ENV['RAILS_YALLA_DATABASE_PASSWORD'] %>
   url: <%= ENV['SCALINGO_POSTGRESQL_URL'] %>
