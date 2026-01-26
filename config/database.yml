@@ -16,4 +16,4 @@ production:
   database: rails-yalla_production
   username: rails-yalla
   password: <%= ENV['RAILS_YALLA_DATABASE_PASSWORD'] %>
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['SCALINGO_POSTGRESQL_URL'].gsub('/rails_yalla_4928', '/postgres') %>
