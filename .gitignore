@@ -8,3 +8,6 @@ public/assets
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore seed data (contains admin password)
+/db/seeds_data.json

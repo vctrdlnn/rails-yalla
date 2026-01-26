@@ -1,27 +1,74 @@
+# =============================================================================
+# YALA SEEDS - Production-ready seed file
+# =============================================================================
+#
+# Usage:
+#   1. Create db/seeds_data.json with your trips and activities
+#   2. Run: rails db:seed (local) or scalingo run rails db:seed (production)
+#
+# =============================================================================
 
-Category.destroy_all
-User.destroy_all
-Trip.destroy_all
-TripDay.destroy_all
+require 'json'
+
+# -----------------------------------------------------------------------------
+# STEP 1: Clean up existing data (in correct order for foreign keys)
+# -----------------------------------------------------------------------------
+puts "Cleaning up existing data..."
+
+PinnedActivity.destroy_all
 Activity.destroy_all
+TripDay.destroy_all
+Participant.destroy_all
+Invite.destroy_all
+Trip.destroy_all
+Category.destroy_all
 MainCategory.destroy_all
+# Only destroy non-admin users in development
+User.where(admin: false).destroy_all if Rails.env.development?
 
-# Cloudinary::Api.delete_resources_by_tag('posted_picture_'+ENV['CLOUDINARY_USER'])
+puts "Cleanup complete"
 
+# -----------------------------------------------------------------------------
+# STEP 2: Load seed data from JSON
+# -----------------------------------------------------------------------------
+seeds_file = Rails.root.join('db', 'seeds_data.json')
+seed_data = File.exist?(seeds_file) ? JSON.parse(File.read(seeds_file), symbolize_names: true) : {}
 
-user_params = {username: "admin", email: "admin@admin.com", password: "000000", phone: "0604590059"}
-user1 = User.create!(user_params)
-user1.admin = true
-user1.save
+# -----------------------------------------------------------------------------
+# STEP 3: Create or update admin user (skip welcome email)
+# -----------------------------------------------------------------------------
+puts "Creating admin user..."
 
-user_params = {username: "victor01", email: "victor010101@gmail.com", password: "000000", phone: "0055314810"}
-user2 = User.create!(user_params)
+admin_params = seed_data[:admin_user] || {
+  username: "yala_admin",
+  email: "admin@yala-app.fr",
+  password: "change_me_in_production",
+  phone: "0600000000"
+}
 
-user_params = {username: "guilaine", email: "guilaine.ghossoub4@gmail.com", password: "000000", phone: "0056714810"}
-user3 = User.create!(user_params)
+# Skip welcome email callback for seeding
+User.skip_callback(:create, :after, :send_welcome_email) rescue nil
 
-user_params = {username: "del", email: "del.martinache@gmail.com", password: "000000", phone: "0056714810"}
-user4 = User.create!(user_params)
+admin = User.find_or_initialize_by(email: admin_params[:email])
+admin.assign_attributes(
+  username: admin_params[:username],
+  password: admin_params[:password],
+  phone: admin_params[:phone],
+  first_name: admin_params[:first_name],
+  last_name: admin_params[:last_name],
+  admin: true
+)
+admin.save!
+
+# Re-enable callback
+User.set_callback(:create, :after, :send_welcome_email) rescue nil
+
+puts "Admin user created: #{admin.email}"
+
+# -----------------------------------------------------------------------------
+# STEP 4: Create Main Categories
+# -----------------------------------------------------------------------------
+puts "Creating main categories..."
 
 main_categories =
 [
@@ -103,8 +150,15 @@ main_categories =
 ]
 
 main_categories.each do |mn|
-  main = MainCategory.create!(mn)
+  MainCategory.create!(mn)
 end
+
+puts "#{MainCategory.count} main categories created"
+
+# -----------------------------------------------------------------------------
+# STEP 5: Create Categories (Google Places mapping)
+# -----------------------------------------------------------------------------
+puts "Creating categories..."
 
 categories =
 [
@@ -207,332 +261,129 @@ categories =
 { main_category_id: MainCategory.find_by(title:"Sport").id, google_title: "gym", title: "Gym"}
 ]
 
-categories.each  do |c|
-  cat = Category.create!(c)
+categories.each do |c|
+  Category.create!(c)
 end
 
+puts "#{Category.count} categories created"
 
-trips = [
-  {
-    title: "Week-end à Paris",
-    description: "While the Right Bank of Paris has seen internationalism and the irrepressible rise of bobos (the Parisian form of hipsters) change its landscape in recent years, the Left Bank has been able to preserve the soul of the French capital. Walk through the Latin Quarter’s crooked cobblestone corridors or down the grand plane-tree-lined boulevards of St.-Germain-des-Prés and, more than once, you’ll think you’re inside a black-and-white Robert Doisneau photo.",
-    category: "Discovery",
-    city: "Paris",
-    country: "France",
-    user: user2,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592374/paris_nfibly.jpg"
-  },
-  {
-    title: "Budapest par Glamour",
-    description: "c’est à Budapest que ça se passe  Encore méconnue, Budapest attire la jeunesse européenne en quête de découvertes placées sous le signe du design et de l’art. Cette ville cosmopolite, foisonne de boutiques insolites, de petits cafés et de galeries d’art où se délasse la nouvelle scène artistique hongroise. Glamour vous fait faire le tour des lieux à ne pas manquer lors d’un week-end dans l’une des capitales les plus cool d’Europe.",
-    category: "Friends",
-    city: "Budapest",
-    country: "Hongrie",
-    user: user4,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592744/budapest_hm3qvp.jpg"
-  },
-  {
-    title: "Weed-end à Amsterdam",
-    description: "c’est à Amsterdam et ca va etre romantique!",
-    category: "Lovers",
-    city: "Amsterdam",
-    country: "Netherlands",
-    user: user2,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480600016/amsterdam_ornexg.jpg"
-  },
-  {
-    title: "Weed-end à Londres",
-    description: "On va visiter Londres, rejoignez-nous!",
-    category: "Cultural",
-    city: "London",
-    country: "UK",
-    user: user3,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480592906/london_geyl3z.jpg"
-  },
-  {
-    title: "Weed-end à Berlin",
-    description: "On part a Berlin et c'est juste genial",
-    category: "Friends",
-    city: "Berlin",
-    country: "Germany",
-    user: user3,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480600112/berlin_wizlvq.jpg"
-  },
-  {
-    title: "Beautiful Florence",
-    description: "Known for its rich history, Florence is a destination for those seeking vibrant culinary, artistic and musical experiences",
-    category: "Family",
-    city: "Florence",
-    country: "Italy",
-    user: user3,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480593549/florence_lowwcx.jpg"
-  },
-  {
-    title: "Business in Dubai",
-    description: "Dubai has emerged as an ethnically diverse metropolis where the world’s populations mingle in markets, galleries and international restaurants, both humble and high-end",
-    category: "Business",
-    city: "Dubai",
-    country: "UAE",
-    user: user4,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480594101/dubai_cz0qmg.jpg"
-  },
-  {
-    title: "Best bachelor in Lille",
-    description: "Lille is the only city in France where beer versus wine is the drink of choice",
-    category: "Bachelor",
-    city: "Lille",
-    country: "France",
-    user: user2,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480594424/lille_cmw6kj.jpg"
-  },
-  {
-    title: "Love Vancouver",
-    description: "An abundance of outdoor options — whether it is hiking or biking in Stanley Park, kayaking in False Creek or skiing on nearby Grouse Mountain — only adds to the appeal. The city doesn’t take its natural gifts for granted; in recent years it has become so eco-friendly that some stores don’t even offer plastic bags. With its multitude of immigrant communities and northwest Canadian culture of extreme friendliness, Vancouver feels just different enough to be intriguingly foreign but familiar enough to be easily conquered in a weekend.",
-    category: "Lovers",
-    city: "Vancouver",
-    country: "Canada",
-    user: user3,
-    photo: "http://res.cloudinary.com/drvdcbpjf/image/upload/v1480595370/vancouver_ndchwa.jpg"
-  }
-]
+# -----------------------------------------------------------------------------
+# STEP 6: Create Trips from JSON (or use defaults)
+# -----------------------------------------------------------------------------
+puts "Creating trips..."
 
-trip_days = [
-  {
-    title: "Vendredi"
-  },
-  {
-    title: "Samedi"
-  },
-  {
-    title: "Dimanche"
-  }
-]
-
-trips.each_with_index do |t, i|
-  trip = Trip.create!(t)
-  trip.remote_photo_url = t[:photo]
-  trip.save
-  trip_days.each do |td|
-    trip.trip_days.build(td)
-    trip.save
+# Helper to safely load remote photos (skip in production to avoid Cloudinary issues)
+def safe_remote_photo(record, url)
+  return if url.blank?
+  return if Rails.env.production? # Skip photo uploads in production seeds
+  begin
+    record.remote_photo_url = url
+    record.save
+  rescue => e
+    puts "  Warning: Could not load photo from #{url}: #{e.message}"
   end
 end
 
-activities_paris = [
-  {
-  title: "APPETITE AWAKENER",
-  description: "will prime you for the weekend’s culinary delights",
-  main_category: MainCategory.all.sample,
-  establishment: "Taste of St.-Germain",
-  address: "8 rue du Cherche-Midi, 75006, Paris",
-  city: "Paris",
-  index: "1",
-  trip: Trip.first
-  },
-  {
-  title: "Marche",
-  description: "where moneyed locals scoop up their saucisson, fresh milk and seasonal produce",
-  main_category: MainCategory.all.sample,
-  establishment: "Le Marché Couvert",
-  address: "4-6 Rue Lobineau, Paris",
-  city: "Paris",
-  index: "2",
-  trip: Trip.first,
-  trip_day: TripDay.first
-  },
-  {
-  title: "To the top",
-  description: "Four elevators will whoosh you to the top (or, if you’re feeling dauntless, tackle the 1,665 steps; 17 euros and 7 euros, respectively) and by now it will be l’heure bleue, that magical time in the evening when the whole city is suffused in an ethereal light",
-  main_category: MainCategory.all.sample,
-  establishment: "The Eiffel Tower",
-  address: "Champ de Mars, 5 Avenue Anatole France, 75007, Paris",
-  city: "Paris",
-  index: "3",
-  trip: Trip.first,
-  trip_day: TripDay.first
-  },
-  {
-  title: "AVANT GARDE ART",
-  description: "he Cartier Fondation and Fondation Henri Cartier-Bresson, which are within walking distance of each other on opposite sides of the famed Montparnasse Cemetery, are sized to offer just the right dose of the familiar and the cutting edge",
-  main_category: MainCategory.all.sample,
-  establishment: "Fondation Henri Cartier-Bresson",
-  address: "2 Impasse Lebouis, 75014, Paris",
-  city: "Paris",
-  index: "1",
-  trip: Trip.first,
-  trip_day: TripDay.first
-  },
-  {
-  title: "LUNCH WORTH WAITING FOR",
-  description: "On a sloping corner in St. Germain, the sliver of a restaurant is, in fact, most noticeable for the line of hungry people waiting for the first-come-first-served weekend service from the chef Yves Camdeborde, who’s often credited with starting the “bistronomy” trend currently rocking the Right Bank",
-  main_category: MainCategory.all.sample,
-  establishment: "Le Comptoir du Relais",
-  address: "5 Carrefour de l'Odéon, Paris",
-  city: "Paris",
-  index: "2",
-  trip: Trip.first,
-  trip_day: TripDay.first
-  },
-  {
-  title: "TERRACE VIEWS",
-  description: "Snatch one of the coveted seats at Café de Flore, where figures such as Simone de Beauvoir and Picasso once sipped, puffed and pontificated, and watch the coiffed regulars come in and kiss-kiss the maître d’hôtel while harried waiters in long white aprons weave and wend, delivering trays of aperitifs",
-  main_category: MainCategory.all.sample,
-  establishment: "Café de Flore",
-  address: "172 Boulevard St. Germain, 75006, Paris",
-  city: "Paris",
-  index: "3",
-  trip: Trip.first
-  },
-  {
-  title: "NOUVEAU COOKING",
-  description: "Neither trendy nor nostalgic, Semilla manages the perfect balance of nouveau Parisian cooking. Opened in 2012 by the international team of Juan Sanchez and Drew Harré, the sparse but sophisticated restaurant ",
-  main_category: MainCategory.all.sample,
-  establishment: "Semilla",
-  address: "54 rue de Seine, 75006, Paris",
-  city: "Paris",
-  index: "4",
-  trip: Trip.first
-  },
-  {
-  title: "GET FRESH",
-  description: "It’s the onion galettes — shredded onion, potato and cheese — frying at one of the dozens of stands at the Marché Biologique Raspail",
-  main_category: MainCategory.all.sample,
-  establishment: "",
-  address: "Boulevard Raspail, Paris",
-  city: "Paris",
-  index: "1",
-  trip: Trip.first,
-  trip_day: TripDay.last
-  },
-  {
-  title: "SUNDAY STROLL",
-  description: "No longer are the Luxembourg Gardens the only nearby spot of green where you can eat your market loot",
-  main_category: MainCategory.all.sample,
-  establishment: "",
-  address: "Luxembourg Gardens, Paris",
-  city: "Paris",
-  index: "1",
-  trip: Trip.first
-  },
-  {
-  title: "Berges de seines",
-  description: "Les Berges de Seine, a nearly 1.5-mile stretch along the Seine reserved for pedestrians, debuted in 2013, so what was once a diesel-fume-choked highway is now thronged with strolling families, joggers, bicyclists and skaters",
-  main_category: MainCategory.all.sample,
-  establishment: "",
-  address: "Berges de Seine, Paris",
-  city: "Paris",
-  index: "1",
-  trip: Trip.first
-  },
-  {
-  title: "SWEET ENDING",
-  description: "This boutique is also an 8,600-square-foot salon de thé/restaurant/lounge devoted to high-end chocolate.",
-  main_category: MainCategory.all.sample,
-  establishment: "Un dimanche a paris",
-  address: "4-6-8 Cour du Commerce Saint-André, 75006, Paris",
-  city: "Paris",
-  index: "2",
-  trip: Trip.first,
-  trip_day: TripDay.last
-  }
-]
+# Get trips from JSON or use empty array
+json_trips = seed_data[:trips] || []
 
-activities_amsterdam = [
-  {
-  title: "STYLE UPGRADE",
-  description: "Gathershop is a serene space opened in late 2014 that’s filled with beautiful art, clothing and more ",
-  main_category: MainCategory.all.sample,
-  establishment: "Gathershop",
-  address: "Hannie Dankbaarpassage 19, 1053 RT Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "PHOTO FIX",
-  description: "Dutch painters of the 17th century are renowned for their mastery of light, a skill that is now celebrated in a more modern medium at Fotografiemuseum Amsterdam",
-  main_category: MainCategory.all.sample,
-  establishment: "Foam",
-  address: "Keizersgracht 609, 1017 DS Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "FAR EAST FLAVORS",
-  description: "At Terpentijn, which opened last May, join groups of after-work Amsterdammers catching up over dishes like Donut Duck",
-  main_category: MainCategory.all.sample,
-  establishment: "Terpentijn",
-  address: "Rokin 103, 1012 KM Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "DE PIJP DRINKS",
-  description: "At the natural-wine bar Glouglou, the atmosphere is gezellig (untranslatably cozy) with dark wood walls, elegant Jugendstil-esque windows, and wooden tables at which to sip a glass of sparkling pét-nat.",
-  main_category: MainCategory.all.sample,
-  establishment: "Glouglou",
-  address: "Tweede van der Helststraat 3, 1073 AE Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "MORNING ROAST",
-  description: "Of the city’s many new third-wave coffee specialists, this is the finest. Baristas pull perfect espressos, accompanied by tasting notes for your beans, amid an eminently Instagrammable interior — wood-plank bar, hanging plants and parquet-wood benches.",
-  main_category: MainCategory.all.sample,
-  establishment: "Bocca Coffee",
-  address: "Kerkstraat 96HS, 1017 GP Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "HOME GROWN",
-  description: "Tulips aren’t the only things growing in the Netherlands. For proof, follow locals to Boerenmarkt, an organic weekly market on Noordermarkt",
-  main_category: MainCategory.all.sample,
-  establishment: "Boerenmarkt",
-  address: "Noordermarkt, 1015 NA Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "SUPERIOR INTERIORS",
-  description: "At Neef Louis Design, enormous warehouses are packed to the rafters with everything from midcentury chairs and industrial light fixtures to giant spotlights for your next film shoot.",
-  main_category: MainCategory.all.sample,
-  establishment: "Neef Louis Design",
-  address: "Papaverweg 46, 1032 KJ Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "FOOD HALL FAME",
-  description: "Foodhallen opened in a former tram depot in 2014 with about two dozen stalls, many occupied by well-known local businesses.",
-  main_category: MainCategory.all.sample,
-  establishment: "Foodhallen",
-  address: "Bellamyplein 51, 1053 AT Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  },
-  {
-  title: "WALL WORKS",
-  description: "Bright Side Gallery, housed in a former garage looking over the canal, features rotating exhibitions like a recent solo show of somber paintings from the up-and-coming Dutch artist Wouter Nijland.",
-  main_category: MainCategory.all.sample,
-  establishment: "Bright Side Gallery",
-  address: "Prinsengracht 737HS, 1017 JX Amsterdam, Netherlands",
-  city: "Amsterdam",
-  index: "1",
-  }
-]
+if json_trips.any?
+  # Load trips from JSON file
+  json_trips.each_with_index do |trip_data, index|
+    puts "  Creating trip #{index + 1}: #{trip_data[:title]}"
 
-activities_paris.each do |a|
-  activity = Trip.find_by(city: "Paris").activities.build(a)
-  activity.save
+    # Create the trip
+    trip = Trip.create!(
+      title: trip_data[:title],
+      description: trip_data[:description],
+      category: trip_data[:category],
+      city: trip_data[:city],
+      country: trip_data[:country],
+      user: admin,
+      lat: trip_data[:lat],
+      lon: trip_data[:lon],
+      public: true
+    )
+
+    # Load trip photo
+    safe_remote_photo(trip, trip_data[:photo_url])
+
+    # Create trip days
+    trip_days = trip_data[:trip_days] || ["Day 1", "Day 2", "Day 3"]
+    created_days = []
+    trip_days.each do |day_title|
+      day = trip.trip_days.create!(title: day_title)
+      created_days << day
+    end
+
+    # Create activities
+    activities = trip_data[:activities] || []
+    activities.each_with_index do |act_data, act_index|
+      # Find the main category
+      main_cat = MainCategory.find_by(title: act_data[:main_category]) || MainCategory.first
+
+      # Determine which trip day (if any)
+      trip_day = nil
+      if act_data[:trip_day_index].present? && created_days[act_data[:trip_day_index]]
+        trip_day = created_days[act_data[:trip_day_index]]
+      end
+
+      activity = Activity.create!(
+        title: act_data[:title],
+        description: act_data[:description],
+        main_category: main_cat,
+        establishment: act_data[:establishment],
+        address: act_data[:address],
+        city: trip_data[:city],
+        lat: act_data[:lat],
+        lon: act_data[:lon],
+        url: act_data[:url],
+        index: act_index + 1,
+        trip: trip,
+        trip_day: trip_day,
+        user: admin  # Required field!
+      )
+
+      # Load activity photo
+      safe_remote_photo(activity, act_data[:photo_url])
+    end
+
+    puts "    -> #{activities.count} activities created"
+  end
+else
+  # Fallback: create sample trips if no JSON provided
+  puts "  No JSON data found, creating sample trips..."
+
+  sample_trips = [
+    { title: "Week-end à Paris", description: "Découvrez la Rive Gauche parisienne", category: "Discovery", city: "Paris", country: "France" },
+    { title: "Amsterdam Explorer", description: "Canals, museums and gezelligheid", category: "Friends", city: "Amsterdam", country: "Netherlands" },
+    { title: "Roma Eterna", description: "Art, history and the best pasta", category: "Cultural", city: "Rome", country: "Italy" }
+  ]
+
+  sample_trips.each do |t|
+    trip = Trip.create!(t.merge(user: admin))
+    ["Day 1", "Day 2", "Day 3"].each { |d| trip.trip_days.create!(title: d) }
+
+    # Create a sample activity
+    Activity.create!(
+      title: "Explore the city center",
+      description: "Start your trip with a walking tour",
+      main_category: MainCategory.find_by(title: "Visits") || MainCategory.first,
+      establishment: "City Center",
+      address: "#{t[:city]} City Center, #{t[:country]}",
+      city: t[:city],
+      trip: trip,
+      user: admin
+    )
+  end
 end
 
-
-activities_amsterdam.each do |a|
-  activity = Trip.find_by(city: "Amsterdam").activities.build(a)
-  activity.save
-end
-
-# some_activities.each do |a|
-#   activity = Activity.create!(a)
-# end
+puts "Seeding complete!"
+puts "=" * 50
+puts "Summary:"
+puts "  - Admin: #{admin.email}"
+puts "  - Trips: #{Trip.count}"
+puts "  - Activities: #{Activity.count}"
+puts "  - Main Categories: #{MainCategory.count}"
+puts "=" * 50
 
