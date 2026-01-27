@@ -66,6 +66,20 @@
               </div>
 
               <div class="form-section optional-section">
+                <!-- Invite Friends -->
+                <div class="form-group invite-friends-group">
+                  <label class="control-label">Invite friends</label>
+                  <div class="invite-input-wrapper">
+                    <div class="email-chips" id="email-chips"></div>
+                    <input type="email"
+                           id="invite-email-input"
+                           class="form-control"
+                           placeholder="Enter email and press Enter">
+                  </div>
+                  <input type="hidden" name="invite_emails" id="invite-emails-hidden" value="">
+                  <p class="help-block">Invite collaborators to help plan this trip</p>
+                </div>
+
                 <%= f.input :description,
                   as: :text,
                   placeholder: "What's this trip about?",
@@ -116,6 +130,66 @@
       $(".day-option").on("click", function() {
         $(".day-option").removeClass("selected");
         $(this).addClass("selected");
+      });
+
+      // Email chips for invite friends
+      var emails = [];
+      var $input = $("#invite-email-input");
+      var $chips = $("#email-chips");
+      var $hidden = $("#invite-emails-hidden");
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      function updateHiddenField() {
+        $hidden.val(emails.join(","));
+      }
+
+      function addEmail(email) {
+        email = email.trim().toLowerCase();
+        if (email && isValidEmail(email) && emails.indexOf(email) === -1) {
+          emails.push(email);
+          var $chip = $('<span class="email-chip">' +
+            '<span class="email-text">' + email + '</span>' +
+            '<button type="button" class="chip-remove" data-email="' + email + '">&times;</button>' +
+          '</span>');
+          $chips.append($chip);
+          updateHiddenField();
+          return true;
+        }
+        return false;
+      }
+
+      function removeEmail(email) {
+        var index = emails.indexOf(email);
+        if (index > -1) {
+          emails.splice(index, 1);
+          updateHiddenField();
+        }
+      }
+
+      $input.on("keydown", function(e) {
+        if (e.key === "Enter" || e.key === ",") {
+          e.preventDefault();
+          if (addEmail($input.val())) {
+            $input.val("");
+          }
+        }
+      });
+
+      $input.on("blur", function() {
+        if ($input.val()) {
+          if (addEmail($input.val())) {
+            $input.val("");
+          }
+        }
+      });
+
+      $chips.on("click", ".chip-remove", function() {
+        var email = $(this).data("email");
+        removeEmail(email);
+        $(this).parent().remove();
       });
     });
   </script>

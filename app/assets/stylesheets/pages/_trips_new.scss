@@ -1,16 +1,16 @@
 // Trips New Page Styles
-// Modern card-based form design
+// Professional dark theme design
 
 .trip-new-page {
   min-height: 100vh;
-  background: #f8f9fa;
+  background: #f5f5f5;
 }
 
 // Hero Section
 .trip-new-hero {
   position: relative;
-  height: 280px;
-  background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1600&q=80');
+  height: 300px;
+  background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&q=80');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -19,7 +19,7 @@
   overflow: hidden;
 
   @media (max-width: 767px) {
-    height: 220px;
+    height: 240px;
   }
 
   .hero-overlay {
@@ -28,7 +28,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
+    background: linear-gradient(135deg, rgba($dark-primary, 0.85) 0%, rgba($dark-secondary, 0.75) 100%);
   }
 
   .hero-content {
@@ -36,24 +36,25 @@
     text-align: center;
     color: white;
     padding: 0 20px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 
     h1 {
       font-family: $header-font;
       font-size: $font-size-4xl;
       font-weight: $font-weight-light;
-      margin: 0 0 10px;
-      letter-spacing: 1px;
+      margin: 0 0 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
 
       @media (max-width: 767px) {
         font-size: $font-size-2xl;
+        letter-spacing: 1px;
       }
     }
 
     p {
       font-family: $base-font;
-      font-size: $font-size-md;
-      opacity: 0.95;
+      font-size: $font-size-lg;
+      opacity: 0.9;
       margin: 0;
       font-weight: $font-weight-light;
     }
@@ -71,13 +72,13 @@
 // Form Card
 .trip-form-card {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 40px;
 
   @media (max-width: 767px) {
     padding: 24px;
-    border-radius: 12px;
+    border-radius: 6px;
     margin: 0 10px;
   }
 }
@@ -93,22 +94,25 @@
   .control-label {
     font-family: $header-font;
     font-weight: $font-weight-medium;
-    font-size: $font-size-base;
-    color: #374151;
+    font-size: $font-size-sm;
+    color: $dark-primary;
     margin-bottom: 8px;
     display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .form-control {
-    border: 2px solid #e5e7eb;
-    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
     padding: 12px 16px;
     font-size: $font-size-base;
     transition: all 0.2s ease;
+    background: #fff;
 
     &:focus {
-      border-color: $brand-color;
-      box-shadow: 0 0 0 3px rgba($brand-color, 0.15);
+      border-color: $dark-accent;
+      box-shadow: 0 0 0 3px rgba($dark-accent, 0.1);
       outline: none;
     }
 
@@ -157,7 +161,7 @@
         width: 20px;
         height: 20px;
         margin-top: 2px;
-        accent-color: $brand-color;
+        accent-color: $dark-primary;
       }
     }
   }
@@ -183,9 +187,9 @@
       align-items: center;
       justify-content: center;
       height: 48px;
-      background: #f3f4f6;
-      border: 2px solid #e5e7eb;
-      border-radius: 10px;
+      background: #f8f9fa;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
       font-family: $header-font;
       font-weight: $font-weight-medium;
       font-size: $font-size-md;
@@ -194,15 +198,16 @@
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: $brand-color;
-        background: rgba($brand-color, 0.05);
+        border-color: $dark-accent;
+        background: rgba($dark-accent, 0.05);
+        color: $dark-primary;
       }
     }
 
     &.selected span,
     input:checked + span {
-      background: $brand-color;
-      border-color: $brand-color;
+      background: $dark-primary;
+      border-color: $dark-primary;
       color: white;
     }
   }
@@ -225,11 +230,11 @@
   span {
     padding: 0 16px;
     font-size: $font-size-xs;
-    color: #9ca3af;
+    color: #6b7280;
     font-family: $header-font;
     font-weight: $font-weight-medium;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
 }
 
@@ -245,20 +250,22 @@
   width: 100%;
   padding: 16px 24px;
   font-family: $header-font;
-  font-size: $font-size-md;
+  font-size: $font-size-base;
   font-weight: $font-weight-medium;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   color: white;
-  background: $brand-color;
+  background: $dark-primary;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 8px;
 
   &:hover {
     transform: translateY(-2px);
-    background: darken($brand-color, 5%);
-    box-shadow: 0 8px 25px rgba($brand-color, 0.4);
+    background: $dark-secondary;
+    box-shadow: 0 8px 25px rgba($dark-primary, 0.3);
   }
 
   &:active {
@@ -270,14 +277,14 @@
 .trip-new-form input[type="file"] {
   padding: 10px;
   background: #f9fafb;
-  border: 2px dashed #e5e7eb;
-  border-radius: 10px;
+  border: 1px dashed #d1d5db;
+  border-radius: 6px;
   width: 100%;
   cursor: pointer;
 
   &:hover {
-    border-color: $brand-color;
-    background: rgba($brand-color, 0.03);
+    border-color: $dark-accent;
+    background: rgba($dark-accent, 0.03);
   }
 }
 
@@ -290,6 +297,88 @@
 
     .help-block {
       color: #ef4444;
+    }
+  }
+}
+
+// Invite Friends - Email Chips
+.invite-friends-group {
+  .invite-input-wrapper {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    min-height: 46px;
+    transition: all 0.2s ease;
+
+    &:focus-within {
+      border-color: $dark-accent;
+      box-shadow: 0 0 0 3px rgba($dark-accent, 0.1);
+    }
+  }
+
+  #invite-email-input {
+    border: none;
+    padding: 4px 0;
+    flex: 1;
+    min-width: 200px;
+    font-size: $font-size-base;
+    background: transparent;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.email-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.email-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba($dark-primary, 0.08);
+  border: 1px solid rgba($dark-primary, 0.15);
+  border-radius: 20px;
+  padding: 4px 8px 4px 12px;
+  font-size: $font-size-sm;
+  color: $dark-primary;
+
+  .email-text {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .chip-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: none;
+    background: rgba($dark-primary, 0.15);
+    border-radius: 50%;
+    color: $dark-primary;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: $dark-primary;
+      color: white;
     }
   }
 }
