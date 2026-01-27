@@ -49,24 +49,8 @@
                 </div>
               </div>
 
-              <!-- Category Selection -->
+              <!-- Invite Friends -->
               <div class="form-section">
-                <%= f.input :category,
-                  as: :select,
-                  collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"],
-                  selected: "Discovery",
-                  include_blank: false,
-                  label: "Trip type"
-                %>
-              </div>
-
-              <!-- Optional Section -->
-              <div class="form-divider">
-                <span>Optional details</span>
-              </div>
-
-              <div class="form-section optional-section">
-                <!-- Invite Friends -->
                 <div class="form-group invite-friends-group">
                   <label class="control-label">Invite friends</label>
                   <div class="invite-input-wrapper">
@@ -79,6 +63,22 @@
                   <input type="hidden" name="invite_emails" id="invite-emails-hidden" value="">
                   <p class="help-block">Invite collaborators to help plan this trip</p>
                 </div>
+              </div>
+
+              <!-- Optional Section Toggle -->
+              <div class="form-divider optional-toggle" id="optional-toggle">
+                <span><i class="fa fa-chevron-down toggle-icon"></i> Optional details</span>
+              </div>
+
+              <div class="form-section optional-section" id="optional-section" style="display: none;">
+                <!-- Category Selection -->
+                <%= f.input :category,
+                  as: :select,
+                  collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"],
+                  selected: "Discovery",
+                  include_blank: false,
+                  label: "Trip type"
+                %>
 
                 <%= f.input :description,
                   as: :text,
@@ -131,6 +131,14 @@
       $(".day-option").on("click", function() {
         $(".day-option").removeClass("selected");
         $(this).addClass("selected");
+      });
+
+      // Optional section toggle
+      $("#optional-toggle").on("click", function() {
+        var $section = $("#optional-section");
+        var $icon = $(this).find(".toggle-icon");
+        $section.slideToggle(200);
+        $icon.toggleClass("fa-chevron-down fa-chevron-up");
       });
 
       // Email chips for invite friends

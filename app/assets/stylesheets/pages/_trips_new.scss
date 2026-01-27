@@ -243,6 +243,24 @@
     text-transform: uppercase;
     letter-spacing: 1px;
   }
+
+  // Toggle styling
+  &.optional-toggle {
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      span {
+        color: $dark-primary;
+      }
+    }
+
+    .toggle-icon {
+      font-size: 10px;
+      margin-right: 6px;
+      transition: transform 0.2s ease;
+    }
+  }
 }
 
 // Optional Section
