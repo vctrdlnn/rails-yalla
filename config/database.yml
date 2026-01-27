@@ -13,7 +13,4 @@ test:
 
 production:
   <<: *default
-  database: rails-yalla_production
-  username: rails-yalla
-  password: <%= ENV['RAILS_YALLA_DATABASE_PASSWORD'] %>
   url: <%= ENV['DATABASE_URL'] %>
