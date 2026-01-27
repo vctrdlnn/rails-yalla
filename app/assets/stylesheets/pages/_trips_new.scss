@@ -1,0 +1,286 @@
+// Trips New Page Styles
+// Modern card-based form design
+
+.trip-new-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+// Hero Section
+.trip-new-hero {
+  position: relative;
+  height: 280px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  @media (max-width: 767px) {
+    height: 220px;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+    background-size: 60px 60px;
+    opacity: 0.5;
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+
+    h1 {
+      font-family: $header-font;
+      font-size: 2.8rem;
+      font-weight: 300;
+      margin: 0 0 10px;
+      letter-spacing: -0.5px;
+
+      @media (max-width: 767px) {
+        font-size: 2rem;
+      }
+    }
+
+    p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin: 0;
+      font-weight: 300;
+    }
+  }
+}
+
+// Form Section
+.trip-new-form-section {
+  margin-top: -60px;
+  padding-bottom: 60px;
+  position: relative;
+  z-index: 10;
+}
+
+// Form Card
+.trip-form-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+
+  @media (max-width: 767px) {
+    padding: 24px;
+    border-radius: 12px;
+    margin: 0 10px;
+  }
+}
+
+// Form Styles
+.trip-new-form {
+  .form-section {
+    margin-bottom: 24px;
+  }
+
+  .control-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #374151;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .form-control {
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  .form-input-lg {
+    padding: 14px 18px;
+    font-size: 1.1rem;
+  }
+
+  // Select styling
+  select.form-control {
+    appearance: none;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%236b7280" d="M6 8L1 3h10z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  // Textarea
+  textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  // Hint text
+  .help-block {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 6px;
+  }
+
+  // Checkbox styling
+  .checkbox {
+    label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      font-weight: normal;
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        accent-color: #667eea;
+      }
+    }
+  }
+}
+
+// Days Selector
+.days-selector {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .day-option {
+    flex: 1;
+    min-width: 44px;
+    max-width: 60px;
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      background: #f3f4f6;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #6b7280;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #667eea;
+        background: #f5f3ff;
+      }
+    }
+
+    &.selected span,
+    input:checked + span {
+      background: #667eea;
+      border-color: #667eea;
+      color: white;
+    }
+  }
+}
+
+// Form Divider
+.form-divider {
+  display: flex;
+  align-items: center;
+  margin: 32px 0 24px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+  }
+
+  span {
+    padding: 0 16px;
+    font-size: 0.85rem;
+    color: #9ca3af;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Optional Section
+.optional-section {
+  .form-group {
+    margin-bottom: 20px;
+  }
+}
+
+// Submit Button
+.btn-submit {
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// File input styling
+.trip-new-form input[type="file"] {
+  padding: 10px;
+  background: #f9fafb;
+  border: 2px dashed #e5e7eb;
+  border-radius: 10px;
+  width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #667eea;
+    background: #f5f3ff;
+  }
+}
+
+// Error states
+.trip-new-form {
+  .has-error {
+    .form-control {
+      border-color: #ef4444;
+    }
+
+    .help-block {
+      color: #ef4444;
+    }
+  }
+}
