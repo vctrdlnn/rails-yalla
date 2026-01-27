@@ -133,7 +133,7 @@ class TripsController < ApplicationController
     params.require(:trip).permit(
       :title, :description, :category,
       :city, :country, :lat, :lon,
-      :photo, :photo_cache, :public
+      :photo, :photo_cache, :remote_photo_url, :public
     )
   end
 
