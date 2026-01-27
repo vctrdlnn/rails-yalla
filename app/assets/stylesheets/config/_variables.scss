@@ -1,24 +1,42 @@
 /* -------------------------------------
  * Fonts
  * ------------------------------------- */
-// Google fonts
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:400,100,300,700,500");
-$base-font: "Open Sans", "Helvetica", "sans-serif";
-$header-font: "Raleway", "Helvetica", "sans-serif";
+// Google fonts - Source Sans Pro (body) + Montserrat (headers)
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
+$base-font: "Source Sans Pro", "Helvetica Neue", "Helvetica", sans-serif;
+$header-font: "Montserrat", "Helvetica Neue", "Helvetica", sans-serif;
 
-// Local fonts (uncomment following lines)
-// @font-face {
-//   font-family: "Font Name";
-//   src: font-url('FontFile.eot');
-//   src: font-url('FontFile.eot?#iefix') format('embedded-opentype'),
-//        font-url('FontFile.woff') format('woff'),
-//        font-url('FontFile.ttf') format('truetype')
-// }
-// $my-font: "Font Name";
+/* -------------------------------------
+ * Typography Scale
+ * ------------------------------------- */
+// Base size and line height
+$base-size: 14px;
+$base-height: 1.5;
 
-// Font-size and line-height
-$base-size: 16px;
-$base-height: 1.4;
+// Font weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 600;
+$font-weight-bold: 700;
+
+// Type scale (based on 1.25 ratio)
+$font-size-xs: 0.75rem;    // 10.5px
+$font-size-sm: 0.875rem;   // 12.25px
+$font-size-base: 1rem;     // 14px
+$font-size-md: 1.125rem;   // 15.75px
+$font-size-lg: 1.25rem;    // 17.5px
+$font-size-xl: 1.5rem;     // 21px
+$font-size-2xl: 1.875rem;  // 26.25px
+$font-size-3xl: 2.25rem;   // 31.5px
+$font-size-4xl: 3rem;      // 42px
+
+// Heading sizes
+$h1-size: $font-size-3xl;
+$h2-size: $font-size-2xl;
+$h3-size: $font-size-xl;
+$h4-size: $font-size-lg;
+$h5-size: $font-size-md;
+$h6-size: $font-size-base;
 
 /* -------------------------------------
  * Colors
