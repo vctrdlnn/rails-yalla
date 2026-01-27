@@ -34,7 +34,6 @@
   .hero-content {
     position: relative;
     text-align: center;
-    color: white;
     padding: 0 20px;
 
     h1 {
@@ -44,6 +43,7 @@
       margin: 0 0 12px;
       letter-spacing: 2px;
       text-transform: uppercase;
+      color: #fff !important;
 
       @media (max-width: 767px) {
         font-size: $font-size-2xl;
@@ -57,6 +57,7 @@
       opacity: 0.9;
       margin: 0;
       font-weight: $font-weight-light;
+      color: #fff !important;
     }
   }
 }
@@ -128,11 +129,17 @@
 
   // Select styling
   select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
+    background-color: #fff;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%236b7280" d="M6 8L1 3h10z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 16px center;
     padding-right: 40px;
+    cursor: pointer;
+    height: auto;
+    line-height: 1.5;
   }
 
   // Textarea

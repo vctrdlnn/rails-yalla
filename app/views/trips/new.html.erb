@@ -94,7 +94,8 @@
 
                 <%= f.input :start_date,
                   placeholder: "Select a date",
-                  label: "Start date"
+                  label: "Start date",
+                  input_html: { value: @trip.start_date&.strftime("%-d %b, %Y") }
                 %>
 
                 <%= f.input :public,

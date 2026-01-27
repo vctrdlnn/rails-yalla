@@ -49,6 +49,7 @@ class TripsController < ApplicationController
 
   def new
     @trip = Trip.new
+    @trip.start_date = Date.today
     authorize @trip
   end
 
