@@ -10,7 +10,9 @@
 .trip-new-hero {
   position: relative;
   height: 280px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1600&q=80');
+  background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,9 +28,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
-    background-size: 60px 60px;
-    opacity: 0.5;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
   }
 
   .hero-content {
@@ -36,13 +36,14 @@
     text-align: center;
     color: white;
     padding: 0 20px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 
     h1 {
       font-family: $header-font;
       font-size: 2.8rem;
-      font-weight: 300;
+      font-weight: 100;
       margin: 0 0 10px;
-      letter-spacing: -0.5px;
+      letter-spacing: 1px;
 
       @media (max-width: 767px) {
         font-size: 2rem;
@@ -50,8 +51,9 @@
     }
 
     p {
+      font-family: $base-font;
       font-size: 1.1rem;
-      opacity: 0.9;
+      opacity: 0.95;
       margin: 0;
       font-weight: 300;
     }
@@ -82,12 +84,15 @@
 
 // Form Styles
 .trip-new-form {
+  font-family: $base-font;
+
   .form-section {
     margin-bottom: 24px;
   }
 
   .control-label {
-    font-weight: 600;
+    font-family: $header-font;
+    font-weight: 500;
     font-size: 0.9rem;
     color: #374151;
     margin-bottom: 8px;
@@ -102,8 +107,8 @@
     transition: all 0.2s ease;
 
     &:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: $brand-color;
+      box-shadow: 0 0 0 3px rgba($brand-color, 0.15);
       outline: none;
     }
 
@@ -152,7 +157,7 @@
         width: 20px;
         height: 20px;
         margin-top: 2px;
-        accent-color: #667eea;
+        accent-color: $brand-color;
       }
     }
   }
@@ -181,22 +186,23 @@
       background: #f3f4f6;
       border: 2px solid #e5e7eb;
       border-radius: 10px;
-      font-weight: 600;
+      font-family: $header-font;
+      font-weight: 500;
       font-size: 1.1rem;
       color: #6b7280;
       cursor: pointer;
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: #667eea;
-        background: #f5f3ff;
+        border-color: $brand-color;
+        background: rgba($brand-color, 0.05);
       }
     }
 
     &.selected span,
     input:checked + span {
-      background: #667eea;
-      border-color: #667eea;
+      background: $brand-color;
+      border-color: $brand-color;
       color: white;
     }
   }
@@ -237,10 +243,11 @@
 .btn-submit {
   width: 100%;
   padding: 16px 24px;
+  font-family: $header-font;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: white;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: $brand-color;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -249,7 +256,8 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    background: darken($brand-color, 5%);
+    box-shadow: 0 8px 25px rgba($brand-color, 0.4);
   }
 
   &:active {
@@ -267,8 +275,8 @@
   cursor: pointer;
 
   &:hover {
-    border-color: #667eea;
-    background: #f5f3ff;
+    border-color: $brand-color;
+    background: rgba($brand-color, 0.03);
   }
 }
 
