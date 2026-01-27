@@ -546,3 +546,81 @@ p .editable-field {
     margin-bottom: 8px;
   }
 }
+
+// Touch support for mobile drag-and-drop
+.activity-item-header {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (max-width: 767px) {
+  .activity-grid.sortable {
+    touch-action: pan-y;
+  }
+
+  .activity-item .activity-item-header {
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  .activity-item.ui-sortable-helper {
+    transform: scale(0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .placeholder-highlight {
+    min-height: 80px;
+    border-width: 3px;
+  }
+}
+
+// Mobile Move Action Button
+.mobile-move-action {
+  display: none;
+  margin: 10px 0;
+  text-align: center;
+
+  @media (max-width: 767px) {
+    display: block;
+  }
+
+  .mobile-move-btn {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+
+    &:hover, &:focus { background: #e9ecef; }
+    i { margin-right: 5px; }
+  }
+
+  .mobile-move-dropdown {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+
+    .dropdown-header {
+      font-weight: bold;
+      color: #666;
+      padding: 8px 15px;
+      background: #f8f9fa;
+    }
+
+    a {
+      padding: 10px 15px;
+      display: block;
+      color: #333;
+
+      &:hover { background: #e3f2fd; color: #1976d2; }
+      i { margin-right: 8px; width: 16px; text-align: center; }
+    }
+
+    .current-location {
+      background: #e8f5e9;
+      font-weight: bold;
+      &::after { content: ' (current)'; font-size: 11px; color: #666; font-weight: normal; }
+    }
+  }
+}
