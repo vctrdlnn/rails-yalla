@@ -27,25 +27,28 @@
         <div class="mini-padded"></div>
         <div class="row">
           <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-            <h3 class="text-center">Input city and other info</h3>
+            <h3 class="text-center">Plan your next adventure</h3>
             <div class="mini-padded"></div>
             <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
-              <%= f.input :nb_days, required: true, collection: 2..3, selected: 3, label: 'Number of days' %>
-              <%= f.input :city %>
-              <%= f.input :title %>
+              <%= f.input :city, placeholder: "e.g. Paris, Tokyo, New York..." %>
+              <%= f.input :title, placeholder: "Give your trip a name" %>
+              <%= f.input :nb_days, required: true, collection: 1..7, selected: 3, label: 'Number of days' %>
               <%= f.input :category,
-                as: :radio_buttons,
-                item_wrapper_class: 'radio-inline',
-                collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
+                as: :select,
+                collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"],
+                selected: "Discovery",
+                include_blank: false
                 %>
-              <%= f.input :public, required: true, label: "Make your trip public and visible to everyone" %>
-              <h5>Optional: </h5>
-              <%= f.input :start_date %>
-              <%= f.input :photo, label: "Put a nice picture of the city" %>
               <%= f.input :country, :as => :hidden %>
               <%= f.input :photo_cache, as: :hidden %>
-              <%= f.input :description, :as => :text %>
-              <%= f.button :submit %>
+
+              <h5>Optional</h5>
+              <%= f.input :description, :as => :text, placeholder: "What's this trip about?" %>
+              <%= f.input :photo, label: "Cover photo" %>
+              <%= f.input :start_date, placeholder: "When does it start?" %>
+              <%= f.input :public, required: false, label: "Make this trip public" %>
+
+              <%= f.button :submit, "Start Planning →", class: "btn btn-primary btn-lg btn-block" %>
             <% end %>
           </div>
         </div>
