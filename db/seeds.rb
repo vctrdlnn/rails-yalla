@@ -46,6 +46,10 @@ admin_params = seed_data[:admin_user] || {
   phone: "0600000000"
 }
 
+# Override with environment variables if set (for production security)
+admin_params[:email] = ENV['ADMIN_EMAIL'] if ENV['ADMIN_EMAIL'].present?
+admin_params[:password] = ENV['ADMIN_PASSWORD'] if ENV['ADMIN_PASSWORD'].present?
+
 # Skip welcome email callback for seeding
 User.skip_callback(:create, :after, :send_welcome_email) rescue nil
 

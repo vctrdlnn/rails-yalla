@@ -10,8 +10,7 @@ public/assets
 # Ignore application configuration
 /config/application.yml
 
-# Ignore seed data (contains admin password)
-/db/seeds_data.json
+# Seed data is now safe to commit (password comes from ENV var)
 
 # Windows metadata files
 *:Zone.Identifier
