@@ -10,6 +10,7 @@ class PagesController < ApplicationController
 
   def unsplash_photo
     query = params[:query]&.downcase&.strip
+    index = params[:index].to_i # Which photo to return (0-9)
     return render json: { error: 'Query required' }, status: :bad_request if query.blank?
 
     access_key = ENV['UNSPLASH_ACCESS_KEY']
@@ -18,52 +19,56 @@ class PagesController < ApplicationController
     end
 
     # Cache results for 24 hours to reduce API calls
-    cache_key = "unsplash_photo_#{query.parameterize}"
-    cached_result = Rails.cache.read(cache_key)
+    cache_key = "unsplash_photos_#{query.parameterize}"
+    cached_photos = Rails.cache.read(cache_key)
 
-    if cached_result
-      Rails.logger.info "[Unsplash] Cache hit for '#{query}'"
-      return render json: cached_result
-    end
+    unless cached_photos
+      Rails.logger.info "[Unsplash] Fetching photos for '#{query}'"
 
-    Rails.logger.info "[Unsplash] Fetching photo for '#{query}'"
+      require 'net/http'
+      require 'json'
 
-    require 'net/http'
-    require 'json'
+      uri = URI("https://api.unsplash.com/search/photos")
+      uri.query = URI.encode_www_form(
+        query: "#{query} city travel",
+        per_page: 10,
+        orientation: 'landscape'
+      )
 
-    uri = URI("https://api.unsplash.com/search/photos")
-    uri.query = URI.encode_www_form(
-      query: "#{query} city travel",
-      per_page: 1,
-      orientation: 'landscape'
-    )
+      request = Net::HTTP::Get.new(uri)
+      request['Authorization'] = "Client-ID #{access_key}"
 
-    request = Net::HTTP::Get.new(uri)
-    request['Authorization'] = "Client-ID #{access_key}"
+      response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+        http.request(request)
+      end
 
-    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-      http.request(request)
-    end
-
-    if response.is_a?(Net::HTTPSuccess)
-      data = JSON.parse(response.body)
-      if data['results'].any?
-        photo = data['results'].first
-        result = {
-          url: photo['urls']['regular'],
-          thumb: photo['urls']['thumb'],
-          photographer: photo['user']['name'],
-          photographer_url: photo['user']['links']['html']
-        }
-        # Cache for 24 hours
-        Rails.cache.write(cache_key, result, expires_in: 24.hours)
-        render json: result
+      if response.is_a?(Net::HTTPSuccess)
+        data = JSON.parse(response.body)
+        if data['results'].any?
+          cached_photos = data['results'].map do |photo|
+            {
+              url: photo['urls']['regular'],
+              thumb: photo['urls']['thumb'],
+              photographer: photo['user']['name'],
+              photographer_url: photo['user']['links']['html']
+            }
+          end
+          # Cache for 24 hours
+          Rails.cache.write(cache_key, cached_photos, expires_in: 24.hours)
+        else
+          return render json: { error: 'No photos found' }, status: :not_found
+        end
       else
-        render json: { error: 'No photos found' }, status: :not_found
+        return render json: { error: 'Unsplash API error' }, status: :bad_gateway
       end
     else
-      render json: { error: 'Unsplash API error' }, status: :bad_gateway
+      Rails.logger.info "[Unsplash] Cache hit for '#{query}'"
     end
+
+    # Return the requested photo (cycle through if index exceeds count)
+    photo_index = index % cached_photos.length
+    result = cached_photos[photo_index].merge(total: cached_photos.length)
+    render json: result
   rescue StandardError => e
     Rails.logger.error "[Unsplash] Error: #{e.message}"
     render json: { error: 'Failed to fetch photo' }, status: :internal_server_error
