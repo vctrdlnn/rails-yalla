@@ -249,12 +249,6 @@
       var $uploadCustom = $("#upload-custom");
       var $customInput = $("#custom-photo-input");
 
-      function getUnsplashUrl(city) {
-        // Using Unsplash Source API for random city photos
-        var timestamp = new Date().getTime();
-        return "https://source.unsplash.com/800x600/?" + encodeURIComponent(city + " city,travel") + "&t=" + timestamp;
-      }
-
       function fetchUnsplashPhoto(city) {
         if (!city || city.length < 2) {
           $suggestion.hide();
@@ -262,18 +256,40 @@
         }
 
         currentCity = city;
-        var photoUrl = getUnsplashUrl(city);
 
-        // Preload image
-        var img = new Image();
-        img.onload = function() {
-          $previewImg.attr("src", photoUrl);
-          $suggestion.fadeIn(200);
-        };
-        img.onerror = function() {
-          $suggestion.hide();
-        };
-        img.src = photoUrl;
+        // Call our backend endpoint which proxies to Unsplash API
+        $.ajax({
+          url: '/unsplash_photo',
+          data: { query: city },
+          dataType: 'json',
+          success: function(data) {
+            if (data.url) {
+              // Preload image
+              var img = new Image();
+              img.onload = function() {
+                $previewImg.attr("src", data.url);
+                // Update credit link if we have photographer info
+                if (data.photographer) {
+                  $(".unsplash-credit").html(
+                    'Photo by <a href="' + data.photographer_url + '?utm_source=yala&utm_medium=referral" target="_blank">' +
+                    data.photographer + '</a> on <a href="https://unsplash.com/?utm_source=yala&utm_medium=referral" target="_blank">Unsplash</a>'
+                  );
+                }
+                $suggestion.fadeIn(200);
+              };
+              img.onerror = function() {
+                $suggestion.hide();
+              };
+              img.src = data.url;
+            } else {
+              $suggestion.hide();
+            }
+          },
+          error: function(xhr) {
+            console.log("Unsplash error:", xhr.responseJSON);
+            $suggestion.hide();
+          }
+        });
       }
 
       // Debounced city input handler
