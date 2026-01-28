@@ -88,5 +88,5 @@ Rails.application.configure do
 
   # Action mailer configuration (Brevo API)
   config.action_mailer.delivery_method = :brevo_api
-  config.action_mailer.default_url_options = { host: "www.yala-app.fr" }
+  config.action_mailer.default_url_options = { host: "www.justyalla.eu" }
 end

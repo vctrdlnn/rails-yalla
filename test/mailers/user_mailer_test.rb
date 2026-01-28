@@ -17,7 +17,7 @@ class UserMailerTest < ActionMailer::TestCase
     end
 
     assert_equal ['test@example.com'], email.to
-    assert_equal ['contact@yala-app.fr'], email.from
-    assert_equal 'Hi Test User, welcome to Yala!', email.subject
+    assert_equal ['contact@justyalla.eu'], email.from
+    assert_equal 'Hi Test User, welcome to Justyalla!', email.subject
   end
 end

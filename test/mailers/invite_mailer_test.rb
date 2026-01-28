@@ -23,7 +23,7 @@ class InviteMailerTest < ActionMailer::TestCase
     end
 
     assert_equal ['invited@example.com'], email.to
-    assert_equal ['contact@yala-app.fr'], email.from
+    assert_equal ['contact@justyalla.eu'], email.from
     assert_equal 'Sender User has invited you to participate to Paris Trip', email.subject
   end
 
