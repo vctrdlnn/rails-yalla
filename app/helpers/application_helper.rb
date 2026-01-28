@@ -17,10 +17,13 @@ module ApplicationHelper
 
     def set_day_icon(trip_days)
       icons = {}
+      max_icons = 6 # Only num1.png through num6.png exist
       trip_days.each_with_index do |trip, i|
-        icons[trip.id] = ActionController::Base.helpers.asset_path('numbers/num' + (i + 1).to_s + '.png')
+        # Cycle through icons if more days than available icons
+        icon_num = (i % max_icons) + 1
+        icons[trip.id] = ActionController::Base.helpers.asset_path("numbers/num#{icon_num}.png")
       end
       icons[0] = ActionController::Base.helpers.asset_path('numbers/num6.png')
-      return icons
+      icons
     end
 end
