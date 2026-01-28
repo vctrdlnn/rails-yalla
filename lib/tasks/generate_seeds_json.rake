@@ -309,4 +309,108 @@ namespace :seeds do
     File.write(seeds_path, JSON.pretty_generate(seeds_data))
     puts "\nUpdated #{seeds_path} with photo URLs"
   end
+
+  desc "Geocode missing lat/lon for activities in seeds_data.json"
+  task geocode_activities: :environment do
+    require 'net/http'
+    require 'json'
+
+    seeds_path = Rails.root.join('db', 'seeds_data.json')
+    unless File.exist?(seeds_path)
+      puts "ERROR: seeds_data.json not found. Run rake seeds:generate_json first"
+      exit 1
+    end
+
+    seeds_data = JSON.parse(File.read(seeds_path))
+
+    total_missing = 0
+    total_geocoded = 0
+    total_failed = 0
+
+    seeds_data['trips'].each do |trip|
+      trip['activities'].each do |activity|
+        next if activity['lat'].present? && activity['lon'].present?
+        total_missing += 1
+      end
+    end
+
+    puts "Found #{total_missing} activities missing coordinates. Geocoding via Nominatim..."
+
+    seeds_data['trips'].each do |trip|
+      city = trip['city']
+      country = trip['country']
+
+      trip['activities'].each_with_index do |activity, idx|
+        next if activity['lat'].present? && activity['lon'].present?
+
+        # Build search query - use establishment name + city for better results
+        establishment = activity['establishment'] || activity['title']
+        query = "#{establishment}, #{city}, #{country}"
+
+        puts "  Geocoding: #{establishment[0..40]}..."
+
+        uri = URI("https://nominatim.openstreetmap.org/search")
+        uri.query = URI.encode_www_form(
+          q: query,
+          format: 'json',
+          limit: 1
+        )
+
+        begin
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
+          request = Net::HTTP::Get.new(uri)
+          request['User-Agent'] = 'YalaApp/1.0 (seed data preparation)'
+
+          response = http.request(request)
+
+          if response.is_a?(Net::HTTPSuccess)
+            data = JSON.parse(response.body)
+            if data.any?
+              activity['lat'] = data.first['lat'].to_f
+              activity['lon'] = data.first['lon'].to_f
+              total_geocoded += 1
+              puts "    -> #{activity['lat']}, #{activity['lon']}"
+            else
+              # Fallback to city coordinates
+              activity['lat'] = trip['lat']
+              activity['lon'] = trip['lon']
+              total_failed += 1
+              puts "    -> Not found, using city center"
+            end
+          else
+            activity['lat'] = trip['lat']
+            activity['lon'] = trip['lon']
+            total_failed += 1
+            puts "    -> API error: #{response.code}, using city center"
+          end
+        rescue StandardError => e
+          activity['lat'] = trip['lat']
+          activity['lon'] = trip['lon']
+          total_failed += 1
+          puts "    -> Error: #{e.message}, using city center"
+        end
+
+        # Nominatim requires 1 request per second
+        sleep 1.1
+      end
+    end
+
+    # Write updated JSON
+    File.write(seeds_path, JSON.pretty_generate(seeds_data))
+    puts "\nGeocoding complete!"
+    puts "  Geocoded: #{total_geocoded}"
+    puts "  Fallback to city: #{total_failed}"
+    puts "Updated #{seeds_path}"
+  end
+
+  desc "Run all seed preparation tasks (generate, geocode, fetch photos)"
+  task prepare_all: :environment do
+    Rake::Task['seeds:generate_json'].invoke
+    Rake::Task['seeds:geocode_activities'].invoke
+    Rake::Task['seeds:fetch_photos'].invoke
+    puts "\n" + "=" * 50
+    puts "All seed data prepared! Run 'rails db:seed' to load."
+    puts "=" * 50
+  end
 end
