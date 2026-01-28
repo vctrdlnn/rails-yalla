@@ -9,13 +9,24 @@ class PagesController < ApplicationController
   end
 
   def unsplash_photo
-    query = params[:query]
+    query = params[:query]&.downcase&.strip
     return render json: { error: 'Query required' }, status: :bad_request if query.blank?
 
     access_key = ENV['UNSPLASH_ACCESS_KEY']
     if access_key.blank? || access_key == 'YOUR_UNSPLASH_ACCESS_KEY_HERE'
       return render json: { error: 'Unsplash API key not configured' }, status: :service_unavailable
     end
+
+    # Cache results for 24 hours to reduce API calls
+    cache_key = "unsplash_photo_#{query.parameterize}"
+    cached_result = Rails.cache.read(cache_key)
+
+    if cached_result
+      Rails.logger.info "[Unsplash] Cache hit for '#{query}'"
+      return render json: cached_result
+    end
+
+    Rails.logger.info "[Unsplash] Fetching photo for '#{query}'"
 
     require 'net/http'
     require 'json'
@@ -38,12 +49,15 @@ class PagesController < ApplicationController
       data = JSON.parse(response.body)
       if data['results'].any?
         photo = data['results'].first
-        render json: {
+        result = {
           url: photo['urls']['regular'],
           thumb: photo['urls']['thumb'],
           photographer: photo['user']['name'],
           photographer_url: photo['user']['links']['html']
         }
+        # Cache for 24 hours
+        Rails.cache.write(cache_key, result, expires_in: 24.hours)
+        render json: result
       else
         render json: { error: 'No photos found' }, status: :not_found
       end

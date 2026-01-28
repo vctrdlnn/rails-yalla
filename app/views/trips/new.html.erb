@@ -297,10 +297,10 @@
         var city = $(this).val().trim();
         clearTimeout(unsplashTimeout);
 
-        if (city.length >= 2) {
+        if (city.length >= 3) {
           unsplashTimeout = setTimeout(function() {
             fetchUnsplashPhoto(city);
-          }, 500);
+          }, 800);
         } else {
           $suggestion.hide();
         }
