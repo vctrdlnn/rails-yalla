@@ -1,3 +1,5 @@
+@import "../config/variables";
+
 /* -------------------------------------
  * CSS code specific to home page
  * (margin/padding adjustments)
@@ -5,7 +7,9 @@
 
 #slogan {
     text-align: center;
-    font-size: 36px;
+    font-size: $font-size-4xl;
+    font-family: $header-font;
+    font-weight: $font-weight-light;
     color: #fff;
 }
 #slogan span { color: #ff0 }

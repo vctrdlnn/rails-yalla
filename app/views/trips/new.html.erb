@@ -1,74 +1,337 @@
-<!-- WRAPPER -->
-  <div class="wrapper">
+<div class="trip-new-page">
+  <!-- Hero Section -->
+  <section class="trip-new-hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Where to next?</h1>
+      <p>Plan your perfect trip in minutes</p>
+    </div>
+  </section>
 
-    <!-- HOME -->
-    <section class="module module-header bg-dark bg-dark-50" data-background=<%= image_path('cities/city2.jpg') %> >
-      <div class="container">
-        <!-- MODULE TITLE -->
-        <div class="row">
-          <div class="col-sm-6 col-sm-offset-3">
-            <h1 class="module-title font-alt align-center">Start a trip now!</h1>
-            <div class="module-subtitle font-inc align-center">
-              Pick a city in the world you'd like to visit and let the simplest travel planner take you exactly where you want to go.
-            </div>
-          </div>
-        </div>
-        <!-- /MODULE TITLE -->
-      </div>
-    </section >
-    <!-- /HOME -->
-
-    <!-- ABOUT -->
-    <section>
-
-      <div class="container">
-
-        <!-- MODULE TITLE -->
-        <div class="mini-padded"></div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-            <h3 class="text-center">Input city and other info</h3>
-            <div class="mini-padded"></div>
-            <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
-              <%= f.input :nb_days, required: true, collection: 2..3, selected: 3, label: 'Number of days' %>
-              <%= f.input :city %>
-              <%= f.input :title %>
-              <%= f.input :category,
-                as: :radio_buttons,
-                item_wrapper_class: 'radio-inline',
-                collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
-                %>
-              <%= f.input :public, required: true, label: "Make your trip public and visible to everyone" %>
-              <h5>Optional: </h5>
-              <%= f.input :start_date %>
-              <%= f.input :photo, label: "Put a nice picture of the city" %>
-              <%= f.input :country, :as => :hidden %>
+  <!-- Form Section -->
+  <section class="trip-new-form-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+          <div class="trip-form-card">
+            <%= simple_form_for @trip, html: { class: 'trip-new-form' } do |f| %>
+              <%= f.input :country, as: :hidden %>
               <%= f.input :photo_cache, as: :hidden %>
-              <%= f.input :description, :as => :text %>
-              <%= f.button :submit %>
+
+              <!-- City Input -->
+              <div class="form-section">
+                <%= f.input :city,
+                  placeholder: "e.g. Paris, Tokyo, New York...",
+                  label: "Destination",
+                  input_html: { class: 'form-input-lg', autofocus: true }
+                %>
+              </div>
+
+              <!-- Title Input -->
+              <div class="form-section">
+                <%= f.input :title,
+                  placeholder: "Give your trip a name",
+                  label: "Trip name",
+                  input_html: { class: 'form-input-lg' }
+                %>
+              </div>
+
+              <!-- Days Selection -->
+              <div class="form-section">
+                <label class="control-label">How many days?</label>
+                <div class="days-selector">
+                  <% (1..7).each do |day| %>
+                    <label class="day-option <%= 'selected' if day == 3 %>">
+                      <input type="radio" name="trip[nb_days]" value="<%= day %>" <%= 'checked' if day == 3 %>>
+                      <span><%= day %></span>
+                    </label>
+                  <% end %>
+                </div>
+              </div>
+
+              <!-- Invite Friends -->
+              <div class="form-section">
+                <div class="form-group invite-friends-group">
+                  <label class="control-label">Invite friends</label>
+                  <div class="invite-input-wrapper">
+                    <div class="email-chips" id="email-chips"></div>
+                    <input type="email"
+                           id="invite-email-input"
+                           class="form-control"
+                           placeholder="Enter email and press Enter">
+                  </div>
+                  <input type="hidden" name="invite_emails" id="invite-emails-hidden" value="">
+                  <p class="help-block">Invite collaborators to help plan this trip</p>
+                </div>
+              </div>
+
+              <!-- Optional Section Toggle -->
+              <div class="form-divider optional-toggle" id="optional-toggle">
+                <span><i class="fa fa-chevron-down toggle-icon"></i> Optional details</span>
+              </div>
+
+              <div class="form-section optional-section" id="optional-section" style="display: none;">
+                <!-- Category Selection -->
+                <%= f.input :category,
+                  as: :select,
+                  collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"],
+                  selected: "Discovery",
+                  include_blank: false,
+                  label: "Trip type"
+                %>
+
+                <%= f.input :description,
+                  as: :text,
+                  placeholder: "What's this trip about?",
+                  label: "Description",
+                  input_html: { rows: 3 }
+                %>
+
+                <!-- Cover Photo with Unsplash Suggestion -->
+                <div class="form-group photo-section">
+                  <label class="control-label">Cover photo</label>
+
+                  <!-- Unsplash Suggestion -->
+                  <div class="unsplash-suggestion" id="unsplash-suggestion" style="display: none;">
+                    <div class="unsplash-preview">
+                      <img id="unsplash-preview-img" src="" alt="Suggested photo">
+                      <div class="unsplash-actions">
+                        <button type="button" class="btn-use-photo" id="use-unsplash-photo">
+                          <i class="fa fa-check"></i> Use this photo
+                        </button>
+                        <button type="button" class="btn-refresh-photo" id="refresh-unsplash-photo">
+                          <i class="fa fa-refresh"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <p class="unsplash-credit">
+                      Photo from <a href="https://unsplash.com" target="_blank">Unsplash</a>
+                    </p>
+                  </div>
+
+                  <!-- Selected Photo Indicator -->
+                  <div class="selected-photo-indicator" id="selected-photo-indicator" style="display: none;">
+                    <i class="fa fa-check-circle"></i> Photo selected from Unsplash
+                    <button type="button" class="btn-change-photo" id="change-photo">Change</button>
+                  </div>
+
+                  <!-- Hidden field for Unsplash URL -->
+                  <input type="hidden" name="trip[remote_photo_url]" id="remote-photo-url" value="">
+
+                  <!-- Or upload custom -->
+                  <div class="upload-custom" id="upload-custom">
+                    <%= f.input :photo,
+                      label: false,
+                      hint: "Or upload your own photo",
+                      wrapper: false,
+                      input_html: { id: 'custom-photo-input' }
+                    %>
+                  </div>
+                </div>
+
+                <%= f.input :start_date,
+                  placeholder: "Select a date",
+                  label: "Start date",
+                  input_html: { value: @trip.start_date&.strftime("%-d %b, %Y") }
+                %>
+
+                <%= f.input :public,
+                  required: false,
+                  label: "Make this trip public",
+                  hint: "Public trips can be discovered by other travelers"
+                %>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="form-section">
+                <%= f.button :submit, "Start Planning →", class: "btn-submit" %>
+              </div>
             <% end %>
           </div>
         </div>
-        <div class="padded"></div>
-        <!-- /MODULE TITLE -->
       </div>
-    </section>
-  </div>
-
-
-
-<!-- https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=62b4d043cc35b97fb3e86b4fa9330f71&tags=street%2C+exterieur%2C+hdr&text=Londres&license=3%2C4%2C5%2C6%2C7&sort=interestingness-desc&safe_search=1&content_type=1&format=json&auth_token=72157675491863902-8690853b197fec9e&api_sig=708692d91ad0986b4a0b715547de09f2
- -->
+    </div>
+  </section>
+</div>
 
 <% content_for (:js) do %>
   <script>
-    $( function() {
-
-      $( "#trip_start_date" ).datepicker({
+    $(function() {
+      // Datepicker for start date
+      $("#trip_start_date").datepicker({
         showButtonPanel: true,
-        dateFormat: "d M, yy"
+        dateFormat: "d M, yy",
+        minDate: 0
       });
 
-    } );
+      // Days selector interaction
+      $(".day-option").on("click", function() {
+        $(".day-option").removeClass("selected");
+        $(this).addClass("selected");
+      });
+
+      // Optional section toggle
+      $("#optional-toggle").on("click", function() {
+        var $section = $("#optional-section");
+        var $icon = $(this).find(".toggle-icon");
+        $section.slideToggle(200);
+        $icon.toggleClass("fa-chevron-down fa-chevron-up");
+      });
+
+      // Email chips for invite friends
+      var emails = [];
+      var $input = $("#invite-email-input");
+      var $chips = $("#email-chips");
+      var $hidden = $("#invite-emails-hidden");
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      function updateHiddenField() {
+        $hidden.val(emails.join(","));
+      }
+
+      function addEmail(email) {
+        email = email.trim().toLowerCase();
+        if (email && isValidEmail(email) && emails.indexOf(email) === -1) {
+          emails.push(email);
+          var $chip = $('<span class="email-chip">' +
+            '<span class="email-text">' + email + '</span>' +
+            '<button type="button" class="chip-remove" data-email="' + email + '">&times;</button>' +
+          '</span>');
+          $chips.append($chip);
+          updateHiddenField();
+          return true;
+        }
+        return false;
+      }
+
+      function removeEmail(email) {
+        var index = emails.indexOf(email);
+        if (index > -1) {
+          emails.splice(index, 1);
+          updateHiddenField();
+        }
+      }
+
+      $input.on("keydown", function(e) {
+        if (e.key === "Enter" || e.key === ",") {
+          e.preventDefault();
+          if (addEmail($input.val())) {
+            $input.val("");
+          }
+        }
+      });
+
+      $input.on("blur", function() {
+        if ($input.val()) {
+          if (addEmail($input.val())) {
+            $input.val("");
+          }
+        }
+      });
+
+      $chips.on("click", ".chip-remove", function() {
+        var email = $(this).data("email");
+        removeEmail(email);
+        $(this).parent().remove();
+      });
+
+      // Unsplash photo suggestion
+      var currentCity = "";
+      var unsplashTimeout = null;
+      var $cityInput = $("#trip_city");
+      var $suggestion = $("#unsplash-suggestion");
+      var $previewImg = $("#unsplash-preview-img");
+      var $remoteUrl = $("#remote-photo-url");
+      var $selectedIndicator = $("#selected-photo-indicator");
+      var $uploadCustom = $("#upload-custom");
+      var $customInput = $("#custom-photo-input");
+
+      function getUnsplashUrl(city) {
+        // Using Unsplash Source API for random city photos
+        var timestamp = new Date().getTime();
+        return "https://source.unsplash.com/800x600/?" + encodeURIComponent(city + " city,travel") + "&t=" + timestamp;
+      }
+
+      function fetchUnsplashPhoto(city) {
+        if (!city || city.length < 2) {
+          $suggestion.hide();
+          return;
+        }
+
+        currentCity = city;
+        var photoUrl = getUnsplashUrl(city);
+
+        // Preload image
+        var img = new Image();
+        img.onload = function() {
+          $previewImg.attr("src", photoUrl);
+          $suggestion.fadeIn(200);
+        };
+        img.onerror = function() {
+          $suggestion.hide();
+        };
+        img.src = photoUrl;
+      }
+
+      // Debounced city input handler
+      $cityInput.on("input", function() {
+        var city = $(this).val().trim();
+        clearTimeout(unsplashTimeout);
+
+        if (city.length >= 2) {
+          unsplashTimeout = setTimeout(function() {
+            fetchUnsplashPhoto(city);
+          }, 500);
+        } else {
+          $suggestion.hide();
+        }
+      });
+
+      // Also fetch on blur if city has value
+      $cityInput.on("blur", function() {
+        var city = $(this).val().trim();
+        if (city.length >= 2 && $suggestion.is(":hidden") && $selectedIndicator.is(":hidden")) {
+          fetchUnsplashPhoto(city);
+        }
+      });
+
+      // Use Unsplash photo
+      $("#use-unsplash-photo").on("click", function() {
+        var photoUrl = $previewImg.attr("src");
+        $remoteUrl.val(photoUrl);
+        $suggestion.hide();
+        $selectedIndicator.show();
+        $uploadCustom.hide();
+      });
+
+      // Refresh photo
+      $("#refresh-unsplash-photo").on("click", function() {
+        if (currentCity) {
+          fetchUnsplashPhoto(currentCity);
+        }
+      });
+
+      // Change photo (go back to selection)
+      $("#change-photo").on("click", function() {
+        $remoteUrl.val("");
+        $selectedIndicator.hide();
+        $uploadCustom.show();
+        if (currentCity) {
+          fetchUnsplashPhoto(currentCity);
+        }
+      });
+
+      // If custom file is selected, clear Unsplash selection
+      $customInput.on("change", function() {
+        if ($(this).val()) {
+          $remoteUrl.val("");
+          $selectedIndicator.hide();
+          $suggestion.hide();
+        }
+      });
+    });
   </script>
 <% end %>

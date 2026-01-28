@@ -1,3 +1,5 @@
+@import "../config/variables";
+
 // TODO: Move to override_theme.scss
 .works-grid {
   overflow: hidden;
@@ -72,8 +74,10 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  font-size: 10px;
+  font-size: $font-size-xs;
   text-transform: uppercase;
+  font-family: $header-font;
+  font-weight: $font-weight-medium;
 }
 .card-trip-description {
   position: absolute;
@@ -82,11 +86,11 @@
 }
 
 .card-trip-description h2 {
-  font-size: 24px;
+  font-size: $font-size-xl;
 }
 
 .card-trip-description p {
-  font-size: 13px;
+  font-size: $font-size-sm;
 }
 
 .card-trip-link:hover{
@@ -143,6 +147,6 @@ h3.font-alt{
 }
 
 h3.post-title.font-alt{
-  font-size: 19px;
+  font-size: $font-size-lg;
 }
 

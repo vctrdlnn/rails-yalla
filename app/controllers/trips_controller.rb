@@ -49,6 +49,7 @@ class TripsController < ApplicationController
 
   def new
     @trip = Trip.new
+    @trip.start_date = Date.today
     authorize @trip
   end
 
@@ -67,6 +68,8 @@ class TripsController < ApplicationController
     params["trip"]["nb_days"].to_i == 0 ? nb_days = 3 : nb_days = params["trip"]["nb_days"].to_i
     create_trip_days(nb_days, params["trip"]["start_date"].to_date)
     if @trip.save
+      # Process invite emails if provided
+      process_invite_emails if params[:invite_emails].present?
       redirect_to edit_trip_path(@trip), notice: 'Trip was successfully created.'
     else
       render :new
@@ -130,8 +133,26 @@ class TripsController < ApplicationController
     params.require(:trip).permit(
       :title, :description, :category,
       :city, :country, :lat, :lon,
-      :photo, :photo_cache, :public
+      :photo, :photo_cache, :remote_photo_url, :public
     )
+  end
+
+  def process_invite_emails
+    emails = params[:invite_emails].split(",").map(&:strip).reject(&:blank?)
+    emails.each do |email|
+      invite = @trip.invites.build(
+        email: email,
+        sender_id: current_user.id
+      )
+      if invite.save
+        if invite.recipient.present?
+          InviteMailer.existing_user_invite(invite).deliver_later
+          invite.recipient.participants.create(trip: @trip, role: "Editor")
+        else
+          InviteMailer.new_user_invite(invite, new_user_registration_url(invite_token: invite.token)).deliver_later
+        end
+      end
+    end
   end
 
 

@@ -12,4 +12,5 @@ test:
   database: rails-yalla_test
 
 production:
-  url: <%= ENV['SCALINGO_POSTGRESQL_URL'].gsub('/rails_yalla_4928', '/postgres') %>
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

@@ -1,3 +1,5 @@
+@import "../config/variables";
+
 .card_activity_index {
   height: 80px;
   border: 1px solid black;
@@ -26,7 +28,7 @@
 .activity-item {
   margin: 5px 2px;
   padding: 0;
-  font-size: 1em;
+  font-size: $font-size-base;
   border-radius: 3px;
   // min-height: 40px;
 }
