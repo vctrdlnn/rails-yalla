@@ -31,8 +31,8 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # Send emails through Letter Opener gem (opens in browser)
-  config.action_mailer.delivery_method = :letter_opener
+  # Send emails through Letter Opener Web (view at /letter_opener)
+  config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Use inline adapter so deliver_later works immediately in development

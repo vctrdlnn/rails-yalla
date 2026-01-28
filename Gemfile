@@ -26,7 +26,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'listen'
-  gem 'letter_opener'
+  gem 'letter_opener_web'
 
   gem 'rubocop', require: false
   gem 'i18n-tasks'
