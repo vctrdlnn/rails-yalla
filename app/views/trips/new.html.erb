@@ -65,6 +65,55 @@
                 </div>
               </div>
 
+              <!-- Cover Photo -->
+              <div class="form-section">
+                <label class="control-label">Cover photo</label>
+
+                <!-- Photo Selection Buttons (shown initially) -->
+                <div class="photo-choice-buttons" id="photo-choice-buttons">
+                  <button type="button" class="btn-photo-choice" id="btn-find-web">
+                    <i class="fa fa-camera"></i> Get from Unsplash
+                  </button>
+                  <button type="button" class="btn-photo-choice" id="btn-upload-own">
+                    <i class="fa fa-upload"></i> Upload your own
+                  </button>
+                </div>
+
+                <!-- Loading indicator -->
+                <div class="photo-loading" id="photo-loading" style="display: none;">
+                  <i class="fa fa-spinner fa-spin"></i> Finding a photo...
+                </div>
+
+                <!-- Photo Preview (shown after selection) -->
+                <div class="photo-preview-container" id="photo-preview-container" style="display: none;">
+                  <div class="photo-preview-wrapper">
+                    <img id="photo-preview-img" src="" alt="Cover photo preview">
+                    <div class="photo-preview-actions">
+                      <button type="button" class="btn-photo-action" id="btn-refresh-photo" title="Try another photo">
+                        <i class="fa fa-refresh"></i>
+                      </button>
+                      <button type="button" class="btn-photo-action" id="btn-change-photo" title="Change photo">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <p class="photo-credit" id="photo-credit"></p>
+                </div>
+
+                <!-- Custom Upload (shown when "Upload your own" is clicked) -->
+                <div class="custom-upload-container" id="custom-upload-container" style="display: none;">
+                  <%= f.input :photo,
+                    label: false,
+                    wrapper: false,
+                    input_html: { id: 'custom-photo-input' }
+                  %>
+                  <button type="button" class="btn-cancel-upload" id="btn-cancel-upload">Cancel</button>
+                </div>
+
+                <!-- Hidden field for Unsplash URL -->
+                <input type="hidden" name="trip[remote_photo_url]" id="remote-photo-url" value="">
+              </div>
+
               <!-- Optional Section Toggle -->
               <div class="form-divider optional-toggle" id="optional-toggle">
                 <span><i class="fa fa-chevron-down toggle-icon"></i> Optional details</span>
@@ -86,48 +135,6 @@
                   label: "Description",
                   input_html: { rows: 3 }
                 %>
-
-                <!-- Cover Photo with Unsplash Suggestion -->
-                <div class="form-group photo-section">
-                  <label class="control-label">Cover photo</label>
-
-                  <!-- Unsplash Suggestion -->
-                  <div class="unsplash-suggestion" id="unsplash-suggestion" style="display: none;">
-                    <div class="unsplash-preview">
-                      <img id="unsplash-preview-img" src="" alt="Suggested photo">
-                      <div class="unsplash-actions">
-                        <button type="button" class="btn-use-photo" id="use-unsplash-photo">
-                          <i class="fa fa-check"></i> Use this photo
-                        </button>
-                        <button type="button" class="btn-refresh-photo" id="refresh-unsplash-photo">
-                          <i class="fa fa-refresh"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <p class="unsplash-credit">
-                      Photo from <a href="https://unsplash.com" target="_blank">Unsplash</a>
-                    </p>
-                  </div>
-
-                  <!-- Selected Photo Indicator -->
-                  <div class="selected-photo-indicator" id="selected-photo-indicator" style="display: none;">
-                    <i class="fa fa-check-circle"></i> Photo selected from Unsplash
-                    <button type="button" class="btn-change-photo" id="change-photo">Change</button>
-                  </div>
-
-                  <!-- Hidden field for Unsplash URL -->
-                  <input type="hidden" name="trip[remote_photo_url]" id="remote-photo-url" value="">
-
-                  <!-- Or upload custom -->
-                  <div class="upload-custom" id="upload-custom">
-                    <%= f.input :photo,
-                      label: false,
-                      hint: "Or upload your own photo",
-                      wrapper: false,
-                      input_html: { id: 'custom-photo-input' }
-                    %>
-                  </div>
-                </div>
 
                 <%= f.input :start_date,
                   placeholder: "Select a date",
@@ -238,99 +245,117 @@
         $(this).parent().remove();
       });
 
-      // Unsplash photo suggestion
-      var currentCity = "";
-      var unsplashTimeout = null;
+      // Cover photo selection
       var $cityInput = $("#trip_city");
-      var $suggestion = $("#unsplash-suggestion");
-      var $previewImg = $("#unsplash-preview-img");
+      var $choiceButtons = $("#photo-choice-buttons");
+      var $loading = $("#photo-loading");
+      var $previewContainer = $("#photo-preview-container");
+      var $previewImg = $("#photo-preview-img");
+      var $photoCredit = $("#photo-credit");
       var $remoteUrl = $("#remote-photo-url");
-      var $selectedIndicator = $("#selected-photo-indicator");
-      var $uploadCustom = $("#upload-custom");
+      var $customUpload = $("#custom-upload-container");
       var $customInput = $("#custom-photo-input");
+      var currentPhotoIndex = 0;
 
-      function getUnsplashUrl(city) {
-        // Using Unsplash Source API for random city photos
-        var timestamp = new Date().getTime();
-        return "https://source.unsplash.com/800x600/?" + encodeURIComponent(city + " city,travel") + "&t=" + timestamp;
-      }
-
-      function fetchUnsplashPhoto(city) {
+      function fetchUnsplashPhoto(index) {
+        var city = $cityInput.val().trim();
         if (!city || city.length < 2) {
-          $suggestion.hide();
+          alert("Please enter a destination first");
           return;
         }
 
-        currentCity = city;
-        var photoUrl = getUnsplashUrl(city);
+        $choiceButtons.hide();
+        $previewContainer.hide();
+        $loading.show();
 
-        // Preload image
-        var img = new Image();
-        img.onload = function() {
-          $previewImg.attr("src", photoUrl);
-          $suggestion.fadeIn(200);
-        };
-        img.onerror = function() {
-          $suggestion.hide();
-        };
-        img.src = photoUrl;
+        $.ajax({
+          url: '/unsplash_photo',
+          data: { query: city, index: index || 0 },
+          dataType: 'json',
+          success: function(data) {
+            $loading.hide();
+            if (data.url) {
+              // Preload image
+              var img = new Image();
+              img.onload = function() {
+                $previewImg.attr("src", data.url);
+                // Auto-select the photo
+                $remoteUrl.val(data.url);
+                // Show credit
+                if (data.photographer) {
+                  $photoCredit.html(
+                    'Photo by <a href="' + data.photographer_url + '?utm_source=yala&utm_medium=referral" target="_blank">' +
+                    data.photographer + '</a> on <a href="https://unsplash.com/?utm_source=yala&utm_medium=referral" target="_blank">Unsplash</a>'
+                  );
+                }
+                $previewContainer.fadeIn(200);
+              };
+              img.onerror = function() {
+                $choiceButtons.show();
+                alert("Could not load the photo. Please try again.");
+              };
+              img.src = data.url;
+            } else {
+              $choiceButtons.show();
+              alert("No photos found for this destination.");
+            }
+          },
+          error: function(xhr) {
+            $loading.hide();
+            $choiceButtons.show();
+            console.log("Unsplash error:", xhr.responseJSON);
+            alert("Could not find a photo. Please try again or upload your own.");
+          }
+        });
       }
 
-      // Debounced city input handler
-      $cityInput.on("input", function() {
-        var city = $(this).val().trim();
-        clearTimeout(unsplashTimeout);
-
-        if (city.length >= 2) {
-          unsplashTimeout = setTimeout(function() {
-            fetchUnsplashPhoto(city);
-          }, 500);
-        } else {
-          $suggestion.hide();
-        }
+      // "Get from Unsplash" button
+      $("#btn-find-web").on("click", function() {
+        currentPhotoIndex = 0;
+        fetchUnsplashPhoto(0);
       });
 
-      // Also fetch on blur if city has value
-      $cityInput.on("blur", function() {
-        var city = $(this).val().trim();
-        if (city.length >= 2 && $suggestion.is(":hidden") && $selectedIndicator.is(":hidden")) {
-          fetchUnsplashPhoto(city);
-        }
+      // "Upload your own" button
+      $("#btn-upload-own").on("click", function() {
+        $choiceButtons.hide();
+        $customUpload.show();
       });
 
-      // Use Unsplash photo
-      $("#use-unsplash-photo").on("click", function() {
-        var photoUrl = $previewImg.attr("src");
-        $remoteUrl.val(photoUrl);
-        $suggestion.hide();
-        $selectedIndicator.show();
-        $uploadCustom.hide();
+      // Cancel upload
+      $("#btn-cancel-upload").on("click", function() {
+        $customInput.val("");
+        $customUpload.hide();
+        $choiceButtons.show();
       });
 
-      // Refresh photo
-      $("#refresh-unsplash-photo").on("click", function() {
-        if (currentCity) {
-          fetchUnsplashPhoto(currentCity);
-        }
-      });
-
-      // Change photo (go back to selection)
-      $("#change-photo").on("click", function() {
-        $remoteUrl.val("");
-        $selectedIndicator.hide();
-        $uploadCustom.show();
-        if (currentCity) {
-          fetchUnsplashPhoto(currentCity);
-        }
-      });
-
-      // If custom file is selected, clear Unsplash selection
+      // When custom file is selected, show preview
       $customInput.on("change", function() {
-        if ($(this).val()) {
-          $remoteUrl.val("");
-          $selectedIndicator.hide();
-          $suggestion.hide();
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $previewImg.attr("src", e.target.result);
+            $remoteUrl.val(""); // Clear remote URL since we're using uploaded file
+            $photoCredit.html("Your uploaded photo");
+            $customUpload.hide();
+            $previewContainer.fadeIn(200);
+          };
+          reader.readAsDataURL(this.files[0]);
         }
+      });
+
+      // Refresh photo (try another from web)
+      $("#btn-refresh-photo").on("click", function() {
+        currentPhotoIndex++;
+        fetchUnsplashPhoto(currentPhotoIndex);
+      });
+
+      // Change photo (go back to choice buttons)
+      $("#btn-change-photo").on("click", function() {
+        $previewContainer.hide();
+        $remoteUrl.val("");
+        $customInput.val("");
+        currentPhotoIndex = 0;
+        $choiceButtons.show();
       });
     });
   </script>

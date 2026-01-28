@@ -31,7 +31,15 @@ class BrevoDeliveryMethod
       send_smtp_email.reply_to = { 'email' => mail.reply_to.first }
     end
 
-    api_instance.send_transac_email(send_smtp_email)
+    begin
+      result = api_instance.send_transac_email(send_smtp_email)
+      Rails.logger.info "[Brevo] Email sent successfully to #{mail.to.join(', ')} - Message ID: #{result.message_id}"
+      result
+    rescue SibApiV3Sdk::ApiError => e
+      Rails.logger.error "[Brevo] Failed to send email to #{mail.to.join(', ')}: #{e.message}"
+      Rails.logger.error "[Brevo] Response body: #{e.response_body}"
+      raise
+    end
   end
 
   private

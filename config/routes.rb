@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # Email preview in development (visit /letter_opener)
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   scope '(:locale)', locale: /en|fr|de/ do
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
     end
 
     get 'my_trips', to: 'trips#my_trips'
+    get 'unsplash_photo', to: 'pages#unsplash_photo'
 
     # get 'activities/new_act', to: 'activities#new_act'
     # post 'activities/new_act', to: 'activities#create'
