@@ -215,6 +215,8 @@
 
       $( connectable_lists ).sortable({
           connectWith: ".sortable",
+          delay: 150,        // 150ms delay to distinguish tap from drag on mobile
+          distance: 10,      // 10px threshold before drag starts
           placeholder: "placeholder-highlight ui-corner-all",
           handle: ".activity-item-header",
           cancel: ".activity-item-toggle",
@@ -771,6 +773,90 @@
         if (!$(e.target).closest('.editable-field, a, button, input, select').length) {
           selectCard($(this));
         }
+      });
+
+      // =====================
+      // MOBILE MOVE FUNCTIONALITY
+      // =====================
+
+      // Highlight current location when dropdown opens
+      $(document).on('show.bs.dropdown', '.mobile-move-action .dropdown', function() {
+        var $card = $(this).closest('.activity-item');
+        var currentDayId = $card.closest('.activity-grid').attr('id').split('-').pop();
+        $(this).find('.move-to-day').removeClass('current-location');
+        $(this).find('.move-to-day[data-day-id="' + currentDayId + '"]').addClass('current-location');
+      });
+
+      // Handle move-to-day click
+      $(document).on('click', '.move-to-day', function(e) {
+        e.preventDefault();
+        var activityId = $(this).data('activity-id');
+        var targetDayId = $(this).data('day-id');
+        var $card = $('#act-' + activityId);
+        var $sourceGrid = $card.closest('.activity-grid');
+        var $targetGrid = $('#grid-' + targetDayId);
+
+        // Don't move if already in target
+        if ($sourceGrid.attr('id') === $targetGrid.attr('id')) {
+          $(this).closest('.dropdown').find('.dropdown-toggle').dropdown('toggle');
+          return;
+        }
+
+        // Store original position for undo
+        var originalParent = $sourceGrid.attr('id');
+        var originalIndex = $card.index();
+
+        // Move card to target (optimistic UI)
+        $targetGrid.append($card);
+
+        // Close dropdown
+        $(this).closest('.dropdown').find('.dropdown-toggle').dropdown('toggle');
+
+        // Calculate new index
+        var newIndex = $targetGrid.children('.activity-item').length;
+
+        // Show saving indicator
+        showToast('Moving activity...', 'saving', false);
+
+        // Save to server
+        $.ajax({
+          type: 'PUT',
+          url: '/activities/' + activityId + '/change_position/',
+          data: {
+            activity: { trip_day_id: targetDayId, index: newIndex },
+            authenticity_token: AUTH_TOKEN
+          },
+          success: function() {
+            // Store action for undo
+            actionHistory.push({
+              activityId: activityId,
+              fromGrid: 'grid-' + targetDayId,
+              fromIndex: newIndex - 1,
+              toGrid: originalParent,
+              toIndex: originalIndex
+            });
+
+            // Show success with undo option
+            showToast('Activity moved', 'success', true, function() {
+              undoLastAction(actionHistory[actionHistory.length - 1]);
+            });
+
+            $('#autoRefresh').click();
+          },
+          error: function() {
+            // Rollback: move item back to original position
+            var $originalGrid = $('#' + originalParent);
+            var items = $originalGrid.children('.activity-item');
+
+            if (originalIndex >= items.length) {
+              $originalGrid.append($card);
+            } else {
+              items.eq(originalIndex).before($card);
+            }
+
+            showToast('Failed to move. Please try again.', 'error', false);
+          }
+        });
       });
     });
   </script>

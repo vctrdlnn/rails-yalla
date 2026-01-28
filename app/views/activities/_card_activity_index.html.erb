@@ -56,6 +56,29 @@
         </span>
       </p>
 
+      <!-- Mobile Move Action -->
+      <div class="mobile-move-action">
+        <div class="dropdown">
+          <button class="btn btn-sm btn-default dropdown-toggle mobile-move-btn"
+                  type="button" data-toggle="dropdown"
+                  data-activity-id="<%= activity.id %>">
+            <i class="fa fa-arrows"></i> Move to...
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu mobile-move-dropdown">
+            <li class="dropdown-header">Move to Day:</li>
+            <li><a href="#" class="move-to-day" data-day-id="0" data-activity-id="<%= activity.id %>">
+              <i class="fa fa-list"></i> Unassigned (Plan)
+            </a></li>
+            <% activity.trip.trip_days.each do |day| %>
+              <li><a href="#" class="move-to-day" data-day-id="<%= day.id %>" data-activity-id="<%= activity.id %>">
+                <i class="fa fa-calendar"></i> <%= day.title %>
+              </a></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
       <h4 class="text-center">
         <%= link_to activity, method: :delete, remote: true, data: {confirm: "Are you sure?"} do %>
           <span class="icon-scissors"></span> Delete
