@@ -52,10 +52,12 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Use a real queuing backend for Active Job (and separate queues per environment)
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "rails-yalla_#{Rails.env}"
+  # Use inline queue adapter (no background processor configured)
+  # Switch to :sidekiq or :resque when background jobs are set up
+  config.active_job.queue_adapter = :inline
+
   config.action_mailer.perform_caching = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
