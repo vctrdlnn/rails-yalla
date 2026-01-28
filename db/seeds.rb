@@ -46,6 +46,10 @@ admin_params = seed_data[:admin_user] || {
   phone: "0600000000"
 }
 
+# Override with environment variables if set (for production security)
+admin_params[:email] = ENV['ADMIN_EMAIL'] if ENV['ADMIN_EMAIL'].present?
+admin_params[:password] = ENV['ADMIN_PASSWORD'] if ENV['ADMIN_PASSWORD'].present?
+
 # Skip welcome email callback for seeding
 User.skip_callback(:create, :after, :send_welcome_email) rescue nil
 
@@ -284,13 +288,42 @@ def safe_remote_photo(record, url)
   end
 end
 
+# Helper to fetch Unsplash photo for a city
+def fetch_unsplash_photo(city)
+  require 'net/http'
+  access_key = ENV['UNSPLASH_ACCESS_KEY']
+  return nil if access_key.blank? || access_key == 'YOUR_UNSPLASH_ACCESS_KEY_HERE'
+
+  uri = URI("https://api.unsplash.com/search/photos")
+  uri.query = URI.encode_www_form(
+    query: "#{city} city travel",
+    per_page: 1,
+    orientation: 'landscape'
+  )
+
+  request = Net::HTTP::Get.new(uri)
+  request['Authorization'] = "Client-ID #{access_key}"
+
+  response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+    http.request(request)
+  end
+
+  if response.is_a?(Net::HTTPSuccess)
+    data = JSON.parse(response.body)
+    data['results'].first&.dig('urls', 'regular')
+  end
+rescue StandardError => e
+  puts "  Warning: Could not fetch Unsplash photo for #{city}: #{e.message}"
+  nil
+end
+
 # Get trips from JSON or use empty array
 json_trips = seed_data[:trips] || []
 
 if json_trips.any?
   # Load trips from JSON file
   json_trips.each_with_index do |trip_data, index|
-    puts "  Creating trip #{index + 1}: #{trip_data[:title]}"
+    puts "  Creating trip #{index + 1}/#{json_trips.count}: #{trip_data[:title]} (#{trip_data[:city]})"
 
     # Create the trip
     trip = Trip.create!(
@@ -305,8 +338,14 @@ if json_trips.any?
       public: true
     )
 
-    # Load trip photo
-    safe_remote_photo(trip, trip_data[:photo_url])
+    # Load trip photo - try JSON first, then fetch from Unsplash
+    photo_url = trip_data[:photo_url]
+    if photo_url.blank? && ENV['UNSPLASH_ACCESS_KEY'].present?
+      puts "    Fetching photo from Unsplash for #{trip_data[:city]}..."
+      photo_url = fetch_unsplash_photo(trip_data[:city])
+      sleep 1.2 if photo_url # Rate limiting for Unsplash API
+    end
+    safe_remote_photo(trip, photo_url)
 
     # Create trip days
     trip_days = trip_data[:trip_days] || ["Day 1", "Day 2", "Day 3"]
@@ -338,6 +377,7 @@ if json_trips.any?
         lat: act_data[:lat],
         lon: act_data[:lon],
         url: act_data[:url],
+        google_place_identifier: act_data[:google_place_identifier],
         index: act_index + 1,
         trip: trip,
         trip_day: trip_day,
