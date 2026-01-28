@@ -16,7 +16,7 @@ namespace :email do
     api_instance = SibApiV3Sdk::TransactionalEmailsApi.new
 
     send_smtp_email = SibApiV3Sdk::SendSmtpEmail.new
-    send_smtp_email.sender = { 'name' => 'Yala', 'email' => 'contact@justyalla.eu' }
+    send_smtp_email.sender = { 'name' => 'Yala', 'email' => 'contact@justyalla.app' }
     send_smtp_email.to = [{ 'email' => recipient }]
     send_smtp_email.subject = 'Test email from Yala App'
     send_smtp_email.html_content = "<html><body><h1>Test Email</h1><p>This is a test email sent at #{Time.now}</p><p>If you received this, Brevo API is working correctly!</p></body></html>"

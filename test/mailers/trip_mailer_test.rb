@@ -23,7 +23,7 @@ class TripMailerTest < ActionMailer::TestCase
     end
 
     assert_equal ['user@example.com'], email.to
-    assert_equal ['contact@justyalla.eu'], email.from
+    assert_equal ['contact@justyalla.app'], email.from
     assert_equal 'Hi Trip User, details of Paris Adventure', email.subject
   end
 end
