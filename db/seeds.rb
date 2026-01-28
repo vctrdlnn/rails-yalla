@@ -53,15 +53,25 @@ admin_params[:password] = ENV['ADMIN_PASSWORD'] if ENV['ADMIN_PASSWORD'].present
 # Skip welcome email callback for seeding
 User.skip_callback(:create, :after, :send_welcome_email) rescue nil
 
-admin = User.find_or_initialize_by(email: admin_params[:email])
-admin.assign_attributes(
-  username: admin_params[:username],
-  password: admin_params[:password],
-  phone: admin_params[:phone],
-  first_name: admin_params[:first_name],
-  last_name: admin_params[:last_name],
-  admin: true
-)
+# Find existing admin or create new one
+admin = User.find_by(admin: true) || User.find_by(email: admin_params[:email]) || User.new
+
+if admin.new_record?
+  # New user - set all attributes
+  admin.assign_attributes(
+    username: admin_params[:username],
+    email: admin_params[:email],
+    password: admin_params[:password],
+    phone: admin_params[:phone],
+    first_name: admin_params[:first_name],
+    last_name: admin_params[:last_name],
+    admin: true
+  )
+else
+  # Existing user - only update password if provided via ENV, keep existing username
+  admin.password = admin_params[:password] if ENV['ADMIN_PASSWORD'].present?
+  admin.admin = true
+end
 admin.save!
 
 # Re-enable callback
