@@ -9,7 +9,9 @@ class PagesController < ApplicationController
   end
 
   def unsplash_photo
-    query = params[:query]&.downcase&.strip
+    raw_query = params[:query]&.strip
+    # Extract just the city name (remove country code like ", FR")
+    query = raw_query&.split(',')&.first&.downcase&.strip
     index = params[:index].to_i # Which photo to return (0-9)
     return render json: { error: 'Query required' }, status: :bad_request if query.blank?
 
