@@ -42,9 +42,12 @@ class PagesController < ApplicationController
         http.request(request)
       end
 
+      Rails.logger.info "[Unsplash] API response status: #{response.code}"
+
       if response.is_a?(Net::HTTPSuccess)
         data = JSON.parse(response.body)
-        if data['results'].any?
+        Rails.logger.info "[Unsplash] Found #{data['results']&.length || 0} results"
+        if data['results']&.any?
           cached_photos = data['results'].map do |photo|
             {
               url: photo['urls']['regular'],
@@ -56,9 +59,11 @@ class PagesController < ApplicationController
           # Cache for 24 hours
           Rails.cache.write(cache_key, cached_photos, expires_in: 24.hours)
         else
+          Rails.logger.warn "[Unsplash] No photos found for query: #{query}"
           return render json: { error: 'No photos found' }, status: :not_found
         end
       else
+        Rails.logger.error "[Unsplash] API error: #{response.code} - #{response.body}"
         return render json: { error: 'Unsplash API error' }, status: :bad_gateway
       end
     else
