@@ -540,3 +540,333 @@
     }
   }
 }
+
+// ==========================================
+// Properties Page Specific Styles
+// ==========================================
+
+.form-card-title {
+  font-family: $header-font;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $dark-primary;
+  margin: 0 0 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.current-photo-preview {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+// Days List
+.days-list {
+  margin-bottom: 20px;
+}
+
+.day-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $dark-accent;
+    background: #fff;
+  }
+}
+
+.day-item-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.day-title-input {
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 6px 10px;
+  font-size: $font-size-base;
+  border-radius: 4px;
+  flex: 1;
+  max-width: 200px;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: $dark-accent;
+    background: #fff;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $dark-primary;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.day-date {
+  font-size: $font-size-sm;
+  color: #6b7280;
+}
+
+.day-item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-day-action {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    border-color: $dark-accent;
+    color: $dark-primary;
+  }
+
+  &.btn-day-delete:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: #fef2f2;
+  }
+
+  &.success {
+    border-color: #22c55e;
+    color: #22c55e;
+    background: #f0fdf4;
+  }
+}
+
+// Add Day Section
+.add-day-section {
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.add-day-form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.add-day-inputs {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+
+  .form-control {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: $font-size-sm;
+
+    &:focus {
+      border-color: $dark-accent;
+      box-shadow: 0 0 0 3px rgba($dark-accent, 0.1);
+      outline: none;
+    }
+  }
+
+  input[type="text"] {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  input[type="date"] {
+    width: 140px;
+  }
+}
+
+.btn-add-day {
+  padding: 10px 20px;
+  background: $dark-primary;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: $header-font;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: $dark-secondary;
+  }
+}
+
+// Participants List
+.participants-list {
+  margin-bottom: 20px;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.participant-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.participant-email {
+  font-size: $font-size-base;
+  color: $dark-primary;
+}
+
+.participant-status {
+  font-size: $font-size-xs;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.status-owner {
+    background: rgba($dark-primary, 0.1);
+    color: $dark-primary;
+  }
+
+  &.status-editor {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  &.status-pending {
+    background: #fef3c7;
+    color: #b45309;
+  }
+}
+
+.btn-remove-participant {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+
+  &:hover {
+    color: #ef4444;
+    background: #fef2f2;
+  }
+}
+
+// Invite Section
+.invite-section {
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.invite-form {
+  .invite-input-row {
+    display: flex;
+    gap: 12px;
+
+    .form-control {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: $font-size-base;
+
+      &:focus {
+        border-color: $dark-accent;
+        box-shadow: 0 0 0 3px rgba($dark-accent, 0.1);
+        outline: none;
+      }
+    }
+  }
+}
+
+.btn-invite {
+  padding: 10px 24px;
+  background: $dark-primary;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: $header-font;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: $dark-secondary;
+  }
+}
+
+// Back Link
+.btn-back-link {
+  display: inline-block;
+  padding: 12px 32px;
+  color: #6b7280;
+  font-family: $header-font;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $dark-primary;
+    border-color: $dark-accent;
+    background: rgba($dark-accent, 0.05);
+    text-decoration: none;
+  }
+}

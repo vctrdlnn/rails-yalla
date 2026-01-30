@@ -21,7 +21,7 @@ class TripDaysController < ApplicationController
   def create
     @trip_day = @trip.trip_days.build(tripday_params)
     if @trip_day.save
-      redirect_to :back, notice: 'Trip day was successfully created.'
+      redirect_back(fallback_location: properties_trip_path(@trip), notice: 'Trip day was successfully created.')
     else
       render :new
     end
@@ -30,7 +30,7 @@ class TripDaysController < ApplicationController
   def update
     if @trip_day.update(tripday_params)
       respond_to do |format|
-        format.html { redirect_to :back, notice: 'Title was successfully updated.' }
+        format.html { redirect_back(fallback_location: properties_trip_path(@trip_day.trip), notice: 'Title was successfully updated.') }
         format.js # <-- will render 'app/views/reviews/update.js.erb'
       end
     else
@@ -47,8 +47,9 @@ class TripDaysController < ApplicationController
   end
 
   def destroy
+    trip = @trip_day.trip
     @trip_day.destroy
-    redirect_to :back, notice: 'Trip day was successfully deleted.'
+    redirect_back(fallback_location: properties_trip_path(trip), notice: 'Trip day was successfully deleted.')
   end
 
   private
