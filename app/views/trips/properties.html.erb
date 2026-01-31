@@ -1,149 +1,208 @@
-<!-- WRAPPER -->
-<div class="wrapper">
-
-  <!-- HOME -->
-  <section class="module module-thin bg-dark bg-dark-50" data-background=<%= image_path('trip_background.jpg') %> >
-    <div class="container">
-      <!-- MODULE TITLE -->
-      <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-          <h1 class="module-title font-alt align-center"><%= @trip.title %></h1>
-          <div class="module-subtitle font-inc align-center">Edit Trip properties</div>
-        </div>
-      </div>
-      <!-- /MODULE TITLE -->
+<div class="trip-new-page">
+  <!-- Hero Section -->
+  <section class="trip-new-hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1><%= @trip.title %></h1>
+      <p>Manage your trip settings</p>
     </div>
-  </section >
-  <!-- /HOME -->
+  </section>
 
+  <!-- Form Section -->
+  <section class="trip-new-form-section">
     <div class="container">
       <div class="row">
-        <div class="col-xs-12 col-sm-6">
-          <!-- PARAMETERS -->
-          <h3>Edit trip caracteristics</h3>
-          <%= simple_form_for @trip, defaults: { input_html: { class: 'form-horizontal' } } do |f| %>
-            <ul>
-            <% @trip.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
+        <!-- Left Column: Trip Details -->
+        <div class="col-xs-12 col-md-6">
+          <div class="trip-form-card">
+            <h2 class="form-card-title">Trip Details</h2>
+
+            <%= simple_form_for @trip, html: { class: 'trip-new-form' } do |f| %>
+              <% if @trip.errors.any? %>
+                <div class="alert alert-danger">
+                  <ul class="mb-0">
+                    <% @trip.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="form-section">
+                <%= f.input :title,
+                  placeholder: "Trip name",
+                  label: "Trip name",
+                  input_html: { class: 'form-input-lg' }
+                %>
+              </div>
+
+              <div class="form-section">
+                <%= f.input :description,
+                  as: :text,
+                  placeholder: "What's this trip about?",
+                  label: "Description",
+                  input_html: { rows: 3 }
+                %>
+              </div>
+
+              <div class="form-section">
+                <%= f.input :category,
+                  as: :select,
+                  collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"],
+                  include_blank: false,
+                  label: "Trip type"
+                %>
+              </div>
+
+              <div class="form-section">
+                <%= f.input :public,
+                  required: false,
+                  label: "Make this trip public",
+                  hint: "Public trips can be discovered by other travelers"
+                %>
+              </div>
+
+              <div class="form-section">
+                <label class="control-label">Cover photo</label>
+                <% if @trip.photo.present? %>
+                  <div class="current-photo-preview">
+                    <%= cl_image_tag @trip.photo.path, width: 400, height: 200, crop: :fill, class: 'img-responsive' %>
+                  </div>
+                <% end %>
+                <%= f.input :photo, label: false, wrapper: false %>
+                <%= f.input :photo_cache, as: :hidden %>
+              </div>
+
+              <div class="form-section">
+                <%= f.button :submit, "Save Changes", class: "btn-submit" %>
+              </div>
             <% end %>
-            </ul>
-            <%= f.input :title %>
-            <%= f.input :description, as: :text %>
-            <%= f.input :category,
-              as: :radio_buttons,
-              item_wrapper_class: 'radio-inline',
-              collection: ["Discovery", "Lovers", "Business", "Friends", "Bachelor", "Family", "Cultural"]
-              %>
-            <%= f.input :public, required: true, label: "Make your trip public and visible to everyone" %>
-            <%= f.input :photo, label: "Add or change picture of the city" %>
-            <%= f.input :photo_cache, as: :hidden %>
-            <%= f.button :submit %>
-          <% end %>
-          <!-- /PARAMETERS -->
+          </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6">
-          <!-- PARAMETERS -->
-          <h3>Edit column titles</h3>
+        <!-- Right Column: Days & Participants -->
+        <div class="col-xs-12 col-md-6">
+          <!-- Days Management Card -->
+          <div class="trip-form-card mb-20">
+            <h2 class="form-card-title">Trip Days</h2>
 
-          <table class="table table-hover">
-              <colgroup>
-                <col>
-                <col class="align-right">
-              </colgroup>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-             <% @trip.trip_days.each do |day| %>
-                <tr>
-                  <td class="text-left">
-                    <input id="trip-day-title-<%= day[:id] %>" placeholder="<%= day[:title] %>" type="text" />
-                  </td>
-                  <td class="text-right">
-                    <button id="btn-trip-day-update-<%= day[:id] %>" type="button" class="btn btn-g btn-sm btn-trip-day-update">update</button>
-                  </td>
-                </tr>
+            <div class="days-list">
+              <% @trip.trip_days.order(:date).each do |day| %>
+                <div class="day-item">
+                  <div class="day-item-content">
+                    <input type="text"
+                           id="trip-day-title-<%= day.id %>"
+                           class="day-title-input"
+                           placeholder="<%= day.title %>"
+                           value="">
+                    <span class="day-date"><%= day.date&.strftime("%a, %b %d") %></span>
+                  </div>
+                  <div class="day-item-actions">
+                    <button type="button"
+                            id="btn-trip-day-update-<%= day.id %>"
+                            class="btn-day-action btn-trip-day-update"
+                            title="Update title">
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <%= link_to trip_trip_day_path(@trip, day),
+                        method: :delete,
+                        data: { confirm: "Delete this day and all its activities?" },
+                        class: "btn-day-action btn-day-delete",
+                        title: "Delete day" do %>
+                      <i class="fa fa-trash"></i>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
-            </tbody>
-          </table>
+            </div>
 
-          <!-- /PARAMETERS -->
-        </div>
-
-        <div class="col-xs-12 col-sm-6">
-          <!-- USERS AND INVITATIONS -->
-          <h3>Manage and invite participants</h3>
-          <table class="table table-hover">
-              <colgroup>
-                <col>
-                <col class="align-right">
-              </colgroup>
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Remove?</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <%= simple_form_for @invite do |f| %>
-                <tr class="warning">
-                  <td>
-                    <%= f.input :email, label:false, placeholder: "Participant's email" %>
-                    <%= f.input :trip_id, as: :hidden, input_html: {value: @trip.id} %>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                    <%= f.button :submit, "Invite", class: "btn btn-primary" %>
-                  </td>
-                </tr>
+            <!-- Add Day Form -->
+            <div class="add-day-section">
+              <%= form_for [@trip, TripDay.new], html: { class: 'add-day-form' } do |f| %>
+                <div class="add-day-inputs">
+                  <%= f.text_field :title, placeholder: "Day title (e.g. Day 4)", class: 'form-control' %>
+                  <%= f.date_field :date, class: 'form-control', value: (@trip.trip_days.maximum(:date)&.tomorrow || Date.today) %>
+                </div>
+                <%= f.submit "Add Day", class: "btn-add-day" %>
               <% end %>
-            </tfoot>
-            <tbody>
-             <% @trip.all_members.each do |member| %>
-                <tr>
-                  <td class="text-left"><%= member[:email] %></td>
-                  <td class="text-right"><%= member[:status] %></td>
-                  <td class="text-right">
+            </div>
+          </div>
+
+          <!-- Participants Card -->
+          <div class="trip-form-card">
+            <h2 class="form-card-title">Participants</h2>
+
+            <div class="participants-list">
+              <% @trip.all_members.each do |member| %>
+                <div class="participant-item">
+                  <div class="participant-info">
+                    <span class="participant-email"><%= member[:email] %></span>
+                    <span class="participant-status status-<%= member[:status].downcase %>"><%= member[:status] %></span>
+                  </div>
+                  <div class="participant-actions">
                     <% if member[:participant_id] %>
-                      <%= link_to participant_path(member[:participant_id]) , method: :delete, data: {confirm: "are you sure ?"} do %>
-                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      <%= link_to participant_path(member[:participant_id]),
+                          method: :delete,
+                          data: { confirm: "Remove this participant?" },
+                          class: "btn-remove-participant" do %>
+                        <i class="fa fa-times"></i>
                       <% end %>
                     <% elsif member[:invitation_id] %>
-                      <%= link_to invite_path(member[:invitation_id]) , method: :delete, data: {confirm: "are you sure ?"} do %>
-                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      <%= link_to invite_path(member[:invitation_id]),
+                          method: :delete,
+                          data: { confirm: "Cancel this invitation?" },
+                          class: "btn-remove-participant" do %>
+                        <i class="fa fa-times"></i>
                       <% end %>
                     <% end %>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               <% end %>
-            </tbody>
-          </table>
-        <!-- /USERS AND INVITATIONS -->
+            </div>
+
+            <!-- Invite Form -->
+            <div class="invite-section">
+              <%= simple_form_for @invite, html: { class: 'invite-form' } do |f| %>
+                <%= f.input :trip_id, as: :hidden, input_html: { value: @trip.id } %>
+                <div class="invite-input-row">
+                  <%= f.input :email,
+                      label: false,
+                      placeholder: "Enter email to invite",
+                      input_html: { class: 'form-control' },
+                      wrapper: false %>
+                  <%= f.button :submit, "Invite", class: "btn-invite" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Link -->
+      <div class="row">
+        <div class="col-xs-12 text-center mt-20">
+          <%= link_to "Back to Trip", edit_trip_path(@trip), class: "btn-back-link" %>
         </div>
       </div>
     </div>
+  </section>
 </div>
-
-
 
 <% content_for(:js) do %>
   <script>
     $(document).ready(function() {
-      // TODO Check safety!!!
       var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
-      $('.btn-trip-day-update').click(function(){
-
+      $('.btn-trip-day-update').click(function() {
         var element_button = $(this);
         var trip_day_id = element_button[0].id.split("-").pop();
-        var element_content = $('#trip-day-title-'+trip_day_id)
-        var trip_day_new_title = element_content[0].value
+        var element_content = $('#trip-day-title-' + trip_day_id);
+        var trip_day_new_title = element_content[0].value;
+
+        if (!trip_day_new_title.trim()) {
+          alert('Please enter a title');
+          return;
+        }
 
         var data = {
           trip_day: {
@@ -158,19 +217,19 @@
           url: '/trip_days/' + trip_day_id + '/update_title',
           data: data,
           success: function(data) {
-            //console.log(data);
-            console.log('trip updated');
-            element_content[0].placeholder = trip_day_new_title
-            element_content[0].value = ''
-            // $('#autoRefresh').click();
-            // callback(data); // return data in callback
+            element_content[0].placeholder = trip_day_new_title;
+            element_content[0].value = '';
+            element_button.addClass('success');
+            setTimeout(function() {
+              element_button.removeClass('success');
+            }, 1500);
           },
           error: function(jqXHR) {
             console.error(jqXHR.responseText);
+            alert('Failed to update title');
           }
         });
       });
     });
   </script>
 <% end %>
-
