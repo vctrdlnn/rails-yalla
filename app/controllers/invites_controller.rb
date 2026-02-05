@@ -30,8 +30,9 @@ class InvitesController < ApplicationController
   end
 
   def destroy
+    trip_id = @invite.trip_id
     @invite.destroy
-    redirect_to :back, notice: 'Invitation cancelled for this user.'
+    redirect_back(fallback_location: properties_trip_path(trip_id), notice: 'Invitation cancelled for this user.')
   end
 
   private

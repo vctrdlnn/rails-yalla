@@ -89,4 +89,8 @@ Rails.application.configure do
   # Action mailer configuration (Brevo API)
   config.action_mailer.delivery_method = :brevo_api
   config.action_mailer.default_url_options = { host: "www.justyalla.app" }
+
+  config.hosts << "justyalla.app"
+  config.hosts << "www.justyalla.app"
+
 end

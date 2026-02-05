@@ -52,7 +52,7 @@ class ActivitiesController < ApplicationController
   def update
     if @activity.update(activity_params)
       respond_to do |format|
-        format.html { redirect_to :back, notice: 'Activity was successfully updated.' }
+        format.html { redirect_back(fallback_location: edit_trip_path(@activity.trip), notice: 'Activity was successfully updated.') }
         format.js # <-- will render 'app/views/reviews/update.js.erb'
       end
     else
@@ -74,12 +74,12 @@ class ActivitiesController < ApplicationController
     end
     if @activity.save
       respond_to do |format|
-        format.html { redirect_to :back, notice: 'Activity was successfully added to the trip.' }
+        format.html { redirect_back(fallback_location: edit_trip_path(@activity.trip), notice: 'Activity was successfully added to the trip.') }
         format.js  # <-- will render `app/views/reviews/create.js.erb`
       end
     else
       respond_to do |format|
-        format.html { redirect_to :back, alert: @activity.errors.messages }
+        format.html { redirect_back(fallback_location: edit_trip_path(@activity.trip), alert: @activity.errors.messages) }
         format.js  # <-- idem
       end
     end
