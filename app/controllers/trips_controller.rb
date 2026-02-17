@@ -108,11 +108,11 @@ class TripsController < ApplicationController
   end
 
   def make_my_day
-    if @trip.activities.where.not(lat: nil, lon: nil).length < @trip.trip_days.length * 3
-      redirect_back(fallback_location: edit_trip_path(@trip), alert: "Only works with at least #{@trip.trip_days.length * 3} activities")
+    result = TripClusteringService.new(@trip).call
+    if result.success?
+      redirect_to edit_trip_path(@trip), notice: "Your itinerary has been optimized!"
     else
-      shortest_trip_days(@trip)
-      redirect_to edit_trip_path(@trip), notice: 'Magic has happen, this is the best itinirary!'
+      redirect_back(fallback_location: edit_trip_path(@trip), alert: result.message)
     end
   end
 
@@ -153,103 +153,5 @@ class TripsController < ApplicationController
         end
       end
     end
-  end
-
-
-  # MAKE MY DAY ALGORITHM
-
-  def shortest_trip_days(trip)
-    points = trip.activities.where.not(lat: nil, lon: nil).map{ |a| {id: a.id, lat: a.lat, lon: a.lon} }
-    shortest_solution = best_path(points, trip.trip_days.length)
-    day_index = 0
-    shortest_solution.each_pair do |key, value|
-      if value.class == Array
-        value.each_with_index do |act, i|
-          activity = Activity.find(act[:id])
-          activity.trip_day_id = trip.trip_days[day_index].id
-          activity.index = i + 1
-          activity.save
-        end
-        day_index += 1
-      end
-    end
-  end
-
-  def best_path(points, days)
-    days = 3
-    possible_trips = all_combinaisons(points, days)
-    shortest = possible_trips.values.min_by { |trip| trip[:distance] }
-  end
-
-  def all_combinaisons(points, days)
-    combos = {}
-    i = 1
-    min_by_day = (points.length / (days + 1)).floor
-    a_max = points.length - min_by_day * (days - 1)
-
-    (min_by_day..a_max).each do |a|
-      points_a = points
-      combos[i] = {} if combos[i].nil?
-      # find which combination of a length is the shortest to only iterate on this one
-      combos[i][:day1] = points_a.combination(a).to_a.min_by { |route| center_distance(route) }
-
-      # TODO: rendre le truc iteratif et repasser dans le code au dessus mais avec le nouveau subpoint
-      # les points d'origine sont en fait le sous ensemble et on le fait sur 2 jours au lieu de 3
-      points_b = points_a - combos[i][:day1]
-      b_max = points_b.length - min_by_day * (days - 2)
-      (min_by_day..b_max).each do |b|
-        if combos[i].nil?
-          combos[i] = {}
-          combos[i][:day1] = combos[i-1][:day1]
-        end
-        # find which combination of b length is the shortest to only iterate on this one
-
-        combos[i][:day2] = points_b.combination(b).to_a.min_by { |route| center_distance(route) }
-
-        # C can only be the remaining!
-        combos[i][:day3] = points_b - combos[i][:day2]
-
-        # TODO: if 4 days or more
-        # points_c = points_b - combos[i][:day2]
-        # c_max = points_c.length
-        # (2..c_max).each do |c|
-        #   if combos[i].nil?
-        #     combos[i][:day1] = combos[i-1][:day1]
-        #     combos[i][:day2] = combos[i-1][:day2]
-        #   end
-        #   combos[i][:day3] = points_c.combination(c).to_a.min_by { |route| center_distance(route) }
-        # end
-
-        # TODO: OPTIMIZE CALCULATION OF PERMUTATION - TOO LONG!
-        # combos[i].each_pair do |key, path|
-        #   if path.length > 9
-        #     combos[i][key] = path.sort { |x,y| y[:lat] <=> x[:lat] }
-        #   else
-        #     combos[i][key] = path.permutation(path.length).to_a.min_by { |route| path_length(route) }
-        #   end
-        # end
-        # PERMUTATIONS
-
-        combos[i][:distance] = path_length(combos[i][:day1]) + path_length(combos[i][:day2]) + path_length(combos[i][:day3])
-        i += 1
-      end
-    end
-    return combos
-  end
-
-  def path_length(points)
-    sum = 0
-    if points.length >= 2
-      points.each_cons(2) do |a, b|
-        sum += Math.sqrt((b[:lat] - a[:lat])**2 + (b[:lon] - a[:lon])**2)
-      end
-    end
-    return sum
-  end
-
-  def center_distance(points)
-    lat_cen = points.inject(0){ |sum, a| sum += a[:lat] } / points.length
-    lon_cen = points.inject(0){ |sum, a| sum += a[:lon] } / points.length
-    points.inject(0) { |sum, a| sum += Math.sqrt((lat_cen - a[:lat])**2 + (lon_cen - a[:lon])**2) }
   end
 end
