@@ -1,4 +1,4 @@
-<%= simple_form_for [trip, activity], remote: true, html: { class: '' }, defaults: { input_html: { class: 'input-group-lg', style: 'width:100%;' } }  do |f| %>
+<%= simple_form_for [trip, activity], remote: true, html: { class: '', style: 'text-align: center;' }, defaults: { input_html: { class: 'input-group-lg', style: 'width:100%;' } }  do |f| %>
 <!--   <div class="row">
     <div class="col-xs-8"> -->
       <%= f.input :establishment, label: false, input_html: { id: 'activity_est_establishment' }, placeholder: 'Input any street/place/restaurant/activity' %>
