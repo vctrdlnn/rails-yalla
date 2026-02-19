@@ -76,10 +76,10 @@
 - Essential for participants feature
 - **Priority**: Medium
 
-### B2. Fix N+1 Queries
-- Use `includes(:trip_day)` for eager loading
-- Profile and optimize slow queries
-- **Priority**: Medium
+### B2. ~~Fix N+1 Queries~~ ✅ Done
+- Eager loading via `includes(trip_days: { activities: :main_category })` in `set_trip`
+- Replaced all Ruby `.sort` with SQL `order` scopes on associations
+- Refactored `my_trips` to single query
 
 ### B3. API Endpoints for AJAX
 - Proper JSON API for activities CRUD
@@ -104,6 +104,85 @@
 - Useful for collaboration and accountability
 - Consider: Activity created, moved, edited, deleted
 - **Priority**: Medium
+
+---
+
+## Backlog - Trip Show Page (`/trips/:id`)
+
+### T1. Banner & Hero Section
+- Add dark gradient overlay for text readability on any photo
+- Display trip dates, category, and activity count in the hero
+- Show author avatar next to "By: username"
+- **Priority**: Medium
+
+### T2. Sticky Day Tabs Navigation
+- Add sticky tabs at top to navigate between days without scrolling
+- Show badge with activity count per day
+- **Priority**: Medium
+
+### T3. Empty State Improvement
+- Replace bare "No activities yet" with illustration/icon
+- Add CTA "Start planning this day" for owner, neutral message for visitors
+- **Priority**: Low
+
+### T4. Interactive Map
+- Replace static map image with interactive Google Maps (gmaps4rails already available)
+- Show route/itinerary between activities of the same day
+- Clickable pins linking to activity cards
+- **Priority**: High
+
+### T5. Timeline Enhancements
+- Add estimated times and travel duration between activities
+- Add Google Maps directions link between consecutive activities
+- **Priority**: Medium
+
+### T6. Enable Share Button
+- Uncomment existing share button (currently commented out in show.html.erb)
+- Implement `navigator.share` API with fallback to copy-link
+- **Priority**: Low
+
+### T7. Responsive Layout Fix
+- `col-md-6` causes unbalanced layout on 3-day trips (2+1)
+- Consider full-width per day or carousel/swiper
+- **Priority**: Low
+
+### T8. SEO & Open Graph Meta Tags
+- Add OG meta tags (title, description, image) for social media previews
+- **Priority**: Medium
+
+### T9. Unassigned Activities Card Redesign
+- Current `col-md-3` cards are too small
+- Switch to `col-md-4` or horizontal list layout with larger photos
+- **Priority**: Low
+
+---
+
+## Backlog - Backend (General)
+
+### B7. Async Email Delivery
+- `send_trip` uses `deliver_now` which blocks the request
+- Switch to `deliver_later` with Active Job
+- **Priority**: Medium
+
+### B8. Fix `create_trip_days` Multiple Saves
+- Currently calls `@trip.save` on every loop iteration
+- Build all trip_days first, then save once
+- **Priority**: Low
+
+### B9. Fragment Caching
+- Russian doll caching on trip show page (day cards, activity cards)
+- Cache static map URLs (deterministic)
+- **Priority**: Low
+
+### B10. Trip View Counter
+- Add view counter on public trips (impressionist gem or counter_cache)
+- Useful for ranking popular trips
+- **Priority**: Low
+
+### B11. JSON API for Trip Show
+- Add jbuilder/jsonapi-serializer for trip show endpoint
+- Prepares for future frontend modernization (React/Vue/Turbo)
+- **Priority**: Low
 
 ---
 

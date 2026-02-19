@@ -50,20 +50,22 @@
               </div>
 
               <!-- Invite Friends -->
-              <div class="form-section">
-                <div class="form-group invite-friends-group">
-                  <label class="control-label">Invite friends</label>
-                  <div class="invite-input-wrapper">
-                    <div class="email-chips" id="email-chips"></div>
-                    <input type="email"
-                           id="invite-email-input"
-                           class="form-control"
-                           placeholder="Enter email and press Enter">
+              <% if user_signed_in? %>
+                <div class="form-section">
+                  <div class="form-group invite-friends-group">
+                    <label class="control-label">Invite friends</label>
+                    <div class="invite-input-wrapper">
+                      <div class="email-chips" id="email-chips"></div>
+                      <input type="email"
+                             id="invite-email-input"
+                             class="form-control"
+                             placeholder="Enter email and press Enter">
+                    </div>
+                    <input type="hidden" name="invite_emails" id="invite-emails-hidden" value="">
+                    <p class="help-block">Invite collaborators to help plan this trip</p>
                   </div>
-                  <input type="hidden" name="invite_emails" id="invite-emails-hidden" value="">
-                  <p class="help-block">Invite collaborators to help plan this trip</p>
                 </div>
-              </div>
+              <% end %>
 
               <!-- Cover Photo -->
               <div class="form-section">

@@ -30,4 +30,14 @@ console.log('error')
   $('#activity_est_lon').val('');
 
   $('#autoRefresh').click();
+
+  <% if @activity.trip&.claim_token.present? && @activity.trip.activities.count >= 3 %>
+    // Soft nudge for guest users
+    var nudgeToast = $('<div class="save-toast success" style="background: #f0ad4e; color: #fff;">' +
+      '<span>You\'ve added <%= @activity.trip.activities.count %> activities! ' +
+      '<a href="<%= new_user_registration_path %>" style="color: #fff; text-decoration: underline; font-weight: bold;">Sign up</a> to save your progress.</span>' +
+      '</div>');
+    $('body').append(nudgeToast);
+    setTimeout(function() { nudgeToast.fadeOut(300, function() { $(this).remove(); }); }, 5000);
+  <% end %>
 <% end %>

@@ -1,6 +1,9 @@
 class ActivitiesController < ApplicationController
+  include GuestTripAccess
+
+  skip_before_action :authenticate_user!, only: [:create, :update, :destroy, :change_position]
+  before_action :authenticate_user_or_guest!, only: [:create, :update, :destroy, :change_position]
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :change_position, :pin]
-  # before_action :set_trip, only: [:new, :create]
   before_action :sanitize_activity_params, only: [:change_position]
 
 
@@ -26,10 +29,14 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    @activity = current_user.activities.build(activity_params)
+    if user_signed_in?
+      @activity = current_user.activities.build(activity_params)
+    else
+      @activity = Activity.new(activity_params)
+    end
     p activity_params
     @activity.index = 1 # TODO : REMOVE THIS
-    authorize @activity
+    authorize_or_skip_for_guest!(@activity)
     set_title if @activity.title.nil?
     find_main_category unless (@activity.google_category.nil? || !@activity.main_category.nil?)
     if !params["trip_id"].nil?
@@ -86,13 +93,6 @@ class ActivitiesController < ApplicationController
   end
 
   def pin
-    # @pinned_activity = current_user.pinned_activities.build(activity_id: params["id"])
-    # if @pinned_activity.save
-    #   respond_to do |format|
-    #     format.html { redirect_to :back, notice: 'Activity saved.' }
-    #     format.js  # <-- TODO: will render `app/views/reviews/pin.js.erb`
-    #   end
-    # end
   end
 
   def destroy
@@ -146,7 +146,7 @@ class ActivitiesController < ApplicationController
 
   def set_activity
     @activity = Activity.find(params[:id])
-    authorize @activity
+    authorize_or_skip_for_guest!(@activity)
   end
 
   def set_trip

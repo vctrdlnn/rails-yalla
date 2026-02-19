@@ -40,9 +40,7 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   def user_is_owner_or_admin?
-    # TODO: seul le user peut modifier le resto
-    # record => @trip
-    # user => current_user
+    return false unless user
     user.admin || record.user == user || record.trip.user == user
   end
 
