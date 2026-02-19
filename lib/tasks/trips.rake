@@ -130,6 +130,11 @@ namespace :trips do
     puts "=" * 50
   end
 
+  desc "Clean up unclaimed guest trips older than 30 days"
+  task cleanup_unclaimed: :environment do
+    CleanupUnclaimedTripsJob.perform_now
+  end
+
   desc "List trips missing photos"
   task missing_photos: :environment do
     trips_without_photos = Trip.where(photo: [nil, ''])

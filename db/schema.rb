@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2016_12_14_204527) do
+ActiveRecord::Schema[7.1].define(version: 2026_02_19_124140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -116,6 +116,7 @@ ActiveRecord::Schema[7.1].define(version: 2016_12_14_204527) do
     t.integer "cached_weighted_score", default: 0
     t.integer "cached_weighted_total", default: 0
     t.float "cached_weighted_average", default: 0.0
+    t.string "claim_token"
     t.index ["cached_votes_down"], name: "index_trips_on_cached_votes_down"
     t.index ["cached_votes_score"], name: "index_trips_on_cached_votes_score"
     t.index ["cached_votes_total"], name: "index_trips_on_cached_votes_total"
@@ -123,6 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2016_12_14_204527) do
     t.index ["cached_weighted_average"], name: "index_trips_on_cached_weighted_average"
     t.index ["cached_weighted_score"], name: "index_trips_on_cached_weighted_score"
     t.index ["cached_weighted_total"], name: "index_trips_on_cached_weighted_total"
+    t.index ["claim_token"], name: "index_trips_on_claim_token", unique: true, where: "(claim_token IS NOT NULL)"
     t.index ["user_id"], name: "index_trips_on_user_id"
   end
 

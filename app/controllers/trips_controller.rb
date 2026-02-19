@@ -1,6 +1,8 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search, :new, :create]
+  include GuestTripAccess
+
+  skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search, :new, :create, :edit, :map_markers]
   before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
   skip_after_action :verify_authorized, only: [:my_trips, :search]
@@ -55,8 +57,10 @@ class TripsController < ApplicationController
   end
 
   def edit
+    authenticate_user_or_guest!
     @activity = Activity.new
     @main_categories = MainCategory.all
+    @unclaimed = @trip.claim_token.present?
   end
 
   def properties
@@ -77,17 +81,20 @@ class TripsController < ApplicationController
         render :new
       end
     else
-      # Guest flow: validate, store in session, redirect to sign up
+      # Guest flow: create real trip in DB with no user
       @trip = Trip.new(trip_params)
+      @trip.public = false
       authorize @trip
-      @trip.user = User.new # temp user to pass belongs_to validation
       if @trip.valid?
-        pending = params[:trip].to_unsafe_h.except("photo", "photo_cache")
-        pending["nb_days"] = params["trip"]["nb_days"]
-        pending["start_date"] = params["trip"]["start_date"]
-        pending["invite_emails"] = params[:invite_emails]
-        session[:pending_trip] = pending
-        redirect_to new_user_registration_path, notice: "Sign up to save your trip!"
+        params["trip"]["nb_days"].to_i == 0 ? nb_days = 3 : nb_days = params["trip"]["nb_days"].to_i
+        create_trip_days(nb_days, params["trip"]["start_date"].to_date)
+        if @trip.save
+          session[:claim_token] = @trip.claim_token
+          session[:claimed_trip_id] = @trip.id
+          redirect_to edit_trip_path(@trip), notice: 'Trip created! Sign up anytime to save it.'
+        else
+          render :new
+        end
       else
         render :new
       end
@@ -96,7 +103,7 @@ class TripsController < ApplicationController
 
   def create_trip_days(nb_days, start_date)
     day = start_date || Date.today
-    days = [nb_days, 3].max
+    days = [nb_days, 1].max
     days.times do
       @trip.trip_days.build(title: day.strftime('%A'), date: day)
       @trip.save
@@ -135,6 +142,7 @@ class TripsController < ApplicationController
   end
 
   def map_markers
+    authenticate_user_or_guest!
     respond_to do |format|
       format.json
     end
@@ -145,7 +153,7 @@ class TripsController < ApplicationController
   def set_trip
     @trip = Trip.includes(trip_days: { activities: :main_category }, activities: :main_category)
                .find(params[:id])
-    authorize @trip
+    authorize_or_skip_for_guest!(@trip)
   end
 
   def trip_params

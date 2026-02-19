@@ -1,6 +1,23 @@
 module PendingTripCreation
   extend ActiveSupport::Concern
 
+  def claim_trip_for_user(user)
+    return nil unless session[:claimed_trip_id].present? && session[:claim_token].present?
+
+    trip = Trip.find_by(id: session[:claimed_trip_id], claim_token: session[:claim_token])
+    return nil unless trip
+
+    trip.user = user
+    trip.claim_token = nil
+    trip.save!
+
+    trip.activities.where(user_id: nil).update_all(user_id: user.id)
+
+    session.delete(:claimed_trip_id)
+    session.delete(:claim_token)
+    trip
+  end
+
   def create_pending_trip_for_user(user)
     return nil unless session[:pending_trip].present?
 
@@ -11,7 +28,7 @@ module PendingTripCreation
     start_date = session[:pending_trip]["start_date"].present? ? Date.parse(session[:pending_trip]["start_date"]) : Date.today
 
     day = start_date
-    [nb_days, 3].max.times do
+    [nb_days, 1].max.times do
       trip.trip_days.build(title: day.strftime('%A'), date: day)
       day = day.next
     end

@@ -4,7 +4,7 @@ class Activity < ApplicationRecord
   belongs_to :trip
   belongs_to :trip_day, optional: true
   belongs_to :main_category
-  belongs_to :user
+  belongs_to :user, optional: true
 
   has_many :pinned_activities, dependent: :destroy
 

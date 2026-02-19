@@ -4,6 +4,14 @@
 <% @disable_footer = true %>
 <% trip_icons = set_day_icon(@trip.trip_days) %>
 <div class="trip-edit-wrapper">
+  <% if @unclaimed %>
+    <div class="alert alert-warning alert-dismissible guest-trip-banner" role="alert" style="margin-bottom: 0; border-radius: 0; text-align: center; position: relative; z-index: 10;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>You're trying out Yalla!</strong> Sign up to save your trip and keep planning.
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-success btn-sm", style: "margin-left: 10px;" %>
+      <%= link_to "Sign In", new_user_session_path, class: "btn btn-default btn-sm", style: "margin-left: 5px;" %>
+    </div>
+  <% end %>
   <!-- Mobile Tab Navigation -->
   <div class="mobile-tabs">
     <button class="mobile-tab active" data-tab="plan-panel">

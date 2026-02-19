@@ -22,6 +22,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
+    if session[:claimed_trip_id].present?
+      trip = claim_trip_for_user(resource)
+      return edit_trip_path(trip) if trip
+    end
     if session[:pending_trip].present?
       trip = create_pending_trip_for_user(resource)
       return edit_trip_path(trip) if trip
