@@ -41,7 +41,7 @@ class ActivityPolicy < ApplicationPolicy
 
   def user_is_owner_or_admin?
     return false unless user
-    user.admin || record.user == user || record.trip.user == user
+    user.admin || record.user == user || record.trip.user == user || record.trip.participants.exists?(user: user)
   end
 
 end

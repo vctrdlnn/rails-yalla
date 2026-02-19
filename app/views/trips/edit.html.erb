@@ -479,8 +479,11 @@
         }
       }
 
-      // Save on Enter, cancel on Escape
+      // Save on Enter, cancel on Escape, allow Space
       $(document).on('keydown', '.editable-input', function(e) {
+        // Stop all key events from bubbling to accordion/sortable
+        e.stopPropagation();
+
         var $field = $(this).closest('.editable-field');
 
         if (e.key === 'Enter') {
