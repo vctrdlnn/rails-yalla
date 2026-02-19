@@ -1,32 +1,33 @@
 # Trip controller - classic CRUD so far
 class TripsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search ]
+  skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search, :new, :create]
   before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
 
   skip_after_action :verify_authorized, only: [:my_trips, :search]
 
   def index
-    # @trips = Trip.all
     @trips = policy_scope(Trip)
-    @trips = @trips.sort { |x, y| y.activities.count <=> x.activities.count }
-    @trips = @trips.sort { |x, y| y.cached_votes_total <=> x.cached_votes_total }
+              .includes(:user, :activities)
+              .left_joins(:activities)
+              .group("trips.id")
+              .order("cached_votes_total DESC, COUNT(activities.id) DESC")
   end
 
   def search
     @trips = policy_scope(Trip)
-    @trips = @trips.near(params["trip"]["city"], 100)
-    @trips = @trips.sort { |x, y| y.activities.count <=> x.activities.count }
-    @trips = @trips.sort { |x, y| y.cached_votes_total <=> x.cached_votes_total }
+              .near(params["trip"]["city"], 100)
+              .includes(:user, :activities)
+              .left_joins(:activities)
+              .group("trips.id")
+              .order("cached_votes_total DESC, COUNT(activities.id) DESC")
     render :index
   end
 
   def my_trips
-    @trips = []
-    @trips += current_user.trips
-    current_user.participants.each do |participation|
-      @trips << participation.trip unless @trips.include?(participation.trip)
-    end
-    @trips += current_user.find_voted_items
+    trip_ids = current_user.trip_ids +
+               current_user.participants.pluck(:trip_id) +
+               current_user.find_voted_items.map(&:id)
+    @trips = Trip.where(id: trip_ids.uniq).includes(:user, :activities)
   end
 
   def show
@@ -63,16 +64,33 @@ class TripsController < ApplicationController
   end
 
   def create
-    @trip = current_user.trips.build(trip_params)
-    authorize @trip
-    params["trip"]["nb_days"].to_i == 0 ? nb_days = 3 : nb_days = params["trip"]["nb_days"].to_i
-    create_trip_days(nb_days, params["trip"]["start_date"].to_date)
-    if @trip.save
-      # Process invite emails if provided
-      process_invite_emails if params[:invite_emails].present?
-      redirect_to edit_trip_path(@trip), notice: 'Trip was successfully created.'
+    if user_signed_in?
+      @trip = current_user.trips.build(trip_params)
+      authorize @trip
+      params["trip"]["nb_days"].to_i == 0 ? nb_days = 3 : nb_days = params["trip"]["nb_days"].to_i
+      create_trip_days(nb_days, params["trip"]["start_date"].to_date)
+      if @trip.save
+        # Process invite emails if provided
+        process_invite_emails if params[:invite_emails].present?
+        redirect_to edit_trip_path(@trip), notice: 'Trip was successfully created.'
+      else
+        render :new
+      end
     else
-      render :new
+      # Guest flow: validate, store in session, redirect to sign up
+      @trip = Trip.new(trip_params)
+      authorize @trip
+      @trip.user = User.new # temp user to pass belongs_to validation
+      if @trip.valid?
+        pending = params[:trip].to_unsafe_h.except("photo", "photo_cache")
+        pending["nb_days"] = params["trip"]["nb_days"]
+        pending["start_date"] = params["trip"]["start_date"]
+        pending["invite_emails"] = params[:invite_emails]
+        session[:pending_trip] = pending
+        redirect_to new_user_registration_path, notice: "Sign up to save your trip!"
+      else
+        render :new
+      end
     end
   end
 
@@ -125,7 +143,8 @@ class TripsController < ApplicationController
   private
 
   def set_trip
-    @trip = Trip.find(params[:id])
+    @trip = Trip.includes(trip_days: { activities: :main_category }, activities: :main_category)
+               .find(params[:id])
     authorize @trip
   end
 

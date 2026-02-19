@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   include Pundit
+  include PendingTripCreation
 
   # Pundit: white-list approach.
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
@@ -54,8 +55,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    # binding.pry
-    # current_user_path
+    if session[:pending_trip].present?
+      trip = create_pending_trip_for_user(resource)
+      return edit_trip_path(trip) if trip
+    end
     my_trips_path
   end
 

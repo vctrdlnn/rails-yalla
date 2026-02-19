@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+  include PendingTripCreation
 
   def new
     @token = params[:invite_token]
@@ -18,6 +19,14 @@ class RegistrationsController < Devise::RegistrationsController
         end
       end
     end
+  end
+
+  def after_sign_up_path_for(resource)
+    if session[:pending_trip].present?
+      trip = create_pending_trip_for_user(resource)
+      return edit_trip_path(trip) if trip
+    end
+    my_trips_path
   end
 
   private
