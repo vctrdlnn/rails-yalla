@@ -3,7 +3,8 @@ class TripsController < ApplicationController
   include GuestTripAccess
 
   skip_before_action :authenticate_user!, only: [:index, :show, :send_trip, :search, :new, :create, :edit, :map_markers]
-  before_action :set_trip, only: [:show, :send_trip, :edit, :update, :destroy, :like, :make_my_day, :map_markers, :properties]
+  before_action :set_trip, only: [:show, :send_trip, :like, :update, :destroy, :make_my_day, :properties]
+  before_action :set_trip_for_guest, only: [:edit, :map_markers]
 
   skip_after_action :verify_authorized, only: [:my_trips, :search]
 
@@ -151,6 +152,12 @@ class TripsController < ApplicationController
   private
 
   def set_trip
+    @trip = Trip.includes(trip_days: { activities: :main_category }, activities: :main_category)
+               .find(params[:id])
+    authorize @trip
+  end
+
+  def set_trip_for_guest
     @trip = Trip.includes(trip_days: { activities: :main_category }, activities: :main_category)
                .find(params[:id])
     authorize_or_skip_for_guest!(@trip)
