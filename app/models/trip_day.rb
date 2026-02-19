@@ -1,7 +1,7 @@
 # days belonging to trips to which we assign activities when sorting them out
 class TripDay < ApplicationRecord
   belongs_to :trip
-  has_many :activities, dependent: :destroy
+  has_many :activities, -> { order(:index) }, dependent: :destroy
 
   def panel_id
     self.title.downcase.gsub(' ', '_')
@@ -13,7 +13,7 @@ class TripDay < ApplicationRecord
     key = "&key=" + ENV['GOOGLE_API_BROWSER_KEY']
     markers = ""
     path = "&path=color:0x0000ff70%7Cweight:3"
-    sorted_activities = self.activities.where.not(lat: nil, lon: nil).sort { |x, y| x.index <=> y.index }
+    sorted_activities = self.activities.where.not(lat: nil, lon: nil).order(:index)
     sorted_activities.each do |act|
       m_color = color_code(act.main_category.color)
       markers += "&markers=color:#{m_color}%7Clabel:#{act.index.to_s}%7C#{act.lat},#{act.lon}"

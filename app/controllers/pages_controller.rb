@@ -4,8 +4,9 @@ class PagesController < ApplicationController
 
   def home
     @trips = policy_scope(Trip)
-    @trips = @trips.sort { |x, y| y.likes <=> x.likes }
-    @trips = @trips.first(4)
+              .includes(:user, :activities)
+              .order(cached_votes_total: :desc)
+              .limit(4)
   end
 
   def unsplash_photo

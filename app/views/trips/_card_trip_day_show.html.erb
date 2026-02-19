@@ -8,7 +8,7 @@
     <div class="text-center">
       <img src="<%= tripday.static_map_url(500, 500) %>"></img>
       <ul class="timeline">
-        <% tripday.activities.sort{ |x, y| x.index <=> y.index }.each_with_index do |activity, index| %>
+        <% tripday.activities.each_with_index do |activity, index| %>
           <li class="<%= 'timeline-inverted' if index % 2 != 0 %>">
             <div class="timeline-badge">
               <%= image_tag(activity.main_category.icon, class: 'icones') %>

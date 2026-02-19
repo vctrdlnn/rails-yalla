@@ -98,7 +98,7 @@
   <div class="row noassigned">
     <h3 class="text-center">Other activities unassigned</h3>
     <div class="mini-padded"></div>
-        <% @trip.activities.where(trip_day_id: nil).sort{ |x, y| x.index <=> y.index }.each do |activity| %>
+        <% @trip.activities.where(trip_day_id: nil).order(:index).each do |activity| %>
           <%= render 'card_noassigned', activity:activity %>
       <% end %>
     <div class="padded"></div>

@@ -4,7 +4,7 @@ class Trip < ApplicationRecord
 
   belongs_to :user
   has_many :trip_days, -> { order "created_at ASC" }, dependent: :destroy
-  has_many :activities, dependent: :destroy
+  has_many :activities, -> { order(:index) }, dependent: :destroy
   has_many :participants
   has_many :invites
 
