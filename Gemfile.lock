@@ -162,7 +162,7 @@ GEM
       actionmailer (>= 5.0)
       devise (>= 4.6)
     drb (2.2.3)
-    erb (6.0.1)
+    erb (6.0.1.1)
     erubi (1.13.1)
     ethon (0.15.0)
       ffi (>= 1.15.0)
